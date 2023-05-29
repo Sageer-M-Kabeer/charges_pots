@@ -29,11 +29,29 @@ INSTALLED_APPS = [
     'drf_yasg',
     'rest_framework',
     'users',
+    'corsheaders',
 ]
+
+REST_FRAMEWORK ={
+    'DEFAULT_PERMISSION_CLASSES':( 'rest_framework.permissions.AllowAny' ,),
+    # 'DEFAULT_AUTHENTICATION_CLASSES':( 'rest_framework.authentication.SessionAuthentication' ,),
+}
 
 AUTH_USER_MODEL = "users.User"
 
+CORS_ALLOW_CREDENTIALS = True
+CORS_ORIGIN_ALLOW_ALL = True
+CORS_ORIGIN_WHITELIST = (
+    'http://localhost:8081',
+    'http://localhost:3000',
+    'http://127.0.0.1:3000',
+)
+
 MIDDLEWARE = [
+    # CORS
+    'corsheaders.middleware.CorsMiddleware',
+    'django.middleware.common.CommonMiddleware',
+    
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -41,6 +59,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    
 ]
 
 ROOT_URLCONF = 'charges_pots.urls'

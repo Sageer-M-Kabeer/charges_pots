@@ -6,15 +6,20 @@ from .serializers import UserSerializer,UserLoginSerializer, UserSignupSerialize
 from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated
 from django.contrib.auth import login,logout
+from rest_framework import permissions 
+from rest_framework.authentication import SessionAuthentication
 
 def index(request):
     return render(request, 'users/index.html')
 
 class UserSignupAPIView(generics.CreateAPIView):
+    permission_classes = (permissions.AllowAny,)
     queryset = User.objects.all()
     serializer_class = UserSignupSerializer
-    
+        
 class UserLoginAPIView(generics.GenericAPIView):
+    permission_classes = (permissions.AllowAny,)
+    authentication_classes = [SessionAuthentication,]
     serializer_class = UserLoginSerializer
 
     def post(self, request):
@@ -27,16 +32,21 @@ class UserLoginAPIView(generics.GenericAPIView):
         return Response({'detail': 'Logged in successfully.'}, status=status.HTTP_200_OK)
     
 class UserLogoutAPIView(APIView):
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated,]
+    authentication_classes = [SessionAuthentication,]
 
     def post(self, request):
         logout(request)
         return Response({'detail': 'Logged out successfully.'}, status=status.HTTP_200_OK)
 
 class UserListAPIView(generics.ListAPIView):
+    permission_classes = [IsAuthenticated,]
+    authentication_classes = [SessionAuthentication,]
     queryset = User.objects.all()
     serializer_class = UserSerializer
-
+\
 class UserDetailAPIView(generics.RetrieveAPIView):
+    permission_classes = [IsAuthenticated,]
+    authentication_classes = [SessionAuthentication,]
     queryset = User.objects.all()
     serializer_class = UserSerializer

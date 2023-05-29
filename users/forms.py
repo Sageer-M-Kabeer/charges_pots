@@ -25,7 +25,7 @@ class UserCreateForm(forms.ModelForm):
 
     class Meta:
         model = User
-        fields = ['phone_number', 'password',  'invite_code']
+        fields = ['phone_number', 'password']
         widgets = {
             'phone_number': forms.TextInput(attrs={'placeholder': 'Phone Number'}),
             'password1': forms.PasswordInput(attrs={'placeholder': 'Password'}),
@@ -43,13 +43,8 @@ class UserCreateForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
         self.fields['password1'].widget.attrs.update({'autocomplete': 'off'})
         self.fields['password2'].widget.attrs.update({'autocomplete': 'off'})
-        self.fields['captcha_code'].initial = generate_captcha_code()
     
-    def clean_captcha_code(self):
-        captcha_code = self.cleaned_data.get('captcha_code')
-        if captcha_code != self.initial['captcha_code']:
-            raise forms.ValidationError('Invalid captcha code')
-        return captcha_code
+
 
     def clean_invite_code(self):
         invite_code = self.cleaned_data.get('invite_code')

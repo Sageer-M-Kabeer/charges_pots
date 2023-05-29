@@ -1,15 +1,29 @@
 from rest_framework import serializers
 from .models import User
 from django.contrib.auth import authenticate
+from django.dispatch import receiver
+import shortuuid
+from django.db.models.signals import pre_save
 
 class UserSignupSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True)
+    comfirm_password = serializers.CharField(write_only=True)
 
     class Meta:
         model = User
-        fields = ['phone_number', 'password', 'invite_code']
+        fields = ['phone_number', 'password','comfirm_password', 'invite_code']
+        
+    def validate(self, attrs):
+        password = attrs.get('password')
+        confirm_password = attrs.get('comfirm_password')
+
+        if password != confirm_password:
+            raise serializers.ValidationError("Passwords do not match.")
+
+        return attrs
 
     def create(self, validated_data):
+        validated_data.pop('comfirm_password')
         password = validated_data.pop('password')
         user = User(**validated_data)
         user.set_password(password)
@@ -35,3 +49,7 @@ class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ['id', 'phone_number', 'invite_code']
+    
+        
+
+
