@@ -35,10 +35,8 @@ const Login = () => {
   .then((response) =>{
     console.log(response)
     if (response.ok){
-      setLoggin(true)
-      if(isLoggedin){
-        return <HomePage />
-      }
+      window.location.href = "/";
+      alert("login success!")
     }else{
       throw new Error('Sign in failed!');
     }

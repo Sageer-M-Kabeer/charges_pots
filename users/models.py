@@ -63,15 +63,15 @@ class User(AbstractBaseUser):
             self.invite_code = self.generate_invite_code()
         super().save(*args, **kwargs)
 
-    def generate_invite_code(self):
-        """
-        Generate a unique invite code for the user.
-        """
-        length = 6
-        while True:
-            code = ''.join(random.choices(string.ascii_uppercase + string.digits, k=length))
-            if not User.objects.filter(invite_code=code).exists():
-                return code
+    # def generate_invite_code(self):
+    #     """
+    #     Generate a unique invite code for the user.
+    #     """
+    #     length = 6
+    #     while True:
+    #         code = ''.join(random.choices(string.ascii_uppercase + string.digits, k=length))
+    #         if not User.objects.filter(invite_code=code).exists():
+    #             return code
             
     def __str__(self):
         return f'{self.phone_number}'
@@ -81,42 +81,24 @@ class User(AbstractBaseUser):
 
     def has_module_perms(self, app_label):
         return True
-    
-class Profile(models.Model):
-    """ Default profile """
-
-    user = models.OneToOneField(User,
-                                unique=True,
-                                verbose_name=_('user'),
-                                related_name='profile',on_delete=models.CASCADE)
-    invite_code = models.CharField(max_length=300, blank=True, null=True)
-
-    def generate_verification_code(self):
-        # Generate user's verification code
-        # TODO: Move this to the model
-        return base64.urlsafe_b64encode(uuid.uuid1().bytes.encode("base64").rstrip())[:25]
-
-    def save(self, *args, **kwargs):
-        """
-        If this is a new user, generate code.
-        Otherwise leave as is
-        """
-        if not self.pk:
-            self.referral_code = self.generate_verification_code()
-        elif not self.verification_code:
-            self.referral_code = self.generate_verification_code()
-
-        return super(Profile, self).save(*args, **kwargs)
-    
+      
 class Account(models.Model):
-    user = models.ForeignKey(User, verbose_name=_("user"),related_name='account', on_delete=models.CASCADE)
-    balance = models.IntegerField()
-    
-    def __str__(self) -> str:
-        return str(self.balance)
-    
-    def get_balance(self):
-        return f"{self.balance}"
+    user = models.OneToOneField(User, on_delete=models.CASCADE,related_name="balance")
+    balance = models.IntegerField(default=0)
+
+    def deposit(self, amount):
+        self.balance += amount
+        self.save()
+
+    def withdraw(self, amount):
+        if self.balance >= amount:
+            self.balance -= amount
+            self.save()
+        else:
+            raise ValueError("Insufficient balance")
+
+    def __str__(self):
+        return f"Account for {self.user.phone_number}"
     
     
 

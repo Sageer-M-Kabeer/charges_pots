@@ -23,6 +23,9 @@ class CustomUserAdmin(admin.ModelAdmin):
     search_fields = ("phone_number",)
     ordering = ("phone_number",)
 
+class AccountAdmin(admin.ModelAdmin):
+    list_display = ('user','balance')
+
 
 admin.site.register(User,CustomUserAdmin)
 admin.site.register(Account)

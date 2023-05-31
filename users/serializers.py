@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import User
+from .models import User,Account
 from django.contrib.auth import authenticate
 from django.dispatch import receiver
 import shortuuid
@@ -48,8 +48,17 @@ class UserLoginSerializer(serializers.Serializer):
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ['id', 'phone_number', 'invite_code']
+        fields = ['id', 'phone_number', 'balance','invite_code']
+
+
+class AccountSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Account
+        fields = ['user','balance']
     
         
-
+class BalanceSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Account
+        fields = ['user','balance']
 

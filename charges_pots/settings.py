@@ -45,6 +45,7 @@ CORS_ORIGIN_WHITELIST = (
     'http://localhost:8081',
     'http://localhost:3000',
     'http://127.0.0.1:3000',
+    'http://192.168.47.120:3000'
 )
 
 MIDDLEWARE = [

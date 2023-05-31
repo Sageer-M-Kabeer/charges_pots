@@ -17,39 +17,39 @@ import Mine from './pages/Mine';
 
  const router = createBrowserRouter([
  
+
   {
-     path: "/",
-     element: <SignupPage/>,
+    path:"/",
+    element:<HomePage/> , 
     },
   {
-    path: 'login',
-    element:<Login/>,
+    path:"/buy",
+    element:<Buy/>  ,
     },
   {
-    path: 'forgot-password',
-    element:<ForgotPasswordPage/>,
-    },
-  {
-    path:'home',
-    element:<HomePage/>  
-    },
-  {
-    path:'buy',
-    element:<Buy/>  
-    },
-  {
-    path:'lease',
-    element:<Lease/>  
+    path:"/lease",
+    element:<Lease/>  ,
    },
    {
-    path:'team',
-    element:<Team/>  
+    path:"/team",
+    element:<Team/>  ,
    },
    {
-    path:'mine',
-    element:<Mine/>  
+    path:"/mine",
+    element:<Mine/>  ,
    },      
-  
+   {
+    path: "signup",
+    element: <SignupPage/>,
+   },
+ {
+   path: "login",
+   element:<Login/>,
+   },
+ {
+   path: "forgot-password",
+   element:<ForgotPasswordPage/>,
+   },
 
  ]);
   
@@ -57,4 +57,4 @@ import Mine from './pages/Mine';
   <RouterProvider router={router} />
  );
 
-reportWebVitals();
+// reportWebVitals();

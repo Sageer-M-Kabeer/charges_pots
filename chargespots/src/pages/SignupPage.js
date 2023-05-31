@@ -4,6 +4,8 @@ import lock from '../assets/lock.png';
 import shield from '../assets/shield.png'
 import {useForm} from "react-hook-form";
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
+import Login from './Login';
 
 const SignupPage = () => {
 
@@ -17,7 +19,7 @@ const SignupPage = () => {
 
   const [error,setError] = useState(null)
 
-  const onSubmit = (data) =>{
+  const onSubmit =  (data)  =>{
     const formattedPhoneNum = "+234" + data.phonenum
 
     fetch('http://localhost:8000/signup/',{
@@ -28,6 +30,8 @@ const SignupPage = () => {
       body:JSON.stringify({
         phone_number:formattedPhoneNum,
         password:data.password,
+        comfirm_password:data.comfirmPassword,
+        invite_code:data.invite,
         
       }),
     })
@@ -45,17 +49,11 @@ const SignupPage = () => {
   
       console.log(data)
       reset();
-
-
-
-
-    console.log(data);
-    reset();
   }
 
   // watch password inputs
   const password = watch('password','');
-  const comfirmPassword = watch('comfirm-password','')
+  const comfirmPassword = watch('comfirmPassword','')
 
     return (
       <div className=" md:h-screen sm:h-full  w-screen bg-[#f6f8f9] p-0 m-0 border-box outline-none font-[48px]">
@@ -131,7 +129,7 @@ const SignupPage = () => {
                                           checkMatch:(value) => value === password || 'passwords do not match'
                                           }
                                          })}
-                                       name="comfirm-password" type='password' placeholder='enter password again' autoComplete="off"
+                                       name="comfirmPassword" type='password' placeholder='enter password again' autoComplete="off"
                                         className=" pl-[10px] w-[100%] h-[45px] text-white bg-[#1895B0] border-none rounded-[10px] focus:outline-none" input/>
                   </div>
                   <div className="text-left mb-4 text-sm p-2 text-[#ee0a24]">
@@ -171,7 +169,7 @@ const SignupPage = () => {
                     </button>
                   </div>
                   <div className="flex-col block text-left mt-5 mb-2">
-                <span className="text-[#666]">Already have an account? <a href='# '><b className="text-[#44648]">Login</b></a></span>
+                <span className="text-[#666]">Already have an account? <Link to="login"><b className="text-[#44648]">login"Login</b></Link></span>
               </div>
               </div>
               {/* button end  */}

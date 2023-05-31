@@ -3,7 +3,7 @@ from . import views
 from rest_framework import permissions
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
-from .views import UserListAPIView, UserDetailAPIView, UserLoginAPIView, UserLogoutAPIView, UserSignupAPIView
+from .views import UserListAPIView,BalanceView, UserDetailAPIView, UserLoginAPIView, UserLogoutAPIView, UserSignupAPIView,DepositView, WithdrawView
 
 schema_view = get_schema_view(
     openapi.Info(
@@ -27,6 +27,9 @@ urlpatterns = [
     path('login/', UserLoginAPIView.as_view(), name='user-login'),
     path('logout/', UserLogoutAPIView.as_view(), name='user-logout'), 
     path('signup/', UserSignupAPIView.as_view(), name='user-signup'),
+    path('deposit/<int:pk>/', DepositView.as_view(), name='deposit'),
+    path('withdraw/<int:pk>/', WithdrawView.as_view(), name='withdraw'),
+    path('balance/', BalanceView.as_view(), name='balance'),
     
     # path('hello', views.index, name='index'),
 ]

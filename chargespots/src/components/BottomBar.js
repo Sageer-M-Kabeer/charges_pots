@@ -10,6 +10,7 @@ import team2 from '../assets/group2.png'
 import lease1 from '../assets/produce1.png'
 import lease2 from '../assets/produce2.png'
 import { useState } from 'react'
+import {Link} from 'react-router-dom'
 
 const  BottomBar = () => {
 const [activeTab,setActiveTab] = useState(1);
@@ -23,12 +24,12 @@ const handleTabClick = (tabNumber) =>{
         <div className="z-50 fixed bottom-[0px] left-0 bg-[#fff] flex content-box w-full h-14 ">
             {/* start of tab */}
             <div className="flex flex-1 justify-center flex-col items-center leading-[1] text-[12px] cursor-pointer">
-                <div className=" mb-[4px] text-[22px] relative inline-block">
+                <Link to="/" className=" mb-[4px] text-[22px] relative inline-block">
                     <div  className={`tab ${activeTab === 1 ? 'active':''}`}  onClick={() => handleTabClick(1)} >
-                        <img className="h-[32px] block" src={activeTab === 1 ? {home1}:{home2}} alt="#" />``
+                        <img className="h-[32px] block" src={activeTab === 1 ? home1:home2} alt="#" />
                     </div>
                   
-                </div>
+                </Link>
                 <div className="text-[] ">
                     <span>Home</span>
                 </div>
@@ -36,8 +37,11 @@ const handleTabClick = (tabNumber) =>{
             {/* end of tab */}
              {/* start of tab */}
              <div className="flex flex-1 justify-center flex-col items-center leading-[1] text-[12px] cursor-pointer">
-                <div className="mb-[4px] text-[22px] relative inline-block">
-                    <img className="h-[32px] block" src={buy2} alt="#" />
+                <div className=" mb-[4px] text-[22px] relative inline-block">
+                    <Link to="buy" className={`tab ${activeTab === 2 ? 'active':''}`}  onClick={() => handleTabClick(2)} >
+                        <img className="h-[32px] block" src={activeTab === 2 ? buy1:buy2} alt="#" />
+                    </Link>
+                  
                 </div>
                 <div className="text-[] ">
                     <span>Buy</span>
@@ -46,8 +50,11 @@ const handleTabClick = (tabNumber) =>{
             {/* end of tab */}
              {/* start of tab */}
              <div className="flex flex-1 justify-center flex-col items-center leading-[1] text-[12px] cursor-pointer">
-                <div className="mb-[4px] text-[22px] relative inline-block">
-                    <img className="h-[32px] block" src={lease2} alt="#" />
+                <div className=" mb-[4px] text-[22px] relative inline-block">
+                    <Link to="lease" className={`tab ${activeTab === 3 ? 'active':''}`}  onClick={() => handleTabClick(3)} >
+                        <img className="h-[32px] block" src={activeTab === 3 ? lease1:lease2} alt="#" />
+                    </Link>
+                  
                 </div>
                 <div className="text-[] ">
                     <span>Lease</span>
@@ -56,17 +63,24 @@ const handleTabClick = (tabNumber) =>{
             {/* end of tab */}
              {/* start of tab */}
              <div className="flex flex-1 justify-center flex-col items-center leading-[1] text-[12px] cursor-pointer">
-                <div className="mb-[4px] text-[22px] relative inline-block">
-                    <img className="h-[32px] block" src={team2} alt="#" />
+                <div className=" mb-[4px] text-[22px] relative inline-block">
+                    <Link to="team" className={`tab ${activeTab === 4 ? 'active':''}`}  onClick={() => handleTabClick(4)} >
+                        <img className="h-[32px] block" src={activeTab === 4 ? team1:team2} alt="#" />
+                    </Link>
+                  
                 </div>
                 <div className="text-[] ">
                     <span>Team</span>
                 </div>
             </div>
-            {/* end of tab */} {/* start of tab */}
-            <div className="flex flex-1 justify-center flex-col items-center leading-[1] text-[12px] cursor-pointer">
-                <div className="mb-[4px] text-[22px] relative inline-block">
-                    <img className="h-[32px] block" src={mine2} alt="#" />
+            {/* end of tab */}
+             {/* start of tab */}
+             <div className="flex flex-1 justify-center flex-col items-center leading-[1] text-[12px] cursor-pointer">
+                <div className=" mb-[4px] text-[22px] relative inline-block">
+                    <Link to="mine" className={`tab ${activeTab === 5 ? 'active':''}`}  onClick={() => handleTabClick(5)} >
+                        <img className="h-[32px] block" src={activeTab === 5 ? mine1:mine2} alt="#" />
+                    </Link>
+                  
                 </div>
                 <div className="text-[] ">
                     <span>Mine</span>
