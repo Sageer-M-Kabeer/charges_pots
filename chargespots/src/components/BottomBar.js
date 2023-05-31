@@ -9,16 +9,25 @@ import team1 from '../assets/group1.png'
 import team2 from '../assets/group2.png'
 import lease1 from '../assets/produce1.png'
 import lease2 from '../assets/produce2.png'
+import { useState } from 'react'
 
-export class BottomBar extends Component {
-  render() {
+const  BottomBar = () => {
+const [activeTab,setActiveTab] = useState(1);
+
+const handleTabClick = (tabNumber) =>{
+    setActiveTab(tabNumber);
+}
+
     return (
       <div className="">
         <div className="z-50 fixed bottom-[0px] left-0 bg-[#fff] flex content-box w-full h-14 ">
             {/* start of tab */}
             <div className="flex flex-1 justify-center flex-col items-center leading-[1] text-[12px] cursor-pointer">
-                <div className="mb-[4px] text-[22px] relative inline-block">
-                    <img className="h-[32px] block" src={home1} alt="#" />
+                <div className=" mb-[4px] text-[22px] relative inline-block">
+                    <div  className={`tab ${activeTab === 1 ? 'active':''}`}  onClick={() => handleTabClick(1)} >
+                        <img className="h-[32px] block" src={activeTab === 1 ? {home1}:{home2}} alt="#" />``
+                    </div>
+                  
                 </div>
                 <div className="text-[] ">
                     <span>Home</span>
@@ -71,6 +80,5 @@ export class BottomBar extends Component {
       </div>
     )
   }
-}
 
 export default BottomBar
