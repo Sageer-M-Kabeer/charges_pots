@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import User,Account
+from .models import User,Account,Transaction
 from django.contrib.auth import authenticate
 from django.dispatch import receiver
 import shortuuid
@@ -11,7 +11,7 @@ class UserSignupSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ['phone_number', 'password','comfirm_password', 'invite_code']
+        fields = ['phone_number', 'password','comfirm_password', 'referral_code']
         
     def validate(self, attrs):
         password = attrs.get('password')
@@ -46,9 +46,14 @@ class UserLoginSerializer(serializers.Serializer):
         return attrs
 
 class UserSerializer(serializers.ModelSerializer):
+    referral_count = serializers.SerializerMethodField()
+
     class Meta:
         model = User
-        fields = ['id', 'phone_number', 'balance','invite_code']
+        fields = ['id' ,'phone_number','invite_code', 'referral_count']
+
+    def get_referral_count(self, obj):
+        return obj.referrals.count()
 
 
 class AccountSerializer(serializers.ModelSerializer):
@@ -60,5 +65,22 @@ class AccountSerializer(serializers.ModelSerializer):
 class BalanceSerializer(serializers.ModelSerializer):
     class Meta:
         model = Account
-        fields = ['user','balance']
+        fields = ['phone_number','balance']
 
+
+class TransactionSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Transaction
+        fields = ['user', 'amount', 'transaction_type', 'timestamp']
+
+
+class WithdrawSerializer(serializers.Serializer):
+    amount = serializers.DecimalField(max_digits=10, decimal_places=2)
+
+    def validate_amount(self, value):
+        if value <= 0:
+            raise serializers.ValidationError("Amount must be greater than zero.")
+        return value
+        
+class DepositSerializer(serializers.Serializer):
+    amount = serializers.DecimalField(max_digits=10, decimal_places=2)

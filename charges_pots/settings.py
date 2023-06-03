@@ -30,6 +30,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'users',
     'corsheaders',
+    'vip',
 ]
 
 REST_FRAMEWORK ={

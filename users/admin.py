@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Account, User
+from .models import Account, User,Transaction
 from .forms import CustomUserChangeForm, UserCreateForm
 
 
@@ -8,7 +8,7 @@ class CustomUserAdmin(admin.ModelAdmin):
     add_form = UserCreateForm
     model = User
     # readonly_fields = ["invite_code"]
-    list_display = ("phone_number", "is_staff", "is_active",)
+    list_display = ("phone_number", "is_staff", "is_active","invite_code",)
     list_filter = ("phone_number", "is_staff", "is_active",)
     fieldsets = (
         (None, {"fields": ("phone_number", "password")}),
@@ -17,16 +17,31 @@ class CustomUserAdmin(admin.ModelAdmin):
     add_fieldsets = (
         (None, {
             'classes': ('wide',),
-            'fields': ('phone_number', 'password1', 'password2', 'invite_code', 'captcha_code'),
+            'fields': ('phone_number', 'password1', 'password2', 'invite_code',),
         }),
     )
     search_fields = ("phone_number",)
     ordering = ("phone_number",)
 
 class AccountAdmin(admin.ModelAdmin):
+    model=Account
     list_display = ('user','balance')
+    readonly_fields = ('user', 'balance')
+    list_filter = ('user',)
+
+class TransactionInline(admin.TabularInline):
+    model = Transaction
+    extra = 0
+    readonly_fields = ('user', 'amount', 'transaction_type', 'timestamp')
+    can_delete = False
+
+class TransactionAdmin(admin.ModelAdmin):
+    list_display = ('user','transaction_type','amount','timestamp')
+    search_fields = ('phone_number',)
+    list_filter = ('transaction_type',)
 
 
 admin.site.register(User,CustomUserAdmin)
-admin.site.register(Account)
+admin.site.register(Account,AccountAdmin)
+admin.site.register(Transaction,TransactionAdmin)
 
