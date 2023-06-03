@@ -3,10 +3,10 @@ from .models import Vip,VipLevel
 from users.models import User
 
 class VipLevelAdmin(admin.ModelAdmin):
-    list_display = ['level', 'price', 'daily_income', 'total_revenue']
+    list_display = ['level', 'price', 'daily_income', 'total_revenue','circle_days']
 
 class VipAdmin(admin.ModelAdmin):
-    list_display = ['user', 'level','circle_days']
+    list_display = ['user', 'level',]
     actions = ['reset_vip']
 
     def reset_vip(self, request, queryset):
