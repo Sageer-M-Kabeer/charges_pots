@@ -14,6 +14,15 @@ import {
  } from "react-router-dom";
 import HomePage from './pages/HomePage';
 import Mine from './pages/Mine';
+import {createRoot} from 'react-dom/client';
+
+import App from './App';
+
+// 👇️ make sure to use the correct root element ID
+// from your public/index.html file
+const rootElement = document.getElementById('root');
+const root = createRoot(rootElement);
+
 
  const router = createBrowserRouter([
  
@@ -57,4 +66,4 @@ import Mine from './pages/Mine';
   <RouterProvider router={router} />
  );
 
-// reportWebVitals();
+reportWebVitals();

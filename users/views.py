@@ -106,8 +106,10 @@ class UserDetailAPIView(generics.RetrieveAPIView):
 
 
 class DepositView(generics.CreateAPIView):
+    queryset = Transaction.objects.all()
     serializer_class = DepositSerializer
     permission_classes = [IsAuthenticated]
+
 
     def create(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
@@ -125,6 +127,7 @@ class DepositView(generics.CreateAPIView):
 
 
 class WithdrawView(generics.CreateAPIView):
+    queryset = Transaction.objects.all()
     serializer_class = WithdrawSerializer
     permission_classes = [IsAuthenticated]
 
