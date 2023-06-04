@@ -19,7 +19,7 @@ const CheckinRecordPage = () => {
                         </div>
                     </div>
                 </div>
-                <div className='py-8 px-4 min-h-full'>
+                <div className='flex items-center justify-center py-8 px-4 min-h-full'>
                     <ul className='pt-10 font-[100] text-sm'>
                         <div className='flex justify-between gap-3'>
                             <li>08147354770-N1000-12-27-29:29 <span className='ml-2 rounded-md text-[#323232] bg-[rgba(37,176,24,0.1)] py-1 px-2 '>Success</span></li>
