@@ -15,7 +15,7 @@ function BottomBar() {
       value={activeTab}
       onChange={(event, newValue) => handleTabClick(newValue)}
       showLabels
-      className="flex justify-between gap-32 bg-white fixed bottom-0 w-full"
+      className="flex justify-between  bg-white fixed bottom-0 w-full md:gap-32"
     >
       <BottomNavigationAction
         label="Home"
