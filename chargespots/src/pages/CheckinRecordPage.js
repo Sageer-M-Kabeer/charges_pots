@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 const CheckinRecordPage = () => {
   return (
-    <div className="bg-[#f6f8f9] w-full h-full">
+    <div className="bg-[#f6f8f9] w-full h-screen">
         <div className="">
             <div className="min-h-full">
                 <div className="relative z-10 leading-[22px] text-center bg-white">
@@ -19,9 +19,9 @@ const CheckinRecordPage = () => {
                         </div>
                     </div>
                 </div>
-                <div className='flex items-center justify-center py-8 px-4 min-h-full'>
-                    <ul className='pt-10 font-[100] text-sm'>
-                        <div className='flex justify-between gap-3'>
+                <div className='flex  items-center justify-center py-4 px-4 min-h-full'>
+                    <ul className='font-[100] text-sm'>
+                        <div className='flex  justify-between gap-3'>
                             <li>08147354770-N1000-12-27-29:29 <span className='ml-2 rounded-md text-[#323232] bg-[rgba(37,176,24,0.1)] py-1 px-2 '>Success</span></li>
                         </div>
                         <div className='flex mt-4 justify-between gap-3'>

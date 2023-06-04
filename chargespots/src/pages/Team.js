@@ -7,11 +7,11 @@ const Team = () => {
 <div className="bg-[#f6f8f9] w-full h-full">
     <div className="">
         <div className="py-8 px-4 min-h-full">
-            <div className="flex justify-between bg-[#1895b0] p-6 mb-4 rounded-3xl">
-                <div className="text-[#1895b0] bg-white flex items-center justify-center font-bold w-32 text-lg rounded-xl py-3 px-2">
+            <div className="flex justify-between bg-[#1895b0] p-2 mb-2 rounded-3xl">
+                <div className="text-[#1895b0] bg-white flex items-center justify-center font-[400] w-32 text-lg rounded-xl py-1 px-1">
                     My invitation
                 </div>
-                <div className="text-white ml-8 mx-auto flex items-center justify-center font-bold w-32 text-lg rounded-xl py-3 px-2">
+                <div className="text-white ml-8 mx-auto flex items-center justify-center font-[400]w-32 text-lg rounded-xl py-3 px-2">
                     Invite friends
                 </div>
             </div>
@@ -21,19 +21,19 @@ const Team = () => {
                     <div className="p-8">
                         <div className="flex justify-around">
                             <div className="border-solid border-2 mx-2 border-[#f1edfe] rounded-md text-center flex w-32 flex-col justify-between mt-3 py-3 px-2">
-                                <div className="flex-1 text-md font-semibold leading-3 text-[#333]">
+                                <div className="flex-1 text-md font-[400] leading-3 text-[#333]">
                                     Number of invites
                                 </div>
-                                <div className="mt-3 text-center text-[#1895b0] font-bold leading-3 ">
+                                <div className="mt-3 text-center text-[#1895b0] font-[400] leading-3 ">
                                     0
                                 </div>
 
                             </div>
                             <div className="border-solid border-2 mx-2 border-[#f1edfe] rounded-md flex w-32 flex-col justify-between mt-3 py-3 px-2">
-                                <div className="flex-1 text-center text-md font-semibold leading-3 text-[#333]">
-                                    invitation reward
+                                <div className="flex-1 text-center text-md font-[400]leading-3 text-[#333]">
+                                    Invitation reward
                                 </div>
-                                <div className="mt-3 text-[#1895b0] text-center font-bold leading-3 ">
+                                <div className="mt-3 text-[#1895b0] text-center font-[400] leading-3 ">
                                     0
                                 </div>
 
@@ -47,19 +47,19 @@ const Team = () => {
                     <div className="p-8">
                         <div className="flex justify-around">
                             <div className="mx-2 border-[#f1edfe] rounded-md text-center flex w-32 flex-col justify-between mt-3 py-3 px-2">
-                                <div className="flex-1 text-md font-semibold leading-3 text-[#333]">
-                                team recharge
+                                <div className="flex-1 text-md font-[400] leading-3 text-[#333]">
+                                Team recharge
                                 </div>
-                                <div className="mt-3 text-center text-[#1895b0] font-bold leading-3 ">
+                                <div className="mt-3 text-center text-[#1895b0] font-[400] leading-3 ">
                                     N0
                                 </div>
 
                             </div>
                             <div className=" mx-2 border-[#f1edfe] rounded-md flex w-32 flex-col justify-between mt-3 py-3 px-2">
-                                <div className="flex-1 text-center text-md font-semibold leading-3 text-[#333]">
-                                    commissions
+                                <div className="flex-1 text-center text-md font-[400] leading-3 text-[#333]">
+                                    Commissions
                                 </div>
-                                <div className="mt-3 text-[#1895b0] text-center font-bold leading-3 ">
+                                <div className="mt-3 text-[#1895b0] text-center font-[400] leading-3 ">
                                     N0
                                 </div>
 
