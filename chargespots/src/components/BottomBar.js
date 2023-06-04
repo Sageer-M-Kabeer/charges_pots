@@ -15,35 +15,35 @@ function BottomBar() {
       value={activeTab}
       onChange={(event, newValue) => handleTabClick(newValue)}
       showLabels
-      className="flex justify-between  bg-white fixed bottom-0 w-full md:gap-32"
+      className="flex justify-between px-10 py-8  bg-white fixed bottom-0 w-screen h-8 md:gap-32"
     >
       <BottomNavigationAction
         label="Home"
-        icon={<HomeIcon style={{ color: activeTab === 1 ? 'rgb(24, 149, 176)' : 'inherit' }} />}
+        icon={<HomeIcon/>}
         component={Link}
         to="/"
       />
       <BottomNavigationAction
         label="Buy"
-        icon={<ShoppingBasketIcon style={{ color: activeTab === 2 ? 'rgb(24, 149, 176)' : 'inherit' }} />}
+        icon={<ShoppingBasketIcon />}
         component={Link}
         to="/buy"
       />
       <BottomNavigationAction
         label="Lease"
-        icon={<AssignmentIcon style={{ color: activeTab === 3 ? 'rgb(24, 149, 176)' : 'inherit' }} />}
+        icon={<AssignmentIcon />}
         component={Link}
         to="/lease"
       />
       <BottomNavigationAction
         label="Team"
-        icon={<PeopleIcon style={{ color: activeTab === 4 ? 'rgb(24, 149, 176)' : 'inherit' }} />}
+        icon={<PeopleIcon/>}
         component={Link}
         to="/team"
       />
       <BottomNavigationAction
         label="Mine"
-        icon={<AccountCircleIcon style={{ color: activeTab === 5 ? 'rgb(24, 149, 176)' : 'inherit' }} />}
+        icon={<AccountCircleIcon/>}
         component={Link}
         to="/mine"
       />
