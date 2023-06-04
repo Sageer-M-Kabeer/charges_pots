@@ -17,6 +17,9 @@ import Mine from './pages/Mine';
 import {createRoot} from 'react-dom/client';
 
 import App from './App';
+import RechargeRecordPage from './pages/RechargeRecordPage';
+import WithdrawRecordPage from './pages/WithdrawRecordPage';
+import CheckinRecordPage from './pages/CheckinRecordPage';
 
 // 👇️ make sure to use the correct root element ID
 // from your public/index.html file
@@ -59,8 +62,21 @@ const root = createRoot(rootElement);
    path: "forgot-password",
    element:<ForgotPasswordPage/>,
    },
+  {
+   path: "recharge-records",
+   element:<RechargeRecordPage/>,
+   },
+   {
+    path: "withdraw-records",
+    element:<WithdrawRecordPage/>,
+    },
+    {
+      path: "checkin-records",
+      element:<CheckinRecordPage/>,
+      },
 
  ]);
+ 
   
  ReactDOM.createRoot(document.getElementById("root")).render(
   <RouterProvider router={router} />

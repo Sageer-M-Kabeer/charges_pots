@@ -74,7 +74,7 @@ const Mine = () => {
                 {/* card */}
                 <div className="relative  mb-10 bg-[#fff]  shadow-sm rounded-2xl">
                     <div className="p-8 flex justify-between flex-col gap-4">
-                        <Link className="m-[0,16px] pt-3 overflow-hidden bg-white">
+                        <Link to="/recharge-records" className="m-[0,16px] pt-3 overflow-hidden bg-white">
                             <div className="flex relative box-border w-full p-[10px,16px] text-[#323232] text-[14px] leading-[24px]">
                                 <div className='text-lg items-center mr-2'> <TbReportMoney/> </div>
                                 <div className="flex-1 "> <span className="text-sm">Recharge Record</span></div>
@@ -83,7 +83,7 @@ const Mine = () => {
                             <hr className="w- text-gray-100 h-1 mt-2"/>
 
                         </Link>
-                        <Link className="m-[0,16px] pt-1 overflow-hidden bg-white">
+                        <Link to="/withdraw-records" className="m-[0,16px] pt-1 overflow-hidden bg-white">
                             <div className="flex relative box-border w-full p-[10px,16px] text-[#323232] text-[14px] leading-[24px]">
                                 <div className='text-lg items-center mr-2'> <TbReportMoney/> </div>
                                 <div className="flex-1 "> <span className="text-sm">Withdrawal Record</span></div>
@@ -93,7 +93,7 @@ const Mine = () => {
                         </Link>
                         <hr className="w- text-gray-100 h-1 mt-1"/>
 
-                        <Link className="m-[0,16px] pt-1 overflow-hidden bg-white">
+                        <Link to="/checkin-records" className="m-[0,16px] pt-1 overflow-hidden bg-white">
                             <div className="flex relative box-border w-full p-[10px,16px] text-[#323232] text-[14px] leading-[24px]">
                                 <div className='text-lg items-center mr-2'> <TbReport/> </div>
                                 <div className="flex-1 "><span className="text-sm">Check in Record</span></div>

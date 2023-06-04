@@ -24,18 +24,16 @@ function BottomBar() {
       value={activeTab}
       onChange={(event, newValue) => handleTabClick(newValue)}
       showLabels
-      className="flex justify-between px-10 py-8  bg-white  fixed bottom-0 w-screen h-8 md:gap-32"
+      className="flex justify-between sm:gap-[2px] px-2 py-8 bg-white  fixed bottom-0 w-screen h-8 md:gap-32"
     >
       <TabBarButton 
         className=""
-        sx={{active: '#001E3C'}}
         label="Home"
         icon={<HomeIcon/>}
         component={Link}
         to="/"
       />
       <TabBarButton
-        sx={{active: '#001E3C'}}
         label="Buy"
         icon={<ShoppingBasketIcon />}
         component={Link}
