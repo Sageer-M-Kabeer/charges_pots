@@ -12,14 +12,14 @@ from django.db.models.signals import pre_save
 from django.utils.translation import gettext_lazy as _
 
 def generate_invite_code():
-        """
-        Generate a unique invite code for the user.
-        """
-        length = 6
-        while True:
-            code = ''.join(random.choices(string.ascii_uppercase + string.digits, k=length))
-            if not User.objects.filter(invite_code=code).exists():
-                return code
+    """
+    Generate a unique invite code for the user consisting of random numbers.
+    """
+    length = 6
+    while True:
+        code = ''.join(random.choices(string.digits, k=length))
+        if not User.objects.filter(invite_code=code).exists():
+            return code
             
 class CustomUserManager(BaseUserManager):
     def create_user(self, phone_number, password=None, **extra_fields):

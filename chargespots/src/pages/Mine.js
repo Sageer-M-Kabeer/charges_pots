@@ -104,7 +104,7 @@ const Mine = () => {
                         <hr className="w- text-gray-100 h-1 mt-1"/>
 
                         <Link className="m-[0,16px] pt-1 overflow-hidden bg-white">
-                            <div className="flex relative box-border w-full p-[10px,16px] text-[#323232] text-[14px] leading-[24px]">
+                            <div className="flex relative box-border w-full p-[5px,16px] text-[#323232] text-[14px] leading-[24px]">
                             <div className='text-lg pt-[2px] items-center mr-2'> <AiOutlineCreditCard/> </div>
                                 <div className="flex-1 "> <span className="text-sm">Blind Bank Card</span></div>
                                 <div className="relative text-right text-[#969799] overflow-hidden "> <span className="text-sm"><AiOutlineRight/></span></div>
