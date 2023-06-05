@@ -4,7 +4,12 @@ import Popup from '../components/PopUp'
 import te from '../assets/te.png'
 import notice from '../assets/notice.png'
 import thropy from '../assets/trophy.png'
-import flg1 from '../assets/1.jpg'
+import chaina from '../assets/chaina.png'
+import india from '../assets/india.png'
+import pakistan from '../assets/pakistan.png'
+import ghana from '../assets/ghana.png'
+import bangaladesh from '../assets/bangaladesh.png'
+import nigeria from '../assets/nigeria.png'
 import {FiDownload} from 'react-icons/fi'
 import {TbCurrencyNaira} from 'react-icons/tb'
 import {RiLuggageDepositFill} from 'react-icons/ri'
@@ -176,9 +181,9 @@ export default function HomePage() {
             <div className="basis-1/4 border-box relative ml2">
               <div className="flex justify-center items-center flex-col h-full p-[16px,8px] bg-white">
                 <div className="mb-[10px] text-[12px]">50k</div>
-                <div className="h-[48px] relative inline-block"><img className="block w-full h-full" src={flg1} alt="" /></div>
+                <div className="h-[48px] relative inline-block"><img className="block w-full h-full" src={chaina} alt="" /></div>
                 <div className="mt-[10px] text-[12px]">
-                chaina
+                Chaina
               </div>
               </div>
              
@@ -186,10 +191,10 @@ export default function HomePage() {
              {/* flag card */}
              <div className="basis-1/4 border-box relative ml2">
               <div className="flex justify-center items-center flex-col h-full p-[16px,8px] bg-white">
-                <div className="mb-[10px] text-[12px]">50k</div>
-                <div className="h-[48px] relative inline-block"><img className="block w-full h-full" src={flg1} alt="" /></div>
+                <div className="mb-[10px] text-[12px]">125k</div>
+                <div className="h-[48px] relative inline-block"><img className="block w-full h-full" src={india} alt="" /></div>
                 <div className="mt-[10px] text-[12px]">
-                chaina
+                India
               </div>
               </div>
              
@@ -197,20 +202,40 @@ export default function HomePage() {
              {/* flag card */}
              <div className="basis-1/4 border-box relative ml2">
               <div className="flex justify-center items-center flex-col h-full p-[16px,8px] bg-white">
-                <div className="mb-[10px] text-[12px]">50k</div>
-                <div className="h-[48px] relative inline-block"><img className="block w-full h-full" src={flg1} alt="" /></div>
+                <div className="mb-[10px] text-[12px]">76k</div>
+                <div className="h-[48px] relative inline-block"><img className="block w-full h-full" src={pakistan} alt="" /></div>
                 <div className="mt-[10px] text-[12px]">
-                chaina
+                Pakistan
               </div>
               </div>
              
             </div>
             <div className="basis-1/4 border-box relative ml2">
               <div className="flex justify-center items-center flex-col h-full p-[16px,8px] bg-white">
-                <div className="mb-[10px] text-[12px]">50k</div>
-                <div className="h-[48px] relative inline-block"><img className="block w-full h-full" src={flg1} alt="" /></div>
+                <div className="mb-[10px] text-[12px]">86k</div>
+                <div className="h-[48px] relative inline-block"><img className="block w-full h-full" src={bangaladesh} alt="" /></div>
                 <div className="mt-[10px] text-[12px]">
-                chaina
+                Bangaladesh
+              </div>
+              </div>
+             
+            </div>
+            <div className="basis-1/4 border-box relative ml2">
+              <div className="flex justify-center items-center flex-col h-full p-[16px,8px] bg-white">
+                <div className="mb-[10px] text-[12px]">107k</div>
+                <div className="h-[48px] relative inline-block"><img className="block w-full h-full" src={nigeria} alt="" /></div>
+                <div className="mt-[10px] text-[12px]">
+                Nigeria
+              </div>
+              </div>
+             
+            </div>
+            <div className="basis-1/4 border-box relative ml2">
+              <div className="flex justify-center items-center flex-col h-full p-[16px,8px] bg-white">
+                <div className="mb-[10px] text-[12px]">70k</div>
+                <div className="h-[48px] relative inline-block"><img className="block w-full h-full" src={ghana} alt="" /></div>
+                <div className="mt-[10px] text-[12px]">
+                Ghana
               </div>
               </div>
              

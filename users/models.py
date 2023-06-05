@@ -10,6 +10,7 @@ from django.dispatch import receiver
 import shortuuid
 from django.db.models.signals import pre_save
 from django.utils.translation import gettext_lazy as _
+import PIL
 
 def generate_invite_code():
     """
