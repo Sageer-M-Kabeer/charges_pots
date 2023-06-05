@@ -13,6 +13,12 @@ import { Link } from 'react-router-dom'
 
 
 const Mine = () => {
+
+    const handleReload = () => {
+        window.location.reload();
+      };
+      
+
   return (
 <div className="bg-[#f6f8f9] w-full h-full">
     <div className="">
@@ -30,7 +36,7 @@ const Mine = () => {
                                 <div className="flex mb-8 justify-between h-6 leading-[24px] font-medium">
                                 <div>8147354770</div>
                                         <div>
-                                        <button type="button" className="text-white right-0 bg-[rgb(24,149,176)] h-[24px] p-2 text-center flex justify-center items-center text-lg font-bold rounded-md ">
+                                        <button onClick={handleReload} type="button" className="text-white right-0 bg-[rgb(24,149,176)] h-[24px] p-2 text-center flex justify-center items-center text-lg font-bold rounded-md ">
                                             <VscRefresh/>
                                         </button>
                                     </div>

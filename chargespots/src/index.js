@@ -20,6 +20,9 @@ import App from './App';
 import RechargeRecordPage from './pages/RechargeRecordPage';
 import WithdrawRecordPage from './pages/WithdrawRecordPage';
 import CheckinRecordPage from './pages/CheckinRecordPage';
+import WithdrawalProofUpload from './pages/WithdrawalProofUpload';
+import Recharge from './pages/Recharge';
+
 
 // 👇️ make sure to use the correct root element ID
 // from your public/index.html file
@@ -74,7 +77,17 @@ const root = createRoot(rootElement);
       path: "checkin-records",
       element:<CheckinRecordPage/>,
       },
+  {
+    path: "withdrawal-proofs",
+    element:<WithdrawalProofUpload/>,
+    },
+    {
+      path:"recharge",
+      element:<Recharge/>  ,
+      },
+  
 
+      
  ]);
  
   
