@@ -7,14 +7,16 @@ import Login from './pages/Login'
 import Buy from './pages/Buy';
 import Lease from './pages/Lease';
 import ForgotPasswordPage from './pages/ForgotPasswordPage';
+import PreRecharge from './pages/PreRecharge'
 import Team from './pages/Team';
+import BindCardPage from './pages/BindCardPage'
 import {
   createBrowserRouter,
   RouterProvider,
- } from "react-router-dom";
+} from "react-router-dom";
 import HomePage from './pages/HomePage';
 import Mine from './pages/Mine';
-import {createRoot} from 'react-dom/client';
+import { createRoot } from 'react-dom/client';
 
 import App from './App';
 import RechargeRecordPage from './pages/RechargeRecordPage';
@@ -30,69 +32,76 @@ const rootElement = document.getElementById('root');
 const root = createRoot(rootElement);
 
 
- const router = createBrowserRouter([
- 
+const router = createBrowserRouter([
+
 
   {
-    path:"/",
-    element:<HomePage/> , 
-    },
+    path: "/",
+    element: <HomePage />,
+  },
   {
-    path:"/buy",
-    element:<Buy/>  ,
-    },
+    path: "/buy",
+    element: <Buy />,
+  },
   {
-    path:"/lease",
-    element:<Lease/>  ,
-   },
-   {
-    path:"/team",
-    element:<Team/>  ,
-   },
-   {
-    path:"/mine",
-    element:<Mine/>  ,
-   },      
-   {
+    path: "/lease",
+    element: <Lease />,
+  },
+  {
+    path: "/team",
+    element: <Team />,
+  },
+  {
+    path: "/mine",
+    element: <Mine />,
+  },
+  {
     path: "signup",
-    element: <SignupPage/>,
-   },
- {
-   path: "login",
-   element:<Login/>,
-   },
- {
-   path: "forgot-password",
-   element:<ForgotPasswordPage/>,
-   },
+    element: <SignupPage />,
+  },
   {
-   path: "recharge-records",
-   element:<RechargeRecordPage/>,
-   },
-   {
+    path: "login",
+    element: <Login />,
+  },
+  {
+    path: "forgot-password",
+    element: <ForgotPasswordPage />,
+  },
+  {
+    path: "recharge-records",
+    element: <RechargeRecordPage />,
+  },
+  {
     path: "withdraw-records",
-    element:<WithdrawRecordPage/>,
-    },
-    {
-      path: "checkin-records",
-      element:<CheckinRecordPage/>,
-      },
+    element: <WithdrawRecordPage />,
+  },
+  {
+    path: "checkin-records",
+    element: <CheckinRecordPage />,
+  },
   {
     path: "withdrawal-proofs",
-    element:<WithdrawalProofUpload/>,
-    },
-    {
-      path:"recharge",
-      element:<Recharge/>  ,
-      },
-  
+    element: <WithdrawalProofUpload />,
+  },
+  {
+    path: "recharge",
+    element: <Recharge />,
+  },
+  {
+    path: "pre-recharge",
+    element: <PreRecharge />,
+  },
+  {
+    path: "bind-card",
+    element: <BindCardPage />,
+  },
 
-      
- ]);
- 
-  
- ReactDOM.createRoot(document.getElementById("root")).render(
+
+]);
+
+
+ReactDOM.createRoot(document.getElementById("root")).render(
   <RouterProvider router={router} />
- );
+);
 
 reportWebVitals();
