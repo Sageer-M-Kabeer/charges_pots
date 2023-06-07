@@ -27,7 +27,7 @@ export default function AlertDialog() {
       >
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
-            
+
           </DialogContentText>
         </DialogContent>
         <DialogActions>

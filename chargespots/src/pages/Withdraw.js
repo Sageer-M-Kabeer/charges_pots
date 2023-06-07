@@ -23,6 +23,10 @@ const Recharge = () => {
                     <div className="relative mt-8 mb-8 bg-[#fff]  shadow-sm rounded-2xl">
                         <div className="p-8">
 
+                            <div>
+                                <p>Main balance <span className='text-[#cc1313]'>N30</span></p>
+                            </div>
+
 
 
                             <div className='flex justify-between flex-col '>

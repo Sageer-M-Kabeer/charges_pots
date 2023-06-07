@@ -13,6 +13,7 @@ import BindCardPage from './pages/BindCardPage'
 import Withdraw from './pages/Withdraw'
 import Precautions from './pages/Precautions'
 import GetApp from './pages/GetApp';
+import InviteFriends from './pages/InviteFriends';
 import {
   createBrowserRouter,
   RouterProvider,
@@ -110,6 +111,11 @@ const router = createBrowserRouter([
     path: "get-app",
     element:<GetApp/>
   },
+  {
+    path: "invite-friends",
+    element:<InviteFriends/>
+  },
+
 
 
 

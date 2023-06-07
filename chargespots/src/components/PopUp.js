@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import React, { Component,useEffect,useState } from 'react'
+import React, { Component, useEffect, useState } from 'react'
 
 const Popup = (props) => {
     const [isOpen, setIsOpen] = useState(props.trigger);

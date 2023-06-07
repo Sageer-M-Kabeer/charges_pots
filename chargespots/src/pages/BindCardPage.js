@@ -23,7 +23,7 @@ const BindCardPage = () => {
                                 </Link>
                             </div>
                             <div className='max-w-[60%] my-0 mx-auto flex-1 text-center text-[#323232] font-[600] text-[16px]'>
-                                Bind bank card
+                                Bind bank
                             </div>
                         </div>
                     </div>
@@ -32,7 +32,7 @@ const BindCardPage = () => {
                         <div className="p-8">
                             <div className="flex justify-between flex-col">
                                 <div>
-                                    Cardholder's Name
+                                  Account Name
                                 </div>
                                 <div>
                                     <div className='mt-2 outline-none bg-slate-300 h-[40px] flex items-center py-2 px-4 rounded-md'>
@@ -45,7 +45,7 @@ const BindCardPage = () => {
                             </div>
                             <div className="flex justify-between flex-col mt-4">
                                 <div>
-                                    Bank Account
+                                    Bank Account Number
                                 </div>
                                 <div>
                                     <div className='mt-2 outline-none bg-slate-300 h-[40px] flex items-center py-2 px-4 rounded-md'>
