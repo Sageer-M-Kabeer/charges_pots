@@ -169,7 +169,7 @@ const SignupPage = () => {
                     </button>
                   </div>
                   <div className="flex-col block text-left mt-5 mb-2">
-                <span className="text-[#666]">Already have an account? <Link to="login"><b className="text-[#44648]">login"Login</b></Link></span>
+                <span className="text-[#969799]">Already have an account? <Link to="/login"><strong className="text-[#44648]">login</strong></Link></span>
               </div>
               </div>
               {/* button end  */}

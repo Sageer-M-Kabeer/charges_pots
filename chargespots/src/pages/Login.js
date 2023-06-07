@@ -4,6 +4,7 @@ import lock from '../assets/lock.png';
 import {useForm} from "react-hook-form";
 import { useState } from 'react';
 import HomePage from "../pages/HomePage"
+import { Link } from 'react-router-dom';
 // import {getCookie} from 'react-cookie'
 
 
@@ -115,7 +116,7 @@ const Login = () => {
               {error && <p>{error}</p>}
                   </div>
               <div className="mt-1 text-right">
-                                <span className="text-[#969799]"><a href='# '>Forgot password</a></span>
+                                <span className="text-[#969799]"><Link to="/forgot-password">Forgot password</Link></span>
 
                                 </div>
               {/* button start  */}
@@ -126,7 +127,7 @@ const Login = () => {
                     </button>
                   </div>
                   <div className="flex-col block text-left mt-5 mb-2">
-                <span className="text-[#969799]">Don't have an account? <a href={'<SignupPage/>'}><strong className="text-[#44648]">Login</strong></a></span>
+                <span className="text-[#969799]">Don't have an account? <Link to="/signup"><strong className="text-[#44648]">signup</strong></Link></span>
               </div>
               </div>
               {/* button end  */}

@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import BottomBar from '../components/BottomBar'
+import { Link } from 'react-router-dom'
 export class ForgotPasswordPage extends Component {
   render() {
     return (
@@ -8,11 +9,11 @@ export class ForgotPasswordPage extends Component {
       
               {/* button start  */}
               <div className="w-full mt-[15px] mx-auto mb-20 flex flex-col justify-center items-center">
-                  <div className="w-[60%] h-[45px] group inline-flex justify-center bg-gradient-to-r from-[#1895B0] to-[#0f758b] rounded-[25px]">
-                    <button onClick={this.handleSubmit} type="button" className="w-full text-center font-bold text-white text-[16px]">
-                      <a href="https://t.me/Chargerspots" >Contact us</a>
+                  <a href="https://t.me/Chargerspots" target="_blank" className="w-[60%] h-[45px] group inline-flex justify-center bg-gradient-to-r from-[#1895B0] to-[#0f758b] rounded-[25px]">
+                    <button type="button" className="w-full text-center font-bold text-white text-[16px]">
+                      Contact us
                     </button>
-                  </div>
+                    </a>
                   <div className="flex-col block text-left mt-5 mb-2">
                 {/* <span className="text-[#969799]">Don't have an account? <a href='# '><strong className="text-[#44648]">Login</strong></a></span> */}
               </div>
