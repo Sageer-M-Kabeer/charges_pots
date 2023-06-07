@@ -87,7 +87,7 @@ export default function HomePage() {
                 </div>
               </Link>
 
-              <Link className="w-[48%] h-10 rounded-[10px] bg-white flex mt-[14px] p-[10px] items-center">
+              <Link to="precautions" className="w-[48%] h-10 rounded-[10px] bg-white flex mt-[14px] p-[10px] items-center">
                 <div className="w-[40%] h-[98%] rounded-lg py-4 text-white bg-[#1895b0] flex items-center justify-center">
                 <SlBulb/>
                 </div>

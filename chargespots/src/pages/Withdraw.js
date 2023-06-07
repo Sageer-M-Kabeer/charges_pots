@@ -52,22 +52,23 @@ const Recharge = () => {
                         <div className="p-8">
                             <div className='flex justify-between flex-col '>
                                 <div className='flex justify-between flex-col mb-8'>
-                                    <div className='font-normal pb-4'>
-                                        1.
+                                    <div className='font-light text-sm pb-4'>
+                                        <div className='font-[500] mb-2 text-lg'>1.</div>
                                         Minimum withdrawal amount is 1000NGN. Same day withdrawals will be credited to your bank account within 72 hours.
 
                                     </div>
-                                    <div className='font-normal pb-4'>
-                                        2.
+                                    <div className='font-light text-sm pb-4'>
+                                        <div className='font-[500] mb-2 text-lg'>2.</div>
                                         Chargespots is subject to additional taxes and a withdrawal fee of 10% of the withdrawal amount.
 
 
                                     </div>
-                                    <div className='font-normal pb-4'>
-                                        3.
+                                    <div className='font-light text-sm pb-4'>
+                                        <div className='font-[500] mb-2 text-lg'>3.</div>
                                         Partners who have successfully withdrawn, don't forget to upload the receipt to get rewards
                                     </div>
-                                    <div className='font-normal pb-4'> 4.
+                                    <div className='font-light text-sm pb-4'>
+                                        <div className='font-[500] mb-2 text-lg'>4.</div>
                                         Withdrawal time: From Monday to Sunday, you can withdraw cash every day, and the withdrawal time is from 9:00am to 6:00pm
                                     </div>
 

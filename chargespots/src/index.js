@@ -11,6 +11,7 @@ import PreRecharge from './pages/PreRecharge'
 import Team from './pages/Team';
 import BindCardPage from './pages/BindCardPage'
 import Withdraw from './pages/Withdraw'
+import Precautions from './pages/Precautions'
 import {
   createBrowserRouter,
   RouterProvider,
@@ -100,6 +101,11 @@ const router = createBrowserRouter([
     path: "withdraw",
     element: <Withdraw />,
   },
+  {
+    path: "precautions",
+    element: <Precautions />,
+  },
+
 
 
 ]);
