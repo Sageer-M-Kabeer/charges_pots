@@ -7,7 +7,7 @@ function CustomerService() {
   return (
     <div className='bg-[#f6f8f9] w-full h-full py-8 px-4'>
         <div className="mt-auto mx-auto p-4 justify-center gap-3 flex-row mb-8 bg-[#fff]  shadow-sm rounded-2xl">
-         <div className='flex fler-row justify-between '>
+         <div className='flex flex-re  justify-between '>
          <div>
             <Link>
             

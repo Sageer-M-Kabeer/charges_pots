@@ -96,7 +96,7 @@ export default function HomePage() {
                 </div>
               </Link>
 
-              <Link className="w-[48%] h-10 rounded-[10px] bg-white flex mt-[14px] p-[10px] items-center">
+              <Link to="get-app" className="w-[48%] h-10 rounded-[10px] bg-white flex mt-[14px] p-[10px] items-center">
                 <div className="w-[40%] h-[98%] rounded-lg py-4 bg-[#1895b0] text-white flex items-center justify-center">
                     <FiDownload/>
                 </div>
