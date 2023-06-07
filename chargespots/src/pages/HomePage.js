@@ -162,7 +162,7 @@ export default function HomePage() {
             <div className="p-[20px] font-xl text-md">Brand Test</div>
             <div className="p-[20px]">
               <div className="max-w-full h-0 pt-[52.6px] xgplayer xgplayer-skin">
-                <video src="">hhbhb</video>
+                <video src={te6}>hhbhb</video>
               </div>
             </div>
           </div>

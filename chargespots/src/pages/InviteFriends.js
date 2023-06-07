@@ -20,7 +20,7 @@ const InviteFriends = () => {
                         </div>
                     </div>
                     <div>
-                        <div className='mx-auto my-8 max-w-[80%] flex-col  flex justify-center items-center'>
+                        <div className='mx-auto my-8 max-w-[100%] flex-col  flex justify-center items-center'>
                             <div className='flex justify-between gap-2 items-center'>
                                 <span>My invitation code</span> <span className='bg-[#1895b0] px-1 py-1 text-sm rounded-md text-white'>755462</span>
                             </div>
