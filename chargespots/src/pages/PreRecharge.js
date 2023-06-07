@@ -42,7 +42,7 @@ const PreRecharge = () => {
                     <div className="relative mt-8 mb-8 bg-[#fff]  shadow-sm rounded-2xl">
                         <div className="p-8">
                             <div className='text-md font-thin py-2  w-full'>
-                                <h4>Minimum deposit amount: <span className='text-[#1895b0]'>N5,000</span></h4>
+                                <h4>Minimum deposit amount: <span className='text-[#1895b0]'>N3,000</span></h4>
                             </div>
                             <div>
 
@@ -89,7 +89,7 @@ const PreRecharge = () => {
                                         <input className='w-full py-2 pl-4  text-[#1895b0] outline-none'></input>
                                     </div>
                                     <div className='flex justify-center items-center'>
-                                        <Link to="/recharge" className='flex justify-center items-center py-4 px-5 bg-[#1895b0] text-white rounded-lg font-light w-[80%]'>
+                                        <Link to="/recharge" className='flex justify-center items-center mt-5 py-4 px-5 bg-[#1895b0] text-white rounded-lg font-light w-[80%]'>
                                             <button type="number"
                                                 value={rechargeAmount}
                                                 typeof='decimal' 
