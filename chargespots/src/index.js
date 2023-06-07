@@ -10,6 +10,7 @@ import ForgotPasswordPage from './pages/ForgotPasswordPage';
 import PreRecharge from './pages/PreRecharge'
 import Team from './pages/Team';
 import BindCardPage from './pages/BindCardPage'
+import Withdraw from './pages/Withdraw'
 import {
   createBrowserRouter,
   RouterProvider,
@@ -94,6 +95,10 @@ const router = createBrowserRouter([
   {
     path: "bind-card",
     element: <BindCardPage />,
+  },
+  {
+    path: "withdraw",
+    element: <Withdraw />,
   },
 
 

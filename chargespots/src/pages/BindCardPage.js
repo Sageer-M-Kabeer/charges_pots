@@ -3,7 +3,7 @@ import { FaAngleLeft } from 'react-icons/fa'
 import { TbCurrencyNaira } from 'react-icons/tb'
 import { Link } from "react-router-dom";
 
-const PreRecharge = () => {
+const BindCardPage = () => {
 
     const [rechargeAmount, setRechargeAmount] = useState('');
 
@@ -83,4 +83,4 @@ const PreRecharge = () => {
     )
 }
 
-export default PreRecharge
+export default BindCardPage
