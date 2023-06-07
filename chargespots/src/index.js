@@ -12,6 +12,7 @@ import Team from './pages/Team';
 import BindCardPage from './pages/BindCardPage'
 import Withdraw from './pages/Withdraw'
 import Precautions from './pages/Precautions'
+import GetApp from './pages/GetApp';
 import {
   createBrowserRouter,
   RouterProvider,
@@ -104,6 +105,10 @@ const router = createBrowserRouter([
   {
     path: "precautions",
     element: <Precautions />,
+  },
+  {
+    path: "get-app",
+    element:<GetApp/>
   },
 
 
