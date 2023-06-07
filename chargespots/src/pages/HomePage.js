@@ -64,13 +64,7 @@ export default function HomePage() {
           </SwiperSlide>
         </Swiper>
         {/* swipper end */}
-        <div className="indicators absolute left-[50%] flex -translate-y-2/4">
-          <i className="w-[6px] h-[6px]  text-[#ebedf4] opacity-[.3] rounded-[100%]"></i>
-          <i className="w-[6px] h-[6px] bg-[#1989fa] text-[#ebedf4] opacity-[.3] rounded-[100%]"></i>
-          <i className="w-[6px] h-[6px]  text-[#ebedf4] opacity-[.3] rounded-[100%]"></i>
-          <i className="w-[6px] h-[6px]  text-[#ebedf4] opacity-[.3] rounded-[100%]"></i>
-
-        </div>
+  
         {/* alert icon */}
         <div className="mx-2 h-[50px] mt-[20px] rounded-[16px] relative flex 
           items-center leading-[24px] text-[16px] bg-[#fff]">
