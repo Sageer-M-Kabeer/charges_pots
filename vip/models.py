@@ -6,6 +6,7 @@ from django.dispatch import receiver
 from datetime import datetime, timedelta
 
 class VipLevel(models.Model):
+    name = models.CharField(max_length=25,null=True)
     level = models.IntegerField(unique=True)
     price = models.DecimalField(max_digits=10, decimal_places=2)
     daily_income = models.DecimalField(max_digits=10, decimal_places=2)

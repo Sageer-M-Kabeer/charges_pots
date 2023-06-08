@@ -1,17 +1,12 @@
-import base64
-import uuid
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
 from phonenumber_field.modelfields import PhoneNumberField
-from django.core.validators import RegexValidator
+from django.utils.translation import gettext_lazy as _
+from django.utils.text import slugify
 import random
 import string
-from django.dispatch import receiver
-import shortuuid
-from django.db.models.signals import pre_save
-from django.utils.translation import gettext_lazy as _
-import PIL
-from django.utils.text import slugify
+
+
 
 def generate_invite_code():
     """
@@ -22,14 +17,15 @@ def generate_invite_code():
         code = ''.join(random.choices(string.digits, k=length))
         if not User.objects.filter(invite_code=code).exists():
             return code
-            
+
+
 class CustomUserManager(BaseUserManager):
     def create_user(self, phone_number, password=None, **extra_fields):
         if not phone_number:
             raise ValueError('The phone number must be set')
 
         extra_fields.setdefault('is_active', True)
-        
+
         # Check if the user exists based on the phone number
         existing_user = self.get_queryset().filter(phone_number=phone_number).first()
         if existing_user:
@@ -37,15 +33,18 @@ class CustomUserManager(BaseUserManager):
 
         user = self.model(phone_number=phone_number, **extra_fields)
         user.set_password(password)
-        
+
         # Generate and assign a slug to the user
         user.slug = slugify(user.phone_number)
-        
+
         user.save(using=self._db)
-        
+
         # Create an Account for the user
         Account.objects.create(user=user)
-        
+
+        # Create a Referral for the users
+        ReferralTeam.objects.create(user=user) 
+
         return user
 
 
@@ -63,8 +62,8 @@ class CustomUserManager(BaseUserManager):
 
 class User(AbstractBaseUser):
     phone_number = PhoneNumberField(unique=True)
-    slug = models.SlugField(max_length=255, unique=True,null=True,blank=True)
-    invite_code = models.CharField(max_length=8, default=generate_invite_code, blank=True, null=True)
+    slug = models.SlugField(max_length=255, unique=True, null=True, blank=True)
+    invite_code = models.CharField(max_length=8, unique=True, blank=True, null=True)
     referral_code = models.CharField(max_length=6, unique=True, null=True)
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
@@ -110,9 +109,10 @@ class User(AbstractBaseUser):
             self.save()
         else:
             raise ValueError('Insufficient balance for VIP purchase')
-      
+
+
 class Account(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE,related_name="account")
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="account")
     balance = models.DecimalField(max_digits=10, decimal_places=2, default=0)
 
     def deposit(self, amount):
@@ -134,21 +134,62 @@ class Account(models.Model):
 
     def __str__(self):
         return f"{self.user.phone_number} - {self.balance}"
-    
+
+
 class Referral(models.Model):
     referred_user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='referrals')
     referred_by = models.ForeignKey(User, on_delete=models.CASCADE, related_name='referred_by')
     timestamp = models.DateTimeField(auto_now_add=True)
 
+
 class InviteCode(models.Model):
     code = models.CharField(max_length=6, unique=True)
     owner = models.OneToOneField(User, on_delete=models.CASCADE)
 
+
 class Transaction(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     amount = models.DecimalField(max_digits=10, decimal_places=2)
-    transaction_type = models.CharField(max_length=10, choices=[('deposit', 'Deposit'), ('withdrawal', 'Withdrawal'), ('referral', 'Referral')])
+    transaction_type = models.CharField(
+        max_length=10,
+        choices=[('deposit', 'Deposit'), ('withdrawal', 'Withdrawal'), ('referral', 'Referral')]
+    )
     timestamp = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return f"{self.user.phone_number} - {self.transaction_type} - {self.amount}"
+
+class BankDetails(models.Model):
+    user = models.ForeignKey(User,on_delete=models.CASCADE,related_name='account_details')
+    account_name = models.CharField(max_length=25)
+    account_number =models.CharField(max_length=10)
+    bank_name = models.CharField(max_length=50,choices=[
+        ("first_bank" , "First Bank"),
+        ("fCM" , "First City Monument Bank"),
+    ])
+
+class ReferralTeam(models.Model):
+    user = models.ForeignKey(User,verbose_name=_("user"), on_delete=models.CASCADE)
+    # vip_level = models.OneToOneField(Vip,verbose_name=_("user"), on_delete=models.CASCADE)
+    numbers_of_invites = models.IntegerField(default=0)
+    team_recharge = models.DecimalField(default=0,decimal_places=2,max_digits=10)
+    comissions = models.DecimalField(default=0,decimal_places=2,max_digits=10) 
+    # investing_reward = models.DecimalField(default=0,decimal_places=2,max_digits=10)
+
+class UploadCashOutProof(models.Model):
+    pass
+
+
+class TransactionRequest(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE,related_name="user")
+    balance = models.OneToOneField(Account,on_delete=models.CASCADE,related_name="balance")
+    status = models.CharField(max_length=50,choices=[
+        ("pending" , "pending"),
+        ("failed" , "failed"),
+        ("successful" , "successful"),
+    ] ,default="pending")
+    is_aproved = models.BooleanField(default=False)
+
+
+
+

@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Account, User,Transaction
+from .models import Account, User,Transaction,BankDetails,ReferralTeam
 from .forms import CustomUserChangeForm, UserCreateForm
 
 
@@ -40,8 +40,22 @@ class TransactionAdmin(admin.ModelAdmin):
     search_fields = ('phone_number',)
     list_filter = ('transaction_type',)
 
+class BankDetailsAdmin(admin.ModelAdmin):
+    list_display = ("user", "account_name","account_number","bank_name")
+    search_fields =  ('phone_number',)
+
+class TeamAdmin(admin.ModelAdmin):
+    list_display = ("user","numbers_of_invites","team_recharge","comissions")
+    readonly_fields = ("numbers_of_invites","team_recharge","comissions" )
+    search_fields = ("phone_number",)
+
+
+
 
 admin.site.register(User,CustomUserAdmin)
 admin.site.register(Account,AccountAdmin)
 admin.site.register(Transaction,TransactionAdmin)
+admin.site.register(BankDetails,BankDetailsAdmin)
+admin.site.register(ReferralTeam,TeamAdmin)
+
 

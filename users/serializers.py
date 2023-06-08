@@ -50,7 +50,7 @@ class UserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ['id' ,'phone_number','invite_code', 'referral_count']
+        fields = ['slug' ,'phone_number','invite_code', 'referral_count']
 
     def get_referral_count(self, obj):
         return obj.referrals.count()
