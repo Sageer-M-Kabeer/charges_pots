@@ -27,6 +27,9 @@ const WithdrawRecordPage = () => {
                     <div className='flex mt-4 justify-between gap-3'>
                         <li>08147354770-N1000-12-27-29:29 <span className='ml-2 rounded-md text-[#323232] bg-[rgba(176,24,24,0.1)] py-1 px-2 '>Failed</span></li>
                     </div>
+                    <div className='flex mt-4 justify-between gap-3'>
+                            <li>08147354770-N1000-12-27-29:29 <span className='ml-2 rounded-md text-[#323232] bg-[rgba(252,255,82,0.95)] py-1 px-2 '>Pending</span></li>
+                        </div>
                     
                 </ul>
             </div>
