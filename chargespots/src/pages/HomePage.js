@@ -8,6 +8,7 @@ import te3 from '../assets/te3.jpeg'
 import te4 from '../assets/te4.jpeg'
 import te5 from '../assets/te5.jpeg'
 import te6 from '../assets/te6.mp4'
+import te7 from '../assets/te7.mp4'
 import notice from '../assets/notice.png'
 import thropy from '../assets/trophy.png'
 import chaina from '../assets/chaina.png'
@@ -149,7 +150,7 @@ export default function HomePage() {
             <div className="p-[20px] font-xl text-md">Brand Test</div>
             <div className="p-[20px]">
               <div className="max-w-full h-0 pt-[52.6px] xgplayer xgplayer-skin">
-                <video src="">hhbhb</video>
+                <video></video>
               </div>
             </div>
           </div>
@@ -162,7 +163,7 @@ export default function HomePage() {
             <div className="p-[20px] font-xl text-md">Brand Test</div>
             <div className="p-[20px]">
               <div className="max-w-full h-0 pt-[52.6px] xgplayer xgplayer-skin">
-                <video src={te6}>hhbhb</video>
+                <video src={te6} controls>hhbhb</video>
               </div>
             </div>
           </div>
@@ -172,7 +173,7 @@ export default function HomePage() {
             <div className="p-[20px] font-xl text-md">Brand Test</div>
             <div className="p-[20px]">
               <div className="max-w-full h-0 pt-[52.6px] xgplayer xgplayer-skin">
-                <video src="">hhbhb</video>
+                <video src={te7} controls controlsList='play'>hhbhb</video>
               </div>
             </div>
           </div>

@@ -3,9 +3,9 @@ import user from '../assets/user.png';
 import lock from '../assets/lock.png';
 import {useForm} from "react-hook-form";
 import { useState } from 'react';
-import HomePage from "../pages/HomePage"
+// import HomePage from "../pages/HomePage"
 import { Link } from 'react-router-dom';
-// import {getCookie} from 'react-cookie'
+import axios from 'axios';
 
 
 const Login = () => {
@@ -19,37 +19,41 @@ const Login = () => {
   const [error,setError] = useState(null)
   const [isLoggedin,setLoggin] = useState(false);
 
-  const onSubmit = (data) =>{
-  const formattedPhoneNum = "+234" + data.phonenum
-
-  fetch('http://localhost:8000/login/',{
-    method:'POST',
-    headers:{
-      'Content-Type':'application/json',
-      // 'X-CSRFToken':getCookie()
-    },
-    body:JSON.stringify({
-      phone_number:formattedPhoneNum,
-      password:data.password,
-    }),
-  })
-  .then((response) =>{
-    console.log(response)
-    if (response.ok){
-      window.location.href = "/";
-      alert("login success!")
-    }else{
-      throw new Error('Sign in failed!');
+  const onSubmit = async (data) => {
+    const formattedPhoneNum = "+234" + data.phonenum;
+  
+    try {
+      const response = await axios.post('http://localhost:8000/login/', {
+        phone_number: formattedPhoneNum,
+        password: data.password,
+      }, {
+        headers: {
+          'Content-Type': 'application/json',
+          'X-CSRFToken': getCookie('csrftoken'),
+        },
+        withCredentials: true, // Send cookies with the request
+      });
+  
+      console.log(response);
+      if (response.status === 200) {
+        window.location.href = "/";
+        alert("Login success!");
+      } else {
+        throw new Error('Sign in failed!');
+      }
+    } catch (error) {
+      setError('Invalid password or phone number');
     }
-  })
-  .catch((error) =>{
-    setError('Invalid password or phone number')
-  })
-
-
-    console.log(data)
+  
+    console.log(data);
     reset();
-  }
+  };
+  
+  // Helper function to retrieve the CSRF token from cookies
+  const getCookie = (name) => {
+    const cookieValue = document.cookie.match('(^|;)\\s*' + name + '\\s*=\\s*([^;]+)');
+    return cookieValue ? cookieValue.pop() : '';
+  };
 
 
     return (

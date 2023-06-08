@@ -150,7 +150,7 @@ const SignupPage = () => {
                                       validate:{
                                         checkLength:(value) => !(value.length < 5),
                                         // matchPattern:(value) => /[0-9]/
-                                      }})} name="invite" type='tel' placeholder='Please enter mobile number' autoComplete="off"
+                                      }})} name="invite" type='tel' placeholder='Please enter invite code' autoComplete="off"
                                         className=" pl-[10px] w-[100%] h-[45px] text-white bg-[#1895B0] border-none rounded-[10px] focus:outline-none" input/>
                   </div>
                   <div className="text-left mb-3 text-sm p-2 text-[#ee0a24]">
