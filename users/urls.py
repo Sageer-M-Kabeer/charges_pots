@@ -27,7 +27,7 @@ urlpatterns = [
     path('login/', UserLoginAPIView.as_view(), name='user-login'),
     path('logout/', UserLogoutAPIView.as_view(), name='user-logout'), 
     path('signup/', UserSignupAPIView.as_view(), name='user-signup'),
-    path('deposit/<int:pk>/', DepositView.as_view(), name='deposit'),
+    path('deposit/', DepositView.as_view(), name='deposit'),
     path('withdraw/<int:pk>/', WithdrawView.as_view(), name='withdraw'),
     # path('balance/', BalanceView.as_view(), name='balance'),
     
