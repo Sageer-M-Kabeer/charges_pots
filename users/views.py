@@ -10,6 +10,7 @@ from django.contrib.auth import login,logout
 from rest_framework import permissions 
 from rest_framework.authentication import SessionAuthentication
 import random
+from rest_framework.exceptions import ValidationError
 
 def index(request):
     return render(request, 'users/index.html')
@@ -35,10 +36,14 @@ class UserSignupAPIView(generics.CreateAPIView):
         referred_by = None
 
         if referral_code:
-            # Check if the referral code is valid
-            referred_by = get_object_or_404(User, referral_code=referral_code)
+            try:
+                referred_by = User.objects.get(referral_code=referral_code)
+            except User.DoesNotExist:
+                raise ValidationError("Referral code does not exist.")
+        else:
+            raise ValidationError("Referral code is required for registration.")
 
-        user = serializer.save()
+        user = serializer.save(referred_by=referred_by)
 
         # Create an account for the user
         Account.objects.create(user=user, balance=0)
@@ -156,24 +161,25 @@ class AccountBalanceView(generics.RetrieveAPIView):
         user = self.request.user
         return self.queryset.get(user=user)
 
-# class UserBalanceView(APIView):
-#     permission_classes = [IsAuthenticated]
+class UserBalanceView(APIView):
+    permission_classes = [IsAuthenticated]
 
-#     serializer_class = BalanceSerializer
+    serializer_class = BalanceSerializer
 
-#     def get(self, request, *args, **kwargs):
-#         user = request.user
+    def get(self, request, *args, **kwargs):
+        user = request.user
 
-#         try:
-#             account = Account.objects.get(user=user)
-#         except Account.DoesNotExist:
-#             return Response({'detail': 'Account not found'}, status=404)
+        try:
+            account = Account.objects.get(user=user)
+        except Account.DoesNotExist:
+            return Response({'detail': 'Account not found'}, status=404)
 
-#         return Response({'balance': account.balance}, status=200)
+        return Response({'balance': account.balance}, status=200)
 
 class DepositHistoryView(generics.ListAPIView):
     queryset = Transaction.objects.filter(transaction_type='deposit')
     serializer_class = TransactionSerializer
+    permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
         user = self.request.user
@@ -182,6 +188,7 @@ class DepositHistoryView(generics.ListAPIView):
 class WithdrawalHistoryView(generics.ListAPIView):
     queryset = Transaction.objects.filter(transaction_type='withdrawal')
     serializer_class = TransactionSerializer
+    permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
         user = self.request.user

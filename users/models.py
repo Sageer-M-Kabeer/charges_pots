@@ -11,6 +11,7 @@ import shortuuid
 from django.db.models.signals import pre_save
 from django.utils.translation import gettext_lazy as _
 import PIL
+from django.utils.text import slugify
 
 def generate_invite_code():
     """
@@ -36,6 +37,10 @@ class CustomUserManager(BaseUserManager):
 
         user = self.model(phone_number=phone_number, **extra_fields)
         user.set_password(password)
+        
+        # Generate and assign a slug to the user
+        user.slug = slugify(user.phone_number)
+        
         user.save(using=self._db)
         
         # Create an Account for the user
@@ -58,6 +63,7 @@ class CustomUserManager(BaseUserManager):
 
 class User(AbstractBaseUser):
     phone_number = PhoneNumberField(unique=True)
+    slug = models.SlugField(max_length=255, unique=True,null=True,blank=True)
     invite_code = models.CharField(max_length=8, default=generate_invite_code, blank=True, null=True)
     referral_code = models.CharField(max_length=6, unique=True, null=True)
     is_active = models.BooleanField(default=True)
@@ -85,6 +91,8 @@ class User(AbstractBaseUser):
     def save(self, *args, **kwargs):
         if not self.invite_code:
             self.invite_code = self.generate_invite_code()
+        if not self.slug:
+            self.slug = slugify(self.phone_number)
         super().save(*args, **kwargs)
  
     def __str__(self):
@@ -144,8 +152,3 @@ class Transaction(models.Model):
 
     def __str__(self):
         return f"{self.user.phone_number} - {self.transaction_type} - {self.amount}"
-    
-
-
-
-    
