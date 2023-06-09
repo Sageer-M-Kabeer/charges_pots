@@ -1,6 +1,9 @@
 from django.urls import path
+
+from users.admin import WithdrawalRequestAdmin
 from . import views
 from rest_framework import permissions
+from django.contrib import admin
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
 from .views import (UserListAPIView,UserBalanceView, UserDetailAPIView, UserLoginAPIView,
@@ -36,6 +39,10 @@ urlpatterns = [
     path('deposithistory/', DepositHistoryView.as_view(), name='deposithistory'),
     path('media/deposit_proofs/<>', DepositRequest.as_view(), name='deposit-image'),
     path('withdrawal/request/', WithdrawalRequestView.as_view(), name='withdrawal-request'),
+     # ...
+    path('admin/', admin.site.urls),
+    path('withdrawal/request/<path:object_id>/approve/', WithdrawalRequestAdmin.approve_withdrawal, name='approve_withdrawal'),
+    path('withdrawal/request/<path:object_id>/reject/', WithdrawalRequestAdmin.reject_withdrawal, name='reject_withdrawal'),
     # path('deposit-request', views.index, name='depositrequests'),
 
 

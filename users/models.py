@@ -238,27 +238,36 @@ class WithdrawalRequest(models.Model):
         self.save()
 
 class DepositTransactionRequest(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE,related_name="deposit_requested_user")
-    status = models.CharField(max_length=50,choices=[
-        ("pending" , "pending"),
-        ("failed" , "failed"),
-        ("successful" , "successful"),
-    ] ,default="pending")
-    is_aproved = models.BooleanField(default=False)
+    STATUS_CHOICES = [
+        ('pending', 'Pending'),
+        ('approved', 'Approved'),
+        ('rejected', 'Rejected'),
+    ]
+
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="deposit_requested_user")
+    amount = models.DecimalField(max_digits=10, decimal_places=2,default=0)
+    timestamp = models.DateTimeField(auto_now_add=True)
+    status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='pending')
     proof = models.ImageField(upload_to="media/deposit_proofs/")
     narration = models.TextField(max_length=120)
+    is_approved = models.BooleanField(default=False)
 
     def approve(self):
-        approved = self.is_aproved
-        if approved:
-            self.status = "succsessful"
-            self.is_aproved = True
-        
-        
+        if self.status == 'pending':
+            self.status = 'approved'
+            self.is_approved = True
+            self.save()
+        else:
+            raise ValueError("Deposit request is already approved or rejected")
 
     def reject(self):
-        if not self.approve:
-            self.is_aproved = False
+        if self.status == 'pending':
+            self.status = 'rejected'
+            self.is_approved = False
+            self.save()
+        else:
+            raise ValueError("Deposit request is already approved or rejected")
+
     
 
 

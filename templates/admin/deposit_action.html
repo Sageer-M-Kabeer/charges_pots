@@ -1,0 +1,13 @@
+{% extends 'admin/change_form.html' %}
+
+{% block content %}
+<h1>Deposit Approval/Reject</h1>
+<form method="POST" action="{% url 'admin:users_deposittransactionrequest_change' object_id %}">
+  {% csrf_token %}
+  <div class="submit-row">
+    <input type="submit" value="Approve" name="_approve" class="default" />
+    <input type="submit" value="Reject" name="_reject" class="default" />
+    <a href="{% url 'admin:users_deposittransactionrequest_changelist' %}" class="btn btn-link">Cancel</a>
+  </div>
+</form>
+{% endblock %}
