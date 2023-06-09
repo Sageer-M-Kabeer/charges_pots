@@ -103,8 +103,13 @@ class WithdrawalRequestSerializer(serializers.ModelSerializer):
         # Perform any additional logic here, if needed
         return withdrawal_request
 
-class DepositTransactionRequestSerializer(serializers.ModelSerializer):
+class DepositRequestSerializer(serializers.ModelSerializer):
     class Meta:
         model = DepositRequest
         fields = ['id', 'user', 'amount', 'timestamp', 'status', 'proof', 'narration']
         read_only_fields = ['user', 'timestamp', 'status']
+        
+    def create(self, validated_data):
+        deposit_request = DepositRequest.objects.create(**validated_data)
+        # Perform any additional logic here, if needed
+        return deposit_request

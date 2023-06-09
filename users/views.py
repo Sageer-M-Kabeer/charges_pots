@@ -4,7 +4,8 @@ from rest_framework import generics, status
 from .models import User,Account,Transaction,InviteCode,Referral,DepositRequest,BankDetails
 
 from .serializers import (UserSerializer,UserLoginSerializer, UserSignupSerializer,AccountSerializer,
-BalanceSerializer,TransactionSerializer,WithdrawSerializer,DepositSerializer,BalanceSerializer,WithdrawalRequestSerializer)
+BalanceSerializer,TransactionSerializer,WithdrawSerializer,DepositSerializer,BalanceSerializer,WithdrawalRequestSerializer
+,DepositRequestSerializer)
 from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated
 from django.contrib.auth import login,logout
@@ -30,14 +31,13 @@ class WithdrawalRequestView(generics.CreateAPIView):
 
 class DepositRequestView(generics.CreateAPIView):
     queryset = DepositRequest.objects.all()
-    # serializer_class = WithdrawalRequestSerializer
+    serializer_class = DepositRequestSerializer
     permission_classes = [IsAuthenticated]
 
     def perform_create(self, serializer):
         # Get the bank details for the authenticated user
-        bank_details = self.request.user.bankdetails.first()
         # Set the user and bank_details fields in the serializer
-        serializer.save(user=self.request.user, bank_details=bank_details)
+        serializer.save(user=self.request.user)
 
 
 class UserSignupAPIView(generics.CreateAPIView):

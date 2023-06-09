@@ -132,11 +132,19 @@ class WithdrawalRequestAdmin(admin.ModelAdmin):
 
 
 
-
-class DepositTransactionRequestAdmin(admin.ModelAdmin):
+class DepositRequestAdmin(admin.ModelAdmin):
     change_form_template = 'admin/deposit_action.html'
-    list_display = ('user', 'amount', 'status', 'deposit_actions')
-    readonly_fields = ('user', 'amount', 'status')
+    list_display = ('user', 'amount', 'status_deposit',"proof", 'deposit_actions')
+    readonly_fields = ('user', 'amount', 'status',"proof",)
+
+    def deposit_proof_url(self, obj):
+        if obj.proof:
+            return format_html('<a href="{}" target="_blank">{}</a>', obj.proof.url, obj.proof.name)
+        else:
+            return None
+    
+    deposit_proof_url.short_description = 'Deposit Proof'
+    deposit_proof_url.allow_tags = True
 
     def get_actions(self, request):
         actions = super().get_actions(request)
@@ -151,6 +159,8 @@ class DepositTransactionRequestAdmin(admin.ModelAdmin):
                  name='approve_deposit'),
             path('<path:object_id>/reject/', self.admin_site.admin_view(self.reject_deposit),
                  name='reject_deposit'),
+            path('<path:object_id>/delete/', self.admin_site.admin_view(self.delete_deposit),
+                 name='delete_deposit'),
         ]
         return custom_urls + urls
 
@@ -158,33 +168,51 @@ class DepositTransactionRequestAdmin(admin.ModelAdmin):
         deposit_request = self.get_object(request, object_id)
         if deposit_request:
             if deposit_request.status == 'pending':
-                deposit_request.approve()
+                deposit_request.status = 'successful'
+                deposit_request.save()
+
+                deposit_request.user.account.balance += deposit_request.amount
+                deposit_request.user.account.save()
+
                 self.message_user(request, 'Deposit request approved successfully.')
             else:
                 self.message_user(request, 'Deposit request has already been approved or rejected.')
-        return HttpResponseRedirect(reverse('admin:app_deposittransactionrequest_changelist'))
+        return HttpResponseRedirect(reverse('admin:users_depositrequest_changelist'))
 
     def reject_deposit(self, request, object_id):
         deposit_request = self.get_object(request, object_id)
         if deposit_request:
             if deposit_request.status == 'pending':
-                deposit_request.reject()
+                deposit_request.status = 'failed'
+                deposit_request.save()
+
                 self.message_user(request, 'Deposit request rejected successfully.')
             else:
                 self.message_user(request, 'Deposit request has already been approved or rejected.')
-        return HttpResponseRedirect(reverse('admin:app_deposittransactionrequest_changelist'))
+        return HttpResponseRedirect(reverse('admin:users_depositrequest_changelist'))
+
+    def delete_deposit(self, request, object_id):
+        deposit_request = self.get_object(request, object_id)
+        if deposit_request:
+            deposit_request.delete()
+            self.message_user(request, 'Deposit request deleted successfully.')
+        return HttpResponseRedirect(reverse('admin:users_depositrequest_changelist'))
 
     def deposit_actions(self, obj):
-        if obj.status == 'pending':
-            return format_html(
-                '<a class="button" href="{}">Approve</a>&nbsp;'
-                '<a class="button" href="{}">Reject</a>',
-                reverse('admin:approve_deposit', args=[obj.id]),
-                reverse('admin:reject_deposit', args=[obj.id])
-            )
-        return obj.status
-    deposit_actions.short_description = 'Deposit Approval/Reject'
+        return format_html(
+            '<a class="button" href="{}">Approve</a>&nbsp;'
+            '<a class="button" href="{}">Reject</a>&nbsp;'
+            '<a class="button" href="{}">Delete</a>',
+            reverse('admin:approve_deposit', args=[obj.pk]),
+            reverse('admin:reject_deposit', args=[obj.pk]),
+            reverse('admin:delete_deposit', args=[obj.pk])
+        )
+    deposit_actions.short_description = 'Actions'
     deposit_actions.allow_tags = True
+
+    def status_deposit(self, obj):
+        return obj.status
+    status_deposit.short_description = 'Status'
 
 
 admin.site.register(User,CustomUserAdmin)
@@ -193,6 +221,6 @@ admin.site.register(Transaction,TransactionAdmin)
 admin.site.register(BankDetails,BankDetailsAdmin)
 admin.site.register(ReferralTeam,TeamAdmin)
 admin.site.register(WithdrawalRequest,WithdrawalRequestAdmin)
-admin.site.register(DepositRequest, DepositTransactionRequestAdmin)
+admin.site.register(DepositRequest, DepositRequestAdmin)
 
 

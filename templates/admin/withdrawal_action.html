@@ -8,7 +8,7 @@
     {% csrf_token %}
     <div class="submit-row">
       <input type="submit" value="Approve" name="_approve" class="default" />
-      <input type="submit" value="Reject" name="_reject" class="default" />
+      <input type="submit" value="Reject" name="_reject" class="default" style="background-color:red;" />
       <a href="{% url 'admin:users_withdrawalrequest_changelist' %}" class="btn btn-link">Cancel</a>
     </div>
   </form>

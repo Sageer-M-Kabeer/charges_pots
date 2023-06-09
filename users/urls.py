@@ -1,14 +1,16 @@
 from django.urls import path
 
-from users.admin import WithdrawalRequestAdmin
+from users.admin import WithdrawalRequestAdmin,DepositRequestAdmin
 from . import views
 from rest_framework import permissions
 from django.contrib import admin
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
+from django.conf import settings
+from django.conf.urls.static import static
 from .views import (UserListAPIView,UserBalanceView, UserDetailAPIView, UserLoginAPIView,
                      UserLogoutAPIView, UserSignupAPIView,DepositView, WithdrawView, WithdrawalHistoryView
-                    ,DepositHistoryView,DepositRequest,WithdrawalRequestView)
+                    ,DepositHistoryView,DepositRequest,WithdrawalRequestView,DepositRequestView)
 
 schema_view = get_schema_view(
     openapi.Info(
@@ -22,6 +24,13 @@ schema_view = get_schema_view(
     public=True,
     permission_classes=(permissions.AllowAny,),
 ) 
+
+# from .admin import WithdrawalRequestAdmin, DepositRequestAdmin
+# from .custom_admin import custom_admin_site
+# # Register your models with the custom admin site
+# custom_admin_site.register(WithdrawalRequest, WithdrawalRequestAdmin)
+# custom_admin_site.register(DepositRequest, DepositRequestAdmin)
+
 
 app_name = 'users'
 urlpatterns = [
@@ -39,13 +48,18 @@ urlpatterns = [
     path('deposithistory/', DepositHistoryView.as_view(), name='deposithistory'),
     # path('media/deposit_proofs/<>', DepositRequest.as_view(), name='deposit-image'),
     path('withdrawal/request/', WithdrawalRequestView.as_view(), name='withdrawal-request'),
+    path('deposit/request/', DepositRequestView.as_view(), name='withdrawal-request'),
+
      # ...
     path('admin/', admin.site.urls),
+    path('deposit/request/<path:object_id>/approve/', DepositRequestAdmin.approve_deposit,name='approve_deposit'),
+    path('deposit/request/<path:object_id>/reject/', DepositRequestAdmin.reject_deposit,name='reject_deposit'),
+    path('deposit/request/<path:object_id>/delete/', DepositRequestAdmin.delete_deposit,name='delete_deposit'),
     path('withdrawal/request/<path:object_id>/approve/', WithdrawalRequestAdmin.approve_withdrawal, name='approve_withdrawal'),
     path('withdrawal/request/<path:object_id>/reject/', WithdrawalRequestAdmin.reject_withdrawal, name='reject_withdrawal'),
     # path('deposit-request', views.index, name='depositrequests'),
+]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 
-]
     
     

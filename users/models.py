@@ -261,7 +261,7 @@ class DepositRequest(models.Model):
     amount = models.DecimalField(max_digits=10, decimal_places=2,default=0)
     timestamp = models.DateTimeField(auto_now_add=True)
     status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='pending')
-    proof = models.ImageField(upload_to="media/deposit_proofs/")
+    proof = models.ImageField(upload_to="deposit_proofs/")
     narration = models.TextField(max_length=120)
     is_approved = models.BooleanField(default=False)
 
