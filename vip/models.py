@@ -11,8 +11,9 @@ class VipLevel(models.Model):
     price = models.DecimalField(max_digits=10, decimal_places=2)
     daily_income = models.DecimalField(max_digits=10, decimal_places=2)
     total_revenue = models.DecimalField(max_digits=10, decimal_places=2)
-    circle_days = models.IntegerField(null=True)  # Number of days in the circle
-
+    circle_days = models.IntegerField(null=True)  # Number of days in the circles
+    is_expired = models.BooleanField(default=False)
+    
     # Calculate the date based on the number of circle days
     @property
     def calculated_date(self):
@@ -57,6 +58,7 @@ class Vip(models.Model):
         self.daily_income = 0
         self.total_revenue = 0
         self.circle_days = 0
+
         self.save()
 
         # Schedule a task to update total revenue daily

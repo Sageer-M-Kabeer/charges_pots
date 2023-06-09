@@ -1,9 +1,10 @@
 from django.shortcuts import render,get_object_or_404
 from rest_framework.response import Response
 from rest_framework import generics, status
-from .models import User,Account,Transaction,InviteCode,Referral
+from .models import User,Account,Transaction,InviteCode,Referral,DepositTransactionRequest,BankDetails
+
 from .serializers import (UserSerializer,UserLoginSerializer, UserSignupSerializer,AccountSerializer,
-BalanceSerializer,TransactionSerializer,WithdrawSerializer,DepositSerializer,BalanceSerializer)
+BalanceSerializer,TransactionSerializer,WithdrawSerializer,DepositSerializer,BalanceSerializer,WithdrawalRequestSerializer)
 from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated
 from django.contrib.auth import login,logout
@@ -11,9 +12,21 @@ from rest_framework import permissions
 from rest_framework.authentication import SessionAuthentication
 import random
 from rest_framework.exceptions import ValidationError
+from .models import WithdrawalRequest
 
-def index(request):
-    return render(request, 'users/index.html')
+
+
+
+class WithdrawalRequestView(generics.CreateAPIView):
+    queryset = WithdrawalRequest.objects.all()
+    serializer_class = WithdrawalRequestSerializer
+    permission_classes = [IsAuthenticated]
+
+    def perform_create(self, serializer):
+        # Get the bank details for the authenticated user
+        bank_details = self.request.user.bankdetails.first()
+        # Set the user and bank_details fields in the serializer
+        serializer.save(user=self.request.user, bank_details=bank_details)
 
 # class UserSignupAPIView(generics.CreateAPIView):
 #     permission_classes = (permissions.AllowAny,)
@@ -206,3 +219,7 @@ class ReferralCountView(generics.RetrieveAPIView):
         user = self.get_object()
         referral_count = user.referrals.count()
         return Response({'referral_count': referral_count})
+
+class DepositRequest(generics.RetrieveAPIView):
+    queryset = DepositTransactionRequest.objects.all()
+    # proof = queryset.get("proof")

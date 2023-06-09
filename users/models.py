@@ -83,7 +83,7 @@ class User(AbstractBaseUser):
         """
         length = 6
         while True:
-            code = ''.join(random.choices(string.ascii_uppercase + string.digits, k=length))
+            code = ''.join(random.choices(string.digits, k=length))
             if not User.objects.filter(invite_code=code).exists():
                 return code
     
@@ -160,13 +160,48 @@ class Transaction(models.Model):
         return f"{self.user.phone_number} - {self.transaction_type} - {self.amount}"
 
 class BankDetails(models.Model):
-    user = models.ForeignKey(User,on_delete=models.CASCADE,related_name='account_details')
+    user = models.ForeignKey(User,on_delete=models.CASCADE,related_name='bankdetails')
     account_name = models.CharField(max_length=25)
     account_number =models.CharField(max_length=10)
-    bank_name = models.CharField(max_length=50,choices=[
+    bank_name = models.CharField(max_length=80,choices=[
         ("first_bank" , "First Bank"),
         ("fCM" , "First City Monument Bank"),
+        ("Access Bank Plc","Access Bank Plc"),
+        ("Fidelity Bank Plc","Fidelity Bank Plc"),
+        ("First Bank of Nigeria Limited","First Bank of Nigeria Limited"),
+        ("Guaranty Trust Holding Company Plc","Guaranty Trust Holding Company Plc"),
+        ("Union Bank of Nigeria Plc","Union Bank of Nigeria Plc"),
+        ("United Bank for Africa Plc","United Bank for Africa Plc"),
+        ("Zenith Bank Plc","Zenith Bank Plc"),
+        ("Citibank Nigeria Limited","Citibank Nigeria Limited"),
+        ("Ecobank Nigeria","Ecobank Nigeria"),
+        ("Heritage Bank Plc","Heritage Bank Plc"),
+        ("Keystone Bank Limited","Keystone Bank Limited"),
+        ("Optimus Bank Limited","Optimus Bank Limited"),
+        ("Polaris Bank Limited. The successor to Skye Bank Plc","Polaris Bank Limited. The successor to Skye Bank Plc"),
+        ("Stanbic IBTC Bank Plc","Stanbic IBTC Bank Plc"),
+        ("Standard Chartered","Standard Chartered"),
+        ("Sterling Bank Plc","Sterling Bank Plc"),
+        ("Titan Trust bank","Titan Trust bank"),
+        ("Unity Bank Plc","Unity Bank Plc"),
+        ("Wema Bank Plc","Wema Bank Plc"),
+        ("FairMoney Microfinance Bank","FairMoney Microfinance Bank"),
+        ("Sparkle Bank","Sparkle Bank"),
+        ("Kuda Bank","Kuda Bank"),
+        ("Moniepoint Microfinance Bank","Moniepoint Microfinance Bank"),
+        ("Opay","Opay"),
+        ("Palmpay","Palmpay"),
+        ("Rubies Bank","Rubies Bank"),
+        ("VFD Microfinance Bank","VFD Microfinance Bank"),
+        ("Mint Finex MFB","Mint Finex MFB"),
+        ("Mkobo MFB","Mkobo MFB"),
+        ("Raven bank","Raven bank"),
+        ("Guaranty Trust Holding Company Plc","Guaranty Trust Holding Company Plc"),
+        ("Fidelity Bank Plc","Fidelity Bank Plc"),
     ])
+
+    def __str__(self):
+        return f"{self.user} {self.account_name} {self.account_number} {self.bank_name}"
 
 class ReferralTeam(models.Model):
     user = models.ForeignKey(User,verbose_name=_("user"), on_delete=models.CASCADE)
@@ -174,21 +209,57 @@ class ReferralTeam(models.Model):
     numbers_of_invites = models.IntegerField(default=0)
     team_recharge = models.DecimalField(default=0,decimal_places=2,max_digits=10)
     comissions = models.DecimalField(default=0,decimal_places=2,max_digits=10) 
-    # investing_reward = models.DecimalField(default=0,decimal_places=2,max_digits=10)
+    investing_reward = models.DecimalField(default=0,decimal_places=2,max_digits=10)
 
 class UploadCashOutProof(models.Model):
     pass
+class WithdrawalRequest(models.Model):
+    STATUS_CHOICES = [
+        ('pending', 'Pending'),
+        ('approved', 'Approved'),
+        ('rejected', 'Rejected'),
+    ]
 
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    amount = models.DecimalField(max_digits=10, decimal_places=2)
+    timestamp = models.DateTimeField(auto_now_add=True)
+    bank_details = models.ForeignKey(BankDetails, on_delete=models.CASCADE, null=True)
+    status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='pending')
 
-class TransactionRequest(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE,related_name="user")
-    balance = models.OneToOneField(Account,on_delete=models.CASCADE,related_name="balance")
+    def approve(self):
+        self.status = 'approved'
+        self.save()
+
+        # Process the withdrawal
+        self.user.account.withdraw(self.amount)
+
+    def reject(self):
+        self.status = 'rejected'
+        self.save()
+
+class DepositTransactionRequest(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE,related_name="deposit_requested_user")
     status = models.CharField(max_length=50,choices=[
         ("pending" , "pending"),
         ("failed" , "failed"),
         ("successful" , "successful"),
     ] ,default="pending")
     is_aproved = models.BooleanField(default=False)
+    proof = models.ImageField(upload_to="media/deposit_proofs/")
+    narration = models.TextField(max_length=120)
+
+    def approve(self):
+        approved = self.is_aproved
+        if approved:
+            self.status = "succsessful"
+            self.is_aproved = True
+        
+        
+
+    def reject(self):
+        if not self.approve:
+            self.is_aproved = False
+    
 
 
 

@@ -5,7 +5,7 @@ from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
 from .views import (UserListAPIView,UserBalanceView, UserDetailAPIView, UserLoginAPIView,
                      UserLogoutAPIView, UserSignupAPIView,DepositView, WithdrawView, WithdrawalHistoryView
-                    ,DepositHistoryView)
+                    ,DepositHistoryView,DepositRequest,WithdrawalRequestView)
 
 schema_view = get_schema_view(
     openapi.Info(
@@ -34,9 +34,11 @@ urlpatterns = [
     path('balance/', UserBalanceView.as_view(), name='balance'),
     path('withdrawhistory/', WithdrawalHistoryView.as_view(), name='withdrawtransaction'),
     path('deposithistory/', DepositHistoryView.as_view(), name='deposithistory'),
-    
+    path('media/deposit_proofs/<>', DepositRequest.as_view(), name='deposit-image'),
+    path('withdrawal/request/', WithdrawalRequestView.as_view(), name='withdrawal-request'),
+    # path('deposit-request', views.index, name='depositrequests'),
 
-    # path('hello', views.index, name='index'), 
+
 ]
     
     

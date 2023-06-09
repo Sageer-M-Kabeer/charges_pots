@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import User,Account,Transaction
+from .models import User,Account,Transaction,WithdrawalRequest,BankDetails
 from django.contrib.auth import authenticate
 from django.dispatch import receiver
 import shortuuid
@@ -84,3 +84,21 @@ class WithdrawSerializer(serializers.Serializer):
         
 class DepositSerializer(serializers.Serializer):
     amount = serializers.DecimalField(max_digits=10, decimal_places=2)
+
+class BankDetailsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = BankDetails
+        fields = '__all__'
+
+
+
+class WithdrawalRequestSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = WithdrawalRequest
+        fields = '__all__'
+        read_only_fields = ['is_approved', 'status']
+
+    def create(self, validated_data):
+        withdrawal_request = WithdrawalRequest.objects.create(**validated_data)
+        # Perform any additional logic here, if needed
+        return withdrawal_request
