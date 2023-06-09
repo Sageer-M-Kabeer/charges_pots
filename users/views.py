@@ -1,7 +1,7 @@
 from django.shortcuts import render,get_object_or_404
 from rest_framework.response import Response
 from rest_framework import generics, status
-from .models import User,Account,Transaction,InviteCode,Referral,DepositTransactionRequest,BankDetails
+from .models import User,Account,Transaction,InviteCode,Referral,DepositRequest,BankDetails
 
 from .serializers import (UserSerializer,UserLoginSerializer, UserSignupSerializer,AccountSerializer,
 BalanceSerializer,TransactionSerializer,WithdrawSerializer,DepositSerializer,BalanceSerializer,WithdrawalRequestSerializer)
@@ -28,10 +28,17 @@ class WithdrawalRequestView(generics.CreateAPIView):
         # Set the user and bank_details fields in the serializer
         serializer.save(user=self.request.user, bank_details=bank_details)
 
-# class UserSignupAPIView(generics.CreateAPIView):
-#     permission_classes = (permissions.AllowAny,)
-#     queryset = User.objects.all()
-#     serializer_class = UserSignupSerializer
+class DepositRequestView(generics.CreateAPIView):
+    queryset = DepositRequest.objects.all()
+    # serializer_class = WithdrawalRequestSerializer
+    permission_classes = [IsAuthenticated]
+
+    def perform_create(self, serializer):
+        # Get the bank details for the authenticated user
+        bank_details = self.request.user.bankdetails.first()
+        # Set the user and bank_details fields in the serializer
+        serializer.save(user=self.request.user, bank_details=bank_details)
+
 
 class UserSignupAPIView(generics.CreateAPIView):
     queryset = User.objects.all()
@@ -219,7 +226,3 @@ class ReferralCountView(generics.RetrieveAPIView):
         user = self.get_object()
         referral_count = user.referrals.count()
         return Response({'referral_count': referral_count})
-
-class DepositRequest(generics.RetrieveAPIView):
-    queryset = DepositTransactionRequest.objects.all()
-    # proof = queryset.get("proof")

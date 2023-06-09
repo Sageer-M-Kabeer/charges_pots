@@ -1,6 +1,6 @@
 from django.contrib import admin
 from .models import (Account, User,Transaction,BankDetails,
-                     ReferralTeam,WithdrawalRequest,DepositTransactionRequest)
+                     ReferralTeam,WithdrawalRequest,DepositRequest)
 from .forms import CustomUserChangeForm, UserCreateForm
 from django.urls import path
 from django.shortcuts import render, redirect
@@ -132,30 +132,17 @@ class WithdrawalRequestAdmin(admin.ModelAdmin):
 
 
 
+
 class DepositTransactionRequestAdmin(admin.ModelAdmin):
     change_form_template = 'admin/deposit_action.html'
-    list_display = ('user', 'amount', 'status')
+    list_display = ('user', 'amount', 'status', 'deposit_actions')
     readonly_fields = ('user', 'amount', 'status')
 
-    def approve_deposit(self, request, object_id):
-        deposit_request = self.get_object(request, object_id)
-        if deposit_request:
-            if deposit_request.status == 'pending':
-                deposit_request.approve()
-                self.message_user(request, 'Deposit request approved successfully.')
-            else:
-                self.message_user(request, 'Deposit request has already been approved or rejected.')
-        return redirect('admin:your_app_label_deposittransactionrequest_changelist')
-
-    def reject_deposit(self, request, object_id):
-        deposit_request = self.get_object(request, object_id)
-        if deposit_request:
-            if deposit_request.status == 'pending':
-                deposit_request.reject()
-                self.message_user(request, 'Deposit request rejected successfully.')
-            else:
-                self.message_user(request, 'Deposit request has already been approved or rejected.')
-        return redirect('admin:your_app_label_deposittransactionrequest_changelist')
+    def get_actions(self, request):
+        actions = super().get_actions(request)
+        if 'delete_selected' in actions:
+            del actions['delete_selected']
+        return actions
 
     def get_urls(self):
         urls = super().get_urls()
@@ -167,7 +154,37 @@ class DepositTransactionRequestAdmin(admin.ModelAdmin):
         ]
         return custom_urls + urls
 
+    def approve_deposit(self, request, object_id):
+        deposit_request = self.get_object(request, object_id)
+        if deposit_request:
+            if deposit_request.status == 'pending':
+                deposit_request.approve()
+                self.message_user(request, 'Deposit request approved successfully.')
+            else:
+                self.message_user(request, 'Deposit request has already been approved or rejected.')
+        return HttpResponseRedirect(reverse('admin:app_deposittransactionrequest_changelist'))
 
+    def reject_deposit(self, request, object_id):
+        deposit_request = self.get_object(request, object_id)
+        if deposit_request:
+            if deposit_request.status == 'pending':
+                deposit_request.reject()
+                self.message_user(request, 'Deposit request rejected successfully.')
+            else:
+                self.message_user(request, 'Deposit request has already been approved or rejected.')
+        return HttpResponseRedirect(reverse('admin:app_deposittransactionrequest_changelist'))
+
+    def deposit_actions(self, obj):
+        if obj.status == 'pending':
+            return format_html(
+                '<a class="button" href="{}">Approve</a>&nbsp;'
+                '<a class="button" href="{}">Reject</a>',
+                reverse('admin:approve_deposit', args=[obj.id]),
+                reverse('admin:reject_deposit', args=[obj.id])
+            )
+        return obj.status
+    deposit_actions.short_description = 'Deposit Approval/Reject'
+    deposit_actions.allow_tags = True
 
 
 admin.site.register(User,CustomUserAdmin)
@@ -176,6 +193,6 @@ admin.site.register(Transaction,TransactionAdmin)
 admin.site.register(BankDetails,BankDetailsAdmin)
 admin.site.register(ReferralTeam,TeamAdmin)
 admin.site.register(WithdrawalRequest,WithdrawalRequestAdmin)
-admin.site.register(DepositTransactionRequest, DepositTransactionRequestAdmin)
+admin.site.register(DepositRequest, DepositTransactionRequestAdmin)
 
 

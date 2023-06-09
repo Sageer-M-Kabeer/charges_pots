@@ -37,7 +37,7 @@ urlpatterns = [
     path('balance/', UserBalanceView.as_view(), name='balance'),
     path('withdrawhistory/', WithdrawalHistoryView.as_view(), name='withdrawtransaction'),
     path('deposithistory/', DepositHistoryView.as_view(), name='deposithistory'),
-    path('media/deposit_proofs/<>', DepositRequest.as_view(), name='deposit-image'),
+    # path('media/deposit_proofs/<>', DepositRequest.as_view(), name='deposit-image'),
     path('withdrawal/request/', WithdrawalRequestView.as_view(), name='withdrawal-request'),
      # ...
     path('admin/', admin.site.urls),

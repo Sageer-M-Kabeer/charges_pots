@@ -1,7 +1,8 @@
+from rest_framework.exceptions import ValidationError
 from rest_framework import generics, status
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
-from .models import Vip
+from .models import Vip, VipLevel
 from .serializers import VipSerializer, BuyVipSerializer,ResetVipSerializer,UserVipSerializer
 from django.contrib.admin.views.decorators import staff_member_required
 from django.utils.decorators import method_decorator
@@ -23,34 +24,20 @@ class VipView(generics.RetrieveAPIView):
 
 class BuyVipView(generics.CreateAPIView):
     serializer_class = BuyVipSerializer
-    permission_classes = [IsAuthenticated]
 
-    def create(self, request, *args, **kwargs):
-        serializer = self.get_serializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        level = serializer.validated_data['level']
-        user = request.user
+    def get_queryset(self):
+        return Vip.objects.none()
 
-        try:
-            vip = user.vip
-            return Response({'error': 'You already have an active VIP subscription'}, status=status.HTTP_400_BAD_REQUEST)
-        except Vip.DoesNotExist:
-            # Check if user has sufficient balance to purchase the VIP level
-            # Adjust the condition according to your business logic
-            if user.account.balance >= level * 100:  # Assuming the price is calculated based on the level
+    def perform_create(self, serializer):
+        vip_level = serializer.validated_data['level']
+        user = self.request.user
+        if user.account.balance < vip_level.price:
+            raise ValidationError("Insufficient balance to purchase VIP.")
+        user.account.balance -= vip_level.price
+        user.account.save()
+        vip = Vip.objects.create(level=vip_level)
+        vip.save()
 
-                # Deduct the price from user's account balance
-                user.account.balance -= level * 100
-                user.account.save()
-
-                # Create a new VIP subscription
-                vip = Vip.objects.create(user=user, level=level, price=level * 100)
-                vip.start_daily_income()
-
-                serializer = VipSerializer(vip)
-                return Response(serializer.data, status=status.HTTP_201_CREATED)
-
-            return Response({'error': 'Insufficient balance to purchase the VIP level'}, status=status.HTTP_400_BAD_REQUEST)
 
 class UserVipView(generics.RetrieveAPIView):
     serializer_class = UserVipSerializer

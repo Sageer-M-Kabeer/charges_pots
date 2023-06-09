@@ -5,7 +5,7 @@ from django.utils.translation import gettext_lazy as _
 from django.utils.text import slugify
 import random
 import string
-
+from vip.models import Vip 
 
 
 def generate_invite_code():
@@ -70,8 +70,7 @@ class User(AbstractBaseUser):
     is_superuser = models.BooleanField(default=False)
     date_joined = models.DateField(auto_now_add=True)
     last_login = models.DateField(auto_now=True)
-    vip_price = models.DecimalField(max_digits=10, decimal_places=2, default=0)
-
+    vip_level = models.ForeignKey(Vip, on_delete=models.CASCADE, null=True)
     USERNAME_FIELD = 'phone_number'
     REQUIRED_FIELDS = []
 
@@ -104,18 +103,24 @@ class User(AbstractBaseUser):
         return True
     
     def deduct_vip_price(self, price):
-        if self.vip_price >= price:
-            self.vip_price -= price
-            self.save()
+        if self.account.balance >= price:
+            self.account.balance -= price
+            self.account.save()
         else:
             raise ValueError('Insufficient balance for VIP purchase')
 
 
+
+
+
 class Account(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="account")
-    balance = models.DecimalField(max_digits=10, decimal_places=2, default=0)
+    balance = models.DecimalField(max_digits=10, decimal_places=2, default=0,)
 
     def deposit(self, amount):
+        if amount < 3000:
+            raise ValueError('Minimum deposit amount is 3000')
+
         self.balance += amount
         self.save()
 
@@ -123,14 +128,19 @@ class Account(models.Model):
         Transaction.objects.create(user=self.user, amount=amount, transaction_type='deposit')
 
     def withdraw(self, amount):
-        if self.balance >= amount:
-            self.balance -= amount
-            self.save()
+        vip_level = self.user.viplevel.vip_level
 
-            # Create a withdrawal transaction
-            Transaction.objects.create(user=self.user, amount=amount, transaction_type='withdrawal')
+        if vip_level > 0:
+            if self.balance >= amount:
+                self.balance -= amount
+                self.save()
+
+                # Create a withdrawal transaction
+                Transaction.objects.create(user=self.user, amount=amount, transaction_type='withdrawal')
+            else:
+                raise ValueError('Insufficient balance')
         else:
-            raise ValueError('Insufficient balance')
+            raise ValueError('VIP level is required to make a withdrawal')
 
     def __str__(self):
         return f"{self.user.phone_number} - {self.balance}"
@@ -213,6 +223,8 @@ class ReferralTeam(models.Model):
 
 class UploadCashOutProof(models.Model):
     pass
+
+
 class WithdrawalRequest(models.Model):
     STATUS_CHOICES = [
         ('pending', 'Pending'),
@@ -237,7 +249,8 @@ class WithdrawalRequest(models.Model):
         self.status = 'rejected'
         self.save()
 
-class DepositTransactionRequest(models.Model):
+
+class DepositRequest(models.Model):
     STATUS_CHOICES = [
         ('pending', 'Pending'),
         ('approved', 'Approved'),
@@ -252,24 +265,14 @@ class DepositTransactionRequest(models.Model):
     narration = models.TextField(max_length=120)
     is_approved = models.BooleanField(default=False)
 
+
     def approve(self):
-        if self.status == 'pending':
-            self.status = 'approved'
-            self.is_approved = True
-            self.save()
-        else:
-            raise ValueError("Deposit request is already approved or rejected")
+        self.status = 'approved'
+        self.save()
+
+        # Process the withdrawal
+        self.user.account.deposit(self.amount)
 
     def reject(self):
-        if self.status == 'pending':
-            self.status = 'rejected'
-            self.is_approved = False
-            self.save()
-        else:
-            raise ValueError("Deposit request is already approved or rejected")
-
-    
-
-
-
-
+        self.status = 'rejected'
+        self.save()

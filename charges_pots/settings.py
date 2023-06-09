@@ -39,7 +39,7 @@ REST_FRAMEWORK ={
     'DEFAULT_AUTHENTICATION_CLASSES':( 'rest_framework.authentication.SessionAuthentication' ,),
 }
 
-AUTH_USER_MODEL = "users.User"
+AUTH_USER_MODEL = 'users.User'
 
 CORS_ALLOW_CREDENTIALS = True
 CORS_ORIGIN_ALLOW_ALL = True
@@ -94,7 +94,7 @@ WSGI_APPLICATION = 'charges_pots.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db2s.sqlite3',
+        'NAME': BASE_DIR / 'debugdb.sqlite3',
     }
 }
 

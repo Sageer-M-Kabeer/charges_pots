@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Vip
+from .models import Vip,VipLevel
 from users.models import User
 
 class VipSerializer(serializers.ModelSerializer):
@@ -9,8 +9,10 @@ class VipSerializer(serializers.ModelSerializer):
         read_only_fields = ('name','user', 'level', 'price', 'daily_income', 'total_revenue', 'circle_days')
 
 
-class BuyVipSerializer(serializers.Serializer):
-    level = serializers.IntegerField()
+class BuyVipSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Vip
+        fields = ['level']
 
 class UserVipSerializer(serializers.ModelSerializer):
     class Meta:
