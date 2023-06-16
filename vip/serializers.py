@@ -21,12 +21,13 @@ class UserVipSerializer(serializers.ModelSerializer):
 
 
 class ResetVipSerializer(serializers.Serializer):
-    user_id = serializers.IntegerField()
+    user = serializers.PrimaryKeyRelatedField(queryset=User.objects.all())
 
-    def validate_user_id(self, value):
+    def validate_user(self, value):
         # Check if the user exists
-        user = User.objects.filter(id=value).first()
-        if not user:
-            raise serializers.ValidationError("Invalid user ID")
+        if not User.objects.filter(id=value.id).exists():
+            raise serializers.ValidationError("Invalid user")
+
         return value
+
 

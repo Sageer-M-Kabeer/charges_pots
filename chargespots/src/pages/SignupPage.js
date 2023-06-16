@@ -5,55 +5,60 @@ import shield from '../assets/shield.png'
 import {useForm} from "react-hook-form";
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import Login from './Login';
+// import Login from './Login';
+import axios from 'axios';
 
 const SignupPage = () => {
 
-  const {
-    register,
-    handleSubmit,
-    reset,
-    watch,
-    formState : { errors }
-  }= useForm();
+  const { register, handleSubmit, reset, watch, formState: { errors } } = useForm();
+  const [error, setError] = useState(null);
 
-  const [error,setError] = useState(null)
+  const onSubmit = (data) => {
+    const formattedPhoneNum = "+234" + data.phonenum;
 
-  const onSubmit =  (data)  =>{
-    const formattedPhoneNum = "+234" + data.phonenum
+    axios
+      .post('http://localhost:8000/signup/', {
+        phone_number: formattedPhoneNum,
+        password: data.password,
+        confirm_password: data.confirmPassword,
+        invite_code: data.invite,
+      }, {
+        headers: {
+          'Content-Type': 'application/json',
+          'X-CSRFToken': getCookie('csrftoken'), // Include the CSRF token from Django
+          'Authorization': `Token ${getSessionAuthToken()}`, // Include the session authentication token
+        },
+      })
+      .then((response) => {
+        if (response.ok) {
+          alert('Account created successfully!');
+        } else {
+          throw new Error('Sign in failed!');
+        }
+      })
+      .catch((error) => {
+        setError('Invalid password or phone number');
+        alert('Account creation error');
+        console.log(error);
+      });
 
-    fetch('http://localhost:8000/signup/',{
-      method:'POST',
-      headers:{
-        'Content-Type':'application/json',
-      },
-      body:JSON.stringify({
-        phone_number:formattedPhoneNum,
-        password:data.password,
-        comfirm_password:data.comfirmPassword,
-        invite_code:data.invite,
-        
-      }),
-    })
-    .then((response) =>{
-      if (response.ok){
-        alert('account created okay!')
-      }else{
-        throw new Error('Sign in failed!');
-      }
-    })
-    .catch((error) =>{
-      setError('Invalid password or phone number')
-    })
-  
-  
-      console.log(data)
-      reset();
-  }
+    console.log(data);
+    
+    reset();
+  };
 
-  // watch password inputs
-  const password = watch('password','');
-  const comfirmPassword = watch('comfirmPassword','')
+  const password = watch('password', '');
+  const confirmPassword = watch('confirmPassword', '');
+
+  const getCookie = (name) => {
+    const cookieValue = document.cookie.match('(^|;)\\s*' + name + '\\s*=\\s*([^;]+)');
+    return cookieValue ? cookieValue.pop() : '';
+  };
+
+  const getSessionAuthToken = () => {
+    // Retrieve the session authentication token from wherever it's stored (e.g., local storage)
+    return localStorage.getItem('sessionAuthToken');
+  };
 
     return (
       <div className=" md:h-screen sm:h-full  w-screen bg-[#f6f8f9] p-0 m-0 border-box outline-none font-[48px]">

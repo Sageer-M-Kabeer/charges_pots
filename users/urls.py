@@ -8,7 +8,7 @@ from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
 from django.conf import settings
 from django.conf.urls.static import static
-from .views import (UserListAPIView,UserBalanceView, UserDetailAPIView, UserLoginAPIView,
+from .views import (TotalIncomeView, UserDetailView,UserBalanceView, UserLoginAPIView,
                      UserLogoutAPIView, UserSignupAPIView,DepositView, WithdrawView, WithdrawalHistoryView
                     ,DepositHistoryView,DepositRequest,WithdrawalRequestView,DepositRequestView)
 
@@ -36,8 +36,7 @@ app_name = 'users'
 urlpatterns = [
     path('', schema_view.with_ui('swagger',cache_timeout=0), name='schema-swagger-ui'),
     path('redoc/', schema_view.with_ui('redoc',cache_timeout=0), name='schema-redoc'),
-    path('users/', UserListAPIView.as_view(), name='user-list'),
-    path('users/<slug>/', UserDetailAPIView.as_view(), name='user-detail'),
+    path('user/', UserDetailView.as_view(), name='user-details'),
     path('login/', UserLoginAPIView.as_view(), name='user-login'),
     path('logout/', UserLogoutAPIView.as_view(), name='user-logout'), 
     path('signup/', UserSignupAPIView.as_view(), name='user-signup'),
@@ -46,7 +45,7 @@ urlpatterns = [
     path('balance/', UserBalanceView.as_view(), name='balance'),
     path('withdrawhistory/', WithdrawalHistoryView.as_view(), name='withdrawtransaction'),
     path('deposithistory/', DepositHistoryView.as_view(), name='deposithistory'),
-    # path('media/deposit_proofs/<>', DepositRequest.as_view(), name='deposit-image'),
+    path('total-income/', TotalIncomeView.as_view(), name='total-income'),
     path('withdrawal/request/', WithdrawalRequestView.as_view(), name='withdrawal-request'),
     path('deposit/request/', DepositRequestView.as_view(), name='withdrawal-request'),
 

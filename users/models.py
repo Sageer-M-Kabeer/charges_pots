@@ -157,9 +157,17 @@ class InviteCode(models.Model):
     owner = models.OneToOneField(User, on_delete=models.CASCADE)
 
 
+
 class Transaction(models.Model):
+    STATUS_CHOICES = [
+        ('pending', 'Pending'),
+        ('approved', 'Approved'),
+        ('rejected', 'Rejected'),
+    ]
+
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     amount = models.DecimalField(max_digits=10, decimal_places=2)
+    status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='pending')
     transaction_type = models.CharField(
         max_length=10,
         choices=[('deposit', 'Deposit'), ('withdrawal', 'Withdrawal'), ('referral', 'Referral')]
@@ -211,7 +219,7 @@ class BankDetails(models.Model):
     ])
 
     def __str__(self):
-        return f"{self.user} {self.account_name} {self.account_number} {self.bank_name}"
+        return f"{self.account_name} {self.account_number} {self.bank_name}"
 
 class ReferralTeam(models.Model):
     user = models.ForeignKey(User,verbose_name=_("user"), on_delete=models.CASCADE)
@@ -261,7 +269,7 @@ class DepositRequest(models.Model):
     amount = models.DecimalField(max_digits=10, decimal_places=2,default=0)
     timestamp = models.DateTimeField(auto_now_add=True)
     status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='pending')
-    proof = models.ImageField(upload_to="deposit_proofs/")
+    proof = models.ImageField(upload_to="deposit_proofs/",verbose_name="deposit proof")
     narration = models.TextField(max_length=120)
     is_approved = models.BooleanField(default=False)
 

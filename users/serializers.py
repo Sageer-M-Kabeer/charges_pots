@@ -4,6 +4,7 @@ from django.contrib.auth import authenticate
 from django.dispatch import receiver
 import shortuuid
 from django.db.models.signals import pre_save
+from django.db.models import Sum
 
 class UserSignupSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True)
@@ -11,7 +12,7 @@ class UserSignupSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ['phone_number', 'password','comfirm_password', 'referral_code']
+        fields = ['phone_number', 'password','comfirm_password', 'code']
         
     def validate(self, attrs):
         password = attrs.get('password')
@@ -45,16 +46,23 @@ class UserLoginSerializer(serializers.Serializer):
         attrs['user'] = user
         return attrs
 
-class UserSerializer(serializers.ModelSerializer):
-    referral_count = serializers.SerializerMethodField()
+class UserDetailSerializer(serializers.ModelSerializer):
+    account_balance = serializers.SerializerMethodField()
+
+    def get_account_balance(self, obj):
+        return obj.account.balance
 
     class Meta:
         model = User
-        fields = ['slug' ,'phone_number','invite_code', 'referral_count']
+        fields = ['phone_number', 'account_balance']
 
-    def get_referral_count(self, obj):
-        return obj.referrals.count()
 
+class TotalIncomeSerializer(serializers.ModelSerializer):
+    total_income = serializers.DecimalField(decimal_places=2, max_digits=10, read_only=True)
+
+    class Meta:
+        model = User
+        fields = ['total_income']
 
 class AccountSerializer(serializers.ModelSerializer):
     class Meta:

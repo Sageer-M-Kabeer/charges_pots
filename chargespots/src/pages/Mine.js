@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react';
 import logo from '../assets/logo2.png'
 import ButtomBar from '../components/BottomBar'
 import { AiOutlineRight } from 'react-icons/ai'
@@ -13,6 +13,42 @@ import axios from 'axios';
 
 
 const Mine = () => {
+
+
+    const [phoneNumber, setPhoneNumber] = useState('');
+  const [accountBalance, setAccountBalance] = useState('');
+  const [inviteCode, setInviteCode] = useState('');
+
+  useEffect(() => {
+    const fetchUserData = async () => {
+        try {
+          const response = await axios.get('http://localhost:8000/user/', {
+            headers: {
+              'Content-Type': 'application/json',
+              'X-CSRFToken': getCookie('csrftoken'),
+              'Authorization': `Token ${getAuthTokenFromSession()}`,
+            },
+            withCredentials: true, // Send cookies with the request
+          });
+      
+          const userData = response.data;
+          setPhoneNumber(userData.phone_number);
+          setAccountBalance(userData.account_balance);
+          setInviteCode(userData.invite_code);
+        } catch (error) {
+          console.error('Error fetching user data:', error);
+        }
+      };
+
+    fetchUserData();
+  }, []);
+
+
+  const getAuthTokenFromSession = () => {
+    // Retrieve the authentication token from the Django session
+    const authToken = sessionStorage.getItem('authToken');
+    return authToken;
+  };
 
     const handleReload = () => {
         window.location.reload();
@@ -60,7 +96,7 @@ const Mine = () => {
                                     </div>
                                     <div className="flex-1 pl-3 flex-col justify-center">
                                         <div className="flex mb-8 justify-between h-6 leading-[24px] font-medium">
-                                            <div>8147354770</div>
+                                            <div>{phoneNumber}</div>
                                             <div>
                                                 <button onClick={handleReload} type="button" className="text-white right-0 bg-[rgb(24,149,176)] h-[24px] p-2 text-center flex justify-center items-center text-lg font-bold rounded-md ">
                                                     <VscRefresh />
@@ -70,7 +106,7 @@ const Mine = () => {
                                         <div className="flex justify-between h-6 leading-[24px] font-medium">
                                             <div>invitation code</div>
                                             <div className="text-[#1895b0] p-[4px,8px] w-20 rounded-md text-center bg-[rgb(24,149,176,.1)] ">
-                                                FJDYJS
+                                                {inviteCode}
                                             </div>
                                         </div>
 
@@ -87,7 +123,7 @@ const Mine = () => {
                                 <div className="m-[0,16px] pt-3 overflow-hidden bg-white">
                                     <div className="flex relative box-border w-full p-[10px,16px] font-[500] text-[#323232] mb-2 text-[18px] leading-[24px]">
                                         <div className="flex-1 "> <span>Main Balance</span></div>
-                                        <div className="relative text-right text-[#969799] mb-2 overflow-hidden "> <span>0</span></div>
+                                        <div className="relative text-right text-[#969799] mb-2 overflow-hidden "> <span>N{accountBalance}</span></div>
                                     </div>
                                     <div className="flex relative box-border w-full p-[10px,16px] font-[500]  text-[#323232]  mb-2 text-[18px] leading-[24px]">
                                         <div className="flex-1 "> <span>Total income</span></div>

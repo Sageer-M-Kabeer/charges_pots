@@ -36,9 +36,15 @@ INSTALLED_APPS = [
     'vip',
 ]
 
-REST_FRAMEWORK ={
-    'DEFAULT_PERMISSION_CLASSES':( 'rest_framework.permissions.AllowAny' ,),
-    'DEFAULT_AUTHENTICATION_CLASSES':( 'rest_framework.authentication.SessionAuthentication' ,),
+CSRF_TRUSTED_ORIGINS = ['https://*.mydomain.com','https://*.127.0.0.1',"https://127.0.0.1:3000","http://localhost:3000"]
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.SessionAuthentication',
+    ],
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticated',
+    ],
 }
 
 AUTH_USER_MODEL = 'users.User'
@@ -49,7 +55,7 @@ CORS_ORIGIN_WHITELIST = (
     'http://localhost:8081',
     'http://localhost:3000',
     'http://127.0.0.1:3000',
-    'http://192.168.47.120:3000'
+    'http://192.168.47.120:3000',
 )
 
 MIDDLEWARE = [

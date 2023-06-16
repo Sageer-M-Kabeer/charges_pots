@@ -1,7 +1,8 @@
+from decimal import Decimal
 from django.contrib import admin
 from .models import (Account, User,Transaction,BankDetails,
                      ReferralTeam,WithdrawalRequest,DepositRequest)
-from .forms import CustomUserChangeForm, UserCreateForm
+# from .forms import CustomUserChangeForm, UserCreateForm
 from django.urls import path
 from django.shortcuts import render, redirect
 from django.urls import reverse
@@ -10,12 +11,9 @@ from django.utils.html import format_html
 
 
 class CustomUserAdmin(admin.ModelAdmin):
-    form = CustomUserChangeForm
-    add_form = UserCreateForm
     model = User
-    # readonly_fields = ["invite_code"]
-    list_display = ("phone_number", "is_staff", "is_active","invite_code",)
-    list_filter = ("phone_number", "is_staff", "is_active",)
+    list_display = ("phone_number", "code", "is_staff", "is_active")
+    list_filter = ("phone_number", "is_staff", "is_active")
     fieldsets = (
         (None, {"fields": ("phone_number", "password")}),
         ("Permissions", {"fields": ("is_staff", "is_active")}),
@@ -23,11 +21,27 @@ class CustomUserAdmin(admin.ModelAdmin):
     add_fieldsets = (
         (None, {
             'classes': ('wide',),
-            'fields': ('phone_number', 'password1', 'password2', 'invite_code',),
+            'fields': ('phone_number', 'password1', 'password2')
         }),
     )
     search_fields = ("phone_number",)
     ordering = ("phone_number",)
+
+    def code(self, obj):
+        return obj.profile.code
+
+    @admin.action(description="Ban selected users")
+    def ban_users(self, request, queryset):
+        # Update the selected users to be inactive
+        queryset.update(is_active=False)
+    
+    @admin.action(description="Unban selected users")
+    def un_ban_users(self, request, queryset):
+        # Update the selected users to be inactive
+        queryset.update(is_active=True)
+
+    actions = [ban_users,un_ban_users]
+
 
 class AccountAdmin(admin.ModelAdmin):
     model=Account
@@ -42,7 +56,7 @@ class TransactionInline(admin.TabularInline):
     can_delete = False
 
 class TransactionAdmin(admin.ModelAdmin):
-    list_display = ('user','transaction_type','amount','timestamp')
+    list_display = ('user','transaction_type','amount','timestamp','status')
     search_fields = ('phone_number',)
     list_filter = ('transaction_type',)
 
@@ -59,7 +73,7 @@ class TeamAdmin(admin.ModelAdmin):
 
 class WithdrawalRequestAdmin(admin.ModelAdmin):
     change_form_template = 'admin/withdrawal_action.html'
-    list_display = ('user', 'amount', 'status_withdrawal', 'withdrawal_actions')
+    list_display = ('user', 'amount', 'status_withdrawal',"bank_details", 'withdrawal_actions')
     readonly_fields = ('user', 'amount', 'status')
 
     def get_actions(self, request):
@@ -87,13 +101,33 @@ class WithdrawalRequestAdmin(admin.ModelAdmin):
                 withdrawal_request.status = 'successful'
                 withdrawal_request.save()
 
-                withdrawal_request.user.account.balance -= withdrawal_request.amount
-                withdrawal_request.user.account.save()
+                account = withdrawal_request.user.account
+                withdrawal_amount = withdrawal_request.amount
+
+                if withdrawal_amount <= account.balance:
+                    account.balance -= withdrawal_amount
+                else:
+                    withdrawal_amount = account.balance
+                    account.balance = 0
+                account.save()
+
+                # Deduct service fee (10%) from the withdrawal amount
+                service_fee = withdrawal_amount * Decimal(0.1)
+                withdrawal_amount -= service_fee
+
+                # Create a transaction for the approved withdrawal
+                Transaction.objects.create(
+                    user=withdrawal_request.user,
+                    amount=withdrawal_amount,
+                    transaction_type='withdrawal',
+                    status='successful'
+                )
 
                 self.message_user(request, 'Withdrawal request approved successfully.')
             else:
                 self.message_user(request, 'Withdrawal request has already been approved or rejected.')
         return HttpResponseRedirect(reverse('admin:users_withdrawalrequest_changelist'))
+
 
     def reject_withdrawal(self, request, object_id):
         withdrawal_request = self.get_object(request, object_id)
@@ -134,8 +168,12 @@ class WithdrawalRequestAdmin(admin.ModelAdmin):
 
 class DepositRequestAdmin(admin.ModelAdmin):
     change_form_template = 'admin/deposit_action.html'
-    list_display = ('user', 'amount', 'status_deposit',"proof", 'deposit_actions')
-    readonly_fields = ('user', 'amount', 'status',"proof",)
+    list_display = ('user', 'amount', 'status_deposit',"proof",'narration',"timestamp", 'deposit_actions')
+    readonly_fields = ('user', 'amount', 'status',"proof","timestamp")
+    raw_id_fields = ("user",)
+    # search_fields = ("user_user_id",)
+    ordering = ('-timestamp',)
+    # list_filter = ('user','timestamp','amount')
 
     def deposit_proof_url(self, obj):
         if obj.proof:
@@ -171,8 +209,10 @@ class DepositRequestAdmin(admin.ModelAdmin):
                 deposit_request.status = 'successful'
                 deposit_request.save()
 
-                deposit_request.user.account.balance += deposit_request.amount
-                deposit_request.user.account.save()
+                account = deposit_request.user.account  # Access the Account object
+                account.balance += deposit_request.amount
+                account.total_income += deposit_request.amount  # Update total_income
+                account.save()
 
                 self.message_user(request, 'Deposit request approved successfully.')
             else:
@@ -222,5 +262,7 @@ admin.site.register(BankDetails,BankDetailsAdmin)
 admin.site.register(ReferralTeam,TeamAdmin)
 admin.site.register(WithdrawalRequest,WithdrawalRequestAdmin)
 admin.site.register(DepositRequest, DepositRequestAdmin)
+# admin.site.register(Profile)
+
 
 

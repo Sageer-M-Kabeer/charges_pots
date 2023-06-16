@@ -1,3 +1,4 @@
+from django.shortcuts import get_object_or_404
 from rest_framework.exceptions import ValidationError
 from rest_framework import generics, status
 from rest_framework.permissions import IsAuthenticated
@@ -7,6 +8,7 @@ from .serializers import VipSerializer, BuyVipSerializer,ResetVipSerializer,User
 from django.contrib.admin.views.decorators import staff_member_required
 from django.utils.decorators import method_decorator
 from users.models import User
+from django.core.exceptions import ObjectDoesNotExist
 
 
 
@@ -47,6 +49,7 @@ class UserVipView(generics.RetrieveAPIView):
         user = self.request.user
         return Vip.objects.get(user=user)
 
+
 @method_decorator(staff_member_required, name='dispatch')
 class ResetVipView(generics.GenericAPIView):
     serializer_class = ResetVipSerializer
@@ -54,11 +57,12 @@ class ResetVipView(generics.GenericAPIView):
     def post(self, request):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
-        user_id = serializer.validated_data['user_id']
-        user = get_object_or_404(User, id=user_id)
+        user = serializer.validated_data['user']
 
-        # Reset the VIP level for the user
-        vip = Vip.objects.get(user=user)
-        vip.reset_vip()
+        try:
+            vip = Vip.objects.get(user=user)
+            vip.reset_vip()
+        except ObjectDoesNotExist:
+            return Response({'message': 'Vip object does not exist for the user'}, status=status.HTTP_404_NOT_FOUND)
 
         return Response({'message': 'VIP level reset successful'}, status=status.HTTP_200_OK)
