@@ -1,8 +1,11 @@
 import React from 'react'
 import { FaAngleLeft } from 'react-icons/fa'
 import { Link } from "react-router-dom";
-import CountdownTimer from '../components/CountdownTimer';
-import { IoMdAdd } from 'react-icons/io'
+// import CountdownTimer from '../components/CountdownTimer';
+import { IoIosCopy } from 'react-icons/io';
+import { FaLock } from 'react-icons/fa'
+import box from '../assets/box.png'
+import sh from '../assets/sh.png'
 
 const Recharge = () => {
     return (
@@ -13,102 +16,125 @@ const Recharge = () => {
                         <div className='relative flex items-center justify-between h-20 w-full'>
                             <div className='left-0 top-0 bottom-0 flex  items-center absolute p-[16px] text-[14px] cursor-pointer'>
                                 <Link to="/pre-recharge" >
-                                    <FaAngleLeft className='text-[#1895b0] text-3xl font-bold mr-2 relative inline-block' />
+                                    <FaAngleLeft className='text-[#42afce] text-3xl font-bold mr-2 relative inline-block' />
                                 </Link>
+                                <div className='flex items-center'>
+                                    <img src={sh} alt='' className='h-24 w-24 pb-[22px]'></img>
+                                </div>
                             </div>
                             <div className='max-w-[60%] my-0 mx-auto flex-1 text-center text-[#323232] font-[600] text-[16px]'>
                                 Recharge
                             </div>
                         </div>
                     </div>
-                    {/* card */}
+                
                     <div className="relative mt-8 mb-8 bg-[#fff]  shadow-sm rounded-2xl">
                         <div className="p-8">
-                            <div>
-                                {/* Other components */}
-                                <CountdownTimer />
-                            </div>
-                            <div className='flex justify-center items-center'>
-                                <button className='py-2 px-4 bg-[#1894b0]  text-white rounded-lg z-[999] font-extralight fixed bottom-4 w-[80%] left-auto right-auto'>Send Request</button>
-                            </div>
-                            <div className='text-[#cc1313]'>
-                                <p>*Tip: Please pay in strict accordance with the details provided below</p>
-                            </div>
-
-
-                        </div>
-                    </div>
-                    {/* card */}
-                    <div className="relative mt-8 mb-8 bg-[#fff]  shadow-sm rounded-2xl">
-                        <div className="p-8">
-                            <div className='text-md font-light py-2  w-full'>
-                                <h4> <span>Step1:</span> Long press and copy the bank details below</h4>
-                            </div>
+                          
                             <div className='flex justify-between flex-col '>
-                                <div className='flex justify-between flex-col mb-4'>
-                                    <div className='text-sm font-thin'>
-                                        Bank Name
-                                    </div>
-                                    <div className='flex justify-between items-center '>
-                                        <span>Example bank ng</span>
-                                        <button className='py-2 px-4 bg-[#1894b0]  text-white rounded-lg font-extralight'>copy</button>
-                                    </div>
-
-                                </div>
-                                <div className='flex justify-between flex-col mb-4'>
-                                    <div className='text-sm font-thin'>
-                                        Account Name
-                                    </div>
-                                    <div className='flex justify-between items-center '>
-                                        <span>example org hy629</span>
-                                        <button className='py-2 px-4 bg-[#1894b0]  text-white rounded-lg font-extralight'>copy</button>
-                                    </div>
-
-                                </div>
-                                <div className='flex justify-between flex-col mb-4'>
-                                    <div className='text-sm font-thin'>
-                                        Account Number
-                                    </div>
-                                    <div className='flex justify-between items-center '>
-                                        <span>8545765855</span>
-                                        <button className='py-2 px-4 bg-[#1894b0]  text-white rounded-lg font-extralight'>copy</button>
-                                    </div>
-
-                                </div>
-
-                            </div>
-
-                            <div className='text-md font-light py-2  w-full'>
-                                <h4> <span>Step2:</span>Upload transfer alert screenshot</h4>
-                            </div>
-                            <div className='flex justify-between flex-col '>
+                                        <div className="text-xl text-[#f38755] font-bold flex flex-row justify-center">
+                                            N <font>150000</font>
+                                        </div>
+                                        <div>
+                                            <div className="text-[#363636] text-md font-semibold">
+                                                Make Transfer</div>
+                                        </div>
+                                        <div className='mt-4'>
+                                            Make transfer of <span className='text-[#f38755] font-semibold
+                                            '>N<font>150000</font></span> to the account
+                                        </div>
+                                        <div className='flex mt-5 justify-center items-center'>
+                                             <button disabled className='py-2 px-4 bg-[#42afce] 
+                                             text-white rounded-full font-extralight w-[80%] mx-2 '>
+                                                Bank transfer</button>
+                                        </div>
                                 <div className='flex justify-between flex-col mb-8'>
-                                    <div className='text-sm font-thin'>
-                                        Upload Proof
-                                    </div>
-                                    <div className='flex justify-between items-center mt mt-4'>
-
-                                        <label className='bg-[#00000011] text-[#323232] text-lg p-12 rounded-lg' for="upload-photo"><IoMdAdd /></label>
-                                        <input className='opacity-0 absolute z-[-1] ' type="file" name="photo" id="upload-photo" />
-                                    </div>
-                                    <div className='text-sm mt-4 font-thin'>
-                                        Write narration that will help us to recognize your transaction easily.
-                                    </div>
-                                    <div className='mt-2 outline-none bg-slate-300 h-[40px] flex items-center py-2 px-4 rounded-md'>
-                                        <div className=''>
+                                       <div className='mt-6 outline-none bg-slate-300 h-[40px] flex items-center py-12 px-4 rounded-md'>
+                                        <div className='flex items-center justify-between flex-1 flex-row'>
                                             {/* <font>NAra</font> */}
-                                            <input type='text' placeholder='write narration name' className='outline-none text-[#323232] bg-slate-300 px-2 rounded-md h-full w-full'></input>
+                                            <label className='text-[#323232] text-md w-full'>Account Number</label>
+                                            <font className="text-[#42afce] font-bold text-lg w-full">45676456434
+                                             </font>
+                                             <div className="text-[#e6a9b0] text-lg">
+                                                <button><IoIosCopy className=""/></button>
+                                                </div>
+                                             
                                         </div>
                                     </div>
-
+                                    <div className='mt-6 outline-none bg-slate-300 h-[40px] flex items-center py-12 px-4 rounded-md'>
+                                        <div className='flex items-center justify-between flex-1 flex-row'>
+                                            {/* <font>NAra</font> */}
+                                            <label className='text-[#323232] text-md w-full'>Bank Name</label>
+                                            <font className="text-[#42afce] font-bold text-lg w-full">yty suui s yus i</font>
+                                            <div className="text-[#e6a9b0] text-lg">
+                                                <button><IoIosCopy className=""/></button>
+                                                </div>
+                                        </div>
+                                    </div>
+                                      <div className='mt-6 outline-none bg-slate-300 h-[40px] flex items-center py-12 px-4 rounded-md'>
+                                        <div className='flex items-center justify-between flex-1 flex-row'>
+                                            {/* <font>NAra</font> */}
+                                            <label className='text-[#323232] text-md w-full'>Account Name</label>
+                                            <font className="text-[#42afce] font-bold text-lg w-full">yty suui s yus i</font>
+                                            <div className="text-[#e6a9b0] text-lg">
+                                                <button><IoIosCopy className=""/></button>
+                                                </div>
+                                        </div>
+                                    </div>
+                                    <div className='mt-6 outline-none bg-slate-300 h-[40px] flex items-center py-12 px-4 rounded-md'>
+                                        <div className='flex flex-row flex-1 items-center justify-between'>
+                                            <label className='text-[#323232] text-md w-full'>Payment Proof</label>
+                                            <input type='file'
+                                            className='outline-none text-[#42afce] text-sm bg-slate-300 px-2 py-8 rounded-md h-full w-full'></input>
+                                        </div>
+                                    </div>
+                                    <div className='mt-6 outline-none bg-slate-300 h-[40px] flex items-center py-12 px-4 rounded-md'>
+                                        <div className='flex flex-row flex-1 items-center justify-between'>
+                                            {/* <font>NAra</font> */}
+                                            <label className='text-[#323232] text-md w-full'>Sender Name</label>
+                                            <input type='text' placeholder='Enter Full Name'
+                                            className='outline-none text-[#42afce] placeholder:text-[#b0b0b0] 
+                                            bg-slate-300 px-2 py-8 rounded-md h-full w-full'></input>
+                                        </div>
+                                    </div>
+                                    <div className='mt-5'>
+                                    <div className='flex mt-5 justify-center items-center'>
+                                             <button className='py-4 px-8 bg-[#42afce] 
+                                             text-white rounded-full font-extralight w-[95%] mx-2 '>
+                                                I have made the payment >> </button>
+                                        </div>
+                                        <div className='px-auto text-[#cc1313] w-[98%] py-2 text-center'>
+                                            Please confirm your transaction immediately after you have sent it to avoid failure
+                                        </div>
+                                        <div className='px-auto text-[#cc1313] w-[98%] py-2 text-center'>
+                                            Please upload the transaction payment proof to confirm transaction after it has between
+                                            processed by the system
+                                        </div>
+                                        <div className='flex flex-1 items-center justify-center mt-8'>
+                                            <img src={box} alt="" className='h-[60%] w-[60%]'></img>
+                                        </div>
+                                        <div className='px-auto text-[#c6c6c6c] w-[98%] py-2 text-center'>
+                                           This payment method will be available soon
+                                        </div>
+                                        <div className='px-auto text-[#c6c6c6c] w-[98%] py-2 text-center'>
+                                           If you hav any questions, connect us by email.
+                                           <div className='px-auto flex flex-row items-scenter 
+                                           justify-between text-[#c6c6c6c] w-[98%] py-1 '>
+                                           <span className='w-full text-sm h-full text-center'>Email address: shpayservices@gmail.com</span>
+                                           <div className="text-[#f87e7e] text-sm">
+                                                <button><IoIosCopy className=""/></button>
+                                                </div>
+                                        </div>
+                                        </div>
+                                        <div className=' mt-16 flex items-center justify-center'>
+                                            <span><FaLock/></span> <font className="ml-4 font-normal text-sm">Secured by 
+                                                <span className='font-bold text-md'> SHPAY</span></font>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-
-
                         </div>
                     </div>
-
-
                 </div>
             </div>
         </div>

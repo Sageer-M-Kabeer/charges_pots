@@ -41,12 +41,12 @@ export default function HomePage() {
       <AlertDialog />
       <div className="py-8 px-4 min-h-full">
         <Swiper
-          className="swiper h-[170px] rounded-[20px] overflow-hidden translate-z-0 cursor-grab"
+          className="swiper h-[200px] md:h-[480px] rounded-[20px] overflow-hidden translate-z-0 cursor-grab"
           autoplay={{ delay: 3000 }} // Adjust the delay as needed
           pagination={{ clickable: true }}
         >
           <SwiperSlide>
-            <img className="w-full h-full" src={te} alt='' />
+            <img className="w-full h-full mx-auto" src={te} alt='' />
           </SwiperSlide>
           <SwiperSlide>
             <img className="w-full h-full" src={te1} alt='' />
@@ -71,7 +71,7 @@ export default function HomePage() {
           items-center leading-[24px] text-[16px] bg-[#fff]">
           <i className="min-w-[24px] h-[24px] w-[24px] text-[20px] relative inline-block "><img src={notice} alt="" /> </i>
           <div className="flex flex-1 relative overflow-hidden items-center h-full">
-            <marquee className="text-[#000] whitespace-nowrap transition-linear"></marquee>
+            <marquee className="text-[#000] whitespace-nowrap transition-linear">+2348726722782  +7822827726</marquee>
           </div>
         </div>
 
@@ -112,7 +112,7 @@ export default function HomePage() {
                 <RiLuggageDepositFill />
               </div>
               <div className="flex flex-1 item-center pl-2 text-sm">
-                <a href="">Withdraw</a>
+                Withdraw
               </div>
             </Link>
 
@@ -144,57 +144,17 @@ export default function HomePage() {
         </div>
 
         {/* videos box */}
-        <div className="mt-[20px] mb-[20px] w-full">
-          <div className="text-[#333] p-[20px] text-[24px]">Video</div>
-          <div className="my-[20px] w-full bg-white rounded-[20px] ">
-            <div className="p-[20px] font-xl text-md">Brand Test</div>
-            <div className="p-[20px]">
-              <div className="max-w-full h-0 pt-[52.6px] xgplayer xgplayer-skin">
-                <video></video>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div className="mt-[20px] mb-[20px] w-full">
+       
+        <div className="flex flex-col justify-center items-center mt-[20px] mb-[15px] w-full">
           <div className="text-[#333] p-[20px] text-[24px]">Video</div>
           {/* video card  */}
-          <div className="my-[20px] w-full bg-white rounded-[20px] ">
+          <div className="my-[20px] flex flex-col justify-center mx-auto w-full bg-[#fff] rounded-[20px] ">
             <div className="p-[20px] font-xl text-md">Brand Test</div>
-            <div className="p-[20px]">
-              <div className="max-w-full h-0 pt-[52.6px] xgplayer xgplayer-skin">
-                <video src={te6} controls>hhbhb</video>
-              </div>
+            <div className='mx-auto px-4 py-2 w-[90%] h-[90%] my-auto md:p-24 rounded-md flex justify-center items-center md:w-[80%] md:h-[80%]'>
+               <video src={te6} controls></video>
             </div>
-          </div>
-
-          {/* video card  */}
-          <div className="my-[20px] w-full bg-white rounded-[20px] ">
-            <div className="p-[20px] font-xl text-md">Brand Test</div>
-            <div className="p-[20px]">
-              <div className="max-w-full h-0 pt-[52.6px] xgplayer xgplayer-skin">
-                <video src={te7} controls controlsList='play'>hhbhb</video>
-              </div>
-            </div>
-          </div>
-
-          {/* video card  */}
-          <div className="my-[20px] w-full bg-white rounded-[20px] ">
-            <div className="p-[20px] font-xl text-md">Brand Test</div>
-            <div className="p-[20px]">
-              <div className="max-w-full h-0 pt-[52.6px] xgplayer xgplayer-skin">
-                <video src="">hhbhb</video>
-              </div>
-            </div>
-          </div>
-
-          {/* video card  */}
-          <div className="my-[20px] w-full bg-white rounded-[20px] ">
-            <div className="p-[20px] font-xl text-md">Brand Test</div>
-            <div className="p-[20px]">
-              <div className="max-w-full h-0 pt-[52.6px] xgplayer xgplayer-skin">
-                <video src="">hhbhb</video>
-              </div>
+            <div className='mx-auto px-4 py-2 w-[90%] h-[90%] my-auto md:p-24 rounded-md flex justify-center items-center md:w-[80%] md:h-[80%]'>
+               <video src={te7} controls></video>
             </div>
           </div>
 
@@ -205,7 +165,7 @@ export default function HomePage() {
         </div>
         {/* flag */}
 
-        <div className="flex my-10 flex-wrap px-8 rounded-md gap-5 bg-white relative">
+        <div className="flex mt-8 mb-16 md:flex-1 flex-wrap p-8 gap-3 justify-center rounded-lg md:gap-2 bg-white relative">
           {/* flag card */}
           <div className="basis-1/4 border-box relative ml2">
             <div className="flex justify-center items-center flex-col h-full p-[16px,8px] bg-white">
