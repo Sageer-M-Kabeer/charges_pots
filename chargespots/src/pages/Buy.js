@@ -33,6 +33,9 @@ const Buy = () => {
                             <div className="text-md text-[rgb(24,142,176)] font-semibold">N500</div>
                         </div>     
                     </div>
+                    <div className='text-[#333] flex justify-between items-center pt-4'>
+                        Current price <span className="text-md text-[rgb(24,142,176)] font-semibold">N5000</span>
+                    </div>
                     <div className="w-full mt-4">
                     <button type='button' className="text-white block w-full h-14 bg-[rgb(24,149,176)] border-[rgb(24,149,176)] border-solid rounded-3xl text-lg py-2 px-8 ">Buy</button>
                     </div>

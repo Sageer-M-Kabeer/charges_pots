@@ -3,16 +3,27 @@ import { Link } from 'react-router-dom';
 import { BottomNavigation, BottomNavigationAction } from '@mui/material';
 import { styled } from '@mui/system';
 import { Home as HomeIcon, ShoppingBasket as ShoppingBasketIcon, Assignment as AssignmentIcon, People as PeopleIcon, AccountCircle as AccountCircleIcon } from '@mui/icons-material';
+import homepage from '../pages/HomePage'
+import buy from '../pages/Buy'
 
 function BottomBar() {
   const [activeTab, setActiveTab] = useState(0);
 
-  const handleTabClick = (tab) => {
+  const handleTabClick = (event, tab) => {
+    // Prevent the default behavior of the event
+   
+    // event.preventDefault();
+    // Update the active tab
     setActiveTab(tab);
+
   };
+  
 
   const TabBarButton = styled(BottomNavigationAction)({
-    color: 'gray',
+   
+    '&.MuiBottomNavigationAction-label': {
+      color: 'gray',
+    },
     '&.Mui-selected': {
       color: '#1895b0',
     },
@@ -22,9 +33,9 @@ function BottomBar() {
     <BottomNavigation
       sx={{ width: '100%' }}
       value={activeTab}
-      onChange={(event, newValue) => handleTabClick(newValue)}
+      onChange={(event, newValue) => handleTabClick(event, newValue)}
       showLabels
-      className="flex justify-between sm:gap-[2px] px-2 py-8 bg-white  fixed bottom-0 w-screen h-8 md:gap-32"
+      className="flex justify-between sm:gap-[2px] px-4 py-8 mx-auto bg-white  fixed bottom-0 w-screen h-8 md:gap-32"
     >
       <TabBarButton
         className=""
@@ -43,7 +54,7 @@ function BottomBar() {
         label="Lease"
         icon={<AssignmentIcon />}
         component={Link}
-        to="/lease"
+        to = "/lease"
       />
       <TabBarButton
         label="Team"

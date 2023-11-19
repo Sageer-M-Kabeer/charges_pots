@@ -6,6 +6,8 @@ import { IoIosCopy } from 'react-icons/io';
 import { FaLock } from 'react-icons/fa'
 import box from '../assets/box.png'
 import sh from '../assets/sh.png'
+import { TbCurrencyNaira } from 'react-icons/tb'
+
 
 const Recharge = () => {
     return (
@@ -22,18 +24,19 @@ const Recharge = () => {
                                     <img src={sh} alt='' className='h-24 w-24 pb-[22px]'></img>
                                 </div>
                             </div>
-                            <div className='max-w-[60%] my-0 mx-auto flex-1 text-center text-[#323232] font-[600] text-[16px]'>
-                                Recharge
-                            </div>
                         </div>
                     </div>
-                
-                    <div className="relative mt-8 mb-8 bg-[#fff]  shadow-sm rounded-2xl">
+                    <div className="relative mt-1 mb-8 bg-[#fff]  shadow-sm rounded-2xl">
                         <div className="p-8">
                           
                             <div className='flex justify-between flex-col '>
                                         <div className="text-xl text-[#f38755] font-bold flex flex-row justify-center">
-                                            N <font>150000</font>
+                                            N<font>150000</font>
+                                        </div>
+                                        <div className='flex mt-4 justify-center items-center'>
+                                             <button disabled className='py-2 px-4 bg-[#42afce] 
+                                             text-white rounded-full font-extralight w-[98%] mx-2 '>
+                                                Bank transfer</button>
                                         </div>
                                         <div>
                                             <div className="text-[#363636] text-md font-semibold">
@@ -43,17 +46,13 @@ const Recharge = () => {
                                             Make transfer of <span className='text-[#f38755] font-semibold
                                             '>N<font>150000</font></span> to the account
                                         </div>
-                                        <div className='flex mt-5 justify-center items-center'>
-                                             <button disabled className='py-2 px-4 bg-[#42afce] 
-                                             text-white rounded-full font-extralight w-[80%] mx-2 '>
-                                                Bank transfer</button>
-                                        </div>
+                                      
                                 <div className='flex justify-between flex-col mb-8'>
-                                       <div className='mt-6 outline-none bg-slate-300 h-[40px] flex items-center py-12 px-4 rounded-md'>
+                                       <div className='mt-3 outline-none bg-slate-300 h-[40px] flex items-center py-10 px-4 rounded-md'>
                                         <div className='flex items-center justify-between flex-1 flex-row'>
                                             {/* <font>NAra</font> */}
                                             <label className='text-[#323232] text-md w-full'>Account Number</label>
-                                            <font className="text-[#42afce] font-bold text-lg w-full">45676456434
+                                            <font className="text-[#42afce] font-bold text-md w-full">45676456434
                                              </font>
                                              <div className="text-[#e6a9b0] text-lg">
                                                 <button><IoIosCopy className=""/></button>
@@ -61,46 +60,46 @@ const Recharge = () => {
                                              
                                         </div>
                                     </div>
-                                    <div className='mt-6 outline-none bg-slate-300 h-[40px] flex items-center py-12 px-4 rounded-md'>
+                                    <div className='mt-3 outline-none bg-slate-300 h-[40px] flex items-center py-10 px-4 rounded-md'>
                                         <div className='flex items-center justify-between flex-1 flex-row'>
                                             {/* <font>NAra</font> */}
                                             <label className='text-[#323232] text-md w-full'>Bank Name</label>
-                                            <font className="text-[#42afce] font-bold text-lg w-full">yty suui s yus i</font>
+                                            <font className="text-[#42afce] font-bold text-md w-full">yty suui s yus i</font>
                                             <div className="text-[#e6a9b0] text-lg">
                                                 <button><IoIosCopy className=""/></button>
                                                 </div>
                                         </div>
                                     </div>
-                                      <div className='mt-6 outline-none bg-slate-300 h-[40px] flex items-center py-12 px-4 rounded-md'>
+                                      <div className='mt-3 outline-none bg-slate-300 h-[40px] flex items-center py-10 px-4 rounded-md'>
                                         <div className='flex items-center justify-between flex-1 flex-row'>
                                             {/* <font>NAra</font> */}
                                             <label className='text-[#323232] text-md w-full'>Account Name</label>
-                                            <font className="text-[#42afce] font-bold text-lg w-full">yty suui s yus i</font>
+                                            <font className="text-[#42afce] font-bold text-md w-full">yty suui s yus i</font>
                                             <div className="text-[#e6a9b0] text-lg">
                                                 <button><IoIosCopy className=""/></button>
                                                 </div>
                                         </div>
                                     </div>
-                                    <div className='mt-6 outline-none bg-slate-300 h-[40px] flex items-center py-12 px-4 rounded-md'>
+                                    <div className='mt-3 outline-none bg-slate-300 h-[40px] flex items-center py-10 px-4 rounded-md'>
                                         <div className='flex flex-row flex-1 items-center justify-between'>
                                             <label className='text-[#323232] text-md w-full'>Payment Proof</label>
                                             <input type='file'
-                                            className='outline-none text-[#42afce] text-sm bg-slate-300 px-2 py-8 rounded-md h-full w-full'></input>
+                                            className='outline-none text-[#42afce] text-sm bg-slate-300 px-2 py-4 rounded-md h-full w-full'></input>
                                         </div>
                                     </div>
-                                    <div className='mt-6 outline-none bg-slate-300 h-[40px] flex items-center py-12 px-4 rounded-md'>
+                                    <div className='mt-3 outline-none bg-slate-300 h-[40px] flex items-center py-10 px-4 rounded-md'>
                                         <div className='flex flex-row flex-1 items-center justify-between'>
                                             {/* <font>NAra</font> */}
                                             <label className='text-[#323232] text-md w-full'>Sender Name</label>
                                             <input type='text' placeholder='Enter Full Name'
                                             className='outline-none text-[#42afce] placeholder:text-[#b0b0b0] 
-                                            bg-slate-300 px-2 py-8 rounded-md h-full w-full'></input>
+                                            bg-slate-300 px-2 py-4 rounded-md h-full w-full'></input>
                                         </div>
                                     </div>
-                                    <div className='mt-5'>
-                                    <div className='flex mt-5 justify-center items-center'>
-                                             <button className='py-4 px-8 bg-[#42afce] 
-                                             text-white rounded-full font-extralight w-[95%] mx-2 '>
+                                    <div className='mt-2'>
+                                    <div className='flex mt-2 justify-center items-center'>
+                                             <button className='py-3 px-4 bg-[#42afce] 
+                                             text-white rounded-full font-extralight w-[98%] mx-2 '>
                                                 I have made the payment >> </button>
                                         </div>
                                         <div className='px-auto text-[#cc1313] w-[98%] py-2 text-center'>
@@ -118,8 +117,8 @@ const Recharge = () => {
                                         </div>
                                         <div className='px-auto text-[#c6c6c6c] w-[98%] py-2 text-center'>
                                            If you hav any questions, connect us by email.
-                                           <div className='px-auto flex flex-row items-scenter 
-                                           justify-between text-[#c6c6c6c] w-[98%] py-1 '>
+                                           <div className='px-4 flex flex-row items-scenter 
+                                           justify-center text-[#c6c6c6c] w-[95%] py-1 text-center'>
                                            <span className='w-full text-sm h-full text-center'>Email address: shpayservices@gmail.com</span>
                                            <div className="text-[#f87e7e] text-sm">
                                                 <button><IoIosCopy className=""/></button>

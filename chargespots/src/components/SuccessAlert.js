@@ -3,12 +3,11 @@ import React, { Component } from 'react'
 export class SuccessAlert extends Component {
   render() {
     return (
-      <div>
-        <div
-          class="mb-4 rounded-lg bg-success-100 px-6 py-5 text-base text-success-700"
-          role="alert">
-          A simple success alert—check it out!
-        </div>
+      <div
+          className="bg-green-100 border-l-[5px] border-green-500 text-green-700 p-4"
+          role="alert" >
+            <p className='font-bold'>Success!</p>
+            <p>Login Successful</p>
       </div>
     )
   }

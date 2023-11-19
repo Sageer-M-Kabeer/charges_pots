@@ -24,6 +24,8 @@ import { SlBulb } from 'react-icons/sl'
 import { Link } from "react-router-dom";
 import AlertDialog from '../components/Dialog'
 
+import SuccessAlert from '../components/SuccessAlert'
+
 import 'swiper/css';
 import 'swiper/css/pagination';
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -38,7 +40,7 @@ export default function HomePage() {
 
   return (
     <div className="bg-[#f6f8f9] w-full h-full">
-      <AlertDialog />
+      <SuccessAlert />
       <div className="py-8 px-4 min-h-full">
         <Swiper
           className="swiper h-[200px] md:h-[480px] rounded-[20px] overflow-hidden translate-z-0 cursor-grab"
