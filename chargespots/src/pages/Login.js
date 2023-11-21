@@ -6,7 +6,8 @@ import { useState } from 'react';
 // import HomePage from "../pages/HomePage"
 import { Link } from 'react-router-dom';
 import axios from 'axios';
-
+import SuccessAlert from '../components/SuccessAlert';
+import ErrorAlert from '../components/ErrorAlert';
 
 const Login = () => {
   const {
@@ -17,34 +18,52 @@ const Login = () => {
   }= useForm();
   const [error,setError] = useState(null)
   const [isLoggedin,setLoggin] = useState(false);
+  const [formsuccess, setformsuccess] = useState(null)
 
-  const onSubmit = async (data) => {
+  const onSubmit = async (data,e) => {
     const formattedPhoneNum = "+234" + data.phonenum;
+    e.preventDefault();
   
     try {
-      const response = await axios.post('http://localhost:8000/login/', {
+      const response = await axios.post('http://3.91.225.206/login/', {
         phone_number: formattedPhoneNum,
         password: data.password,
       }, {
         headers: {
           'Content-Type': 'application/json',
-          'X-CSRFToken': getCookie('csrftoken'),
+          'X-CSRFToken': getCookie('token'),
         },
         withCredentials: true, // Send cookies with the request
       });
   
       console.log(response);
       if (response.status === 200) {
+        const authToken = response.data.token;
+        console.log(authToken);
+        setformsuccess(true)
+        setLoggin(true)
+         // Save the token in localStorage
+        localStorage.setItem('token', authToken);
         window.location.href = "/";
-        alert("Login success!");
+        // Set the token in axios headers
+      axios.defaults.headers.common['Authorization'] = `Bearer ${authToken}`;
+        
       } else {
-        throw new Error('Sign in failed!');
+        setError('Invalid password or phone number');
+        setformsuccess(false)
+        setLoggin(false)
+
       }
     } catch (error) {
-      setError('Invalid password or phone number');
+      setError('Sign in failed!');
+      setformsuccess(false)
+      setLoggin(false)
+
     }
   
     console.log(data);
+    // setformsuccess(null)
+    // setLoggin(null)
     reset();
   };
   
@@ -57,6 +76,9 @@ const Login = () => {
 
     return (
       <div className=" h-full md:h-screen w-screen bg-[#f6f8f9] p-0 m-0 border-box outline-none font-[48px]">
+        { isLoggedin && formsuccess ? <SuccessAlert title="Login Success" text="Redirecting to homepage"/> : ""}
+        {formsuccess === false ? <ErrorAlert title="Login Failed!" text="invalid credentials"/> : null}
+
 
         {/* start of logo */}
         <div className="flex-box justify-center">

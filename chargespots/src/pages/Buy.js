@@ -1,8 +1,24 @@
-import React from 'react'
+import React, {useState,useEffect  } from 'react'
 import ivip from '../assets/1st.jpg'
 import ButtomBar from '../components/BottomBar'
 
 const Buy = () => {
+    const [isLoggedin, setLoggin] = useState(false);
+
+  useEffect(() => {
+    const checkAccessToken = async () => {
+      const accessToken = localStorage.getItem('token');
+      console.log(accessToken);
+      if (accessToken) {
+        setLoggin(prevState => !prevState);
+      } else {
+        setLoggin(false);
+        window.location.href = '/login';
+      }
+    };
+
+    checkAccessToken();
+  }, []); 
   return (
 <div className="bg-[#f6f8f9] w-full h-full">
     <div className="">

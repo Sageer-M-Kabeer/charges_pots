@@ -1,9 +1,73 @@
-import React from 'react'
-import ivip from '../assets/1st.jpg'
+import React, {useState,useEffect  } from 'react'
 import ButtomBar from '../components/BottomBar'
 import { Link } from 'react-router-dom'
+import axios from 'axios';
+
 
 const Team = () => {
+    const [isLoggedin, setLoggin] = useState(false);
+
+    const accessToken = localStorage.getItem('token');
+    const [numberofInvites, setNumberOfInvites] = useState('');
+    //level one
+    const [teamRecharge, setTeamRecharge] = useState('')
+    const [referralCount, setReferralCount] = useState('')
+
+    //level two
+    const [levetwoteamRecharge, setleveltwoTeamRecharge] = useState('')
+    const [leveltworeferralCount, setleveltwoReferralCount] = useState('')
+ 
+    //level two
+    const [levethreeteamRecharge, setlevelthreeTeamRecharge] = useState('')
+    const [levelthreereferralCount, setlevelthreeReferralCount] = useState('')
+
+    useEffect(() => {
+      const checkAccessToken = async () => {
+        console.log(accessToken);
+        if (accessToken) {
+          setLoggin(prevState => !prevState);
+        } else {
+          setLoggin(false);
+          window.location.href = '/login';
+        }
+      };
+      const fetchUserData = async () => {
+        try {
+          const response = await axios.get('http://3.91.225.206/api/teams/', {
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${accessToken}`,
+            },
+            withCredentials: true, // Send cookies with the request
+          });
+      
+          const userData = response.data;
+          setNumberOfInvites(userData.nnumber_of_invites)
+          //level one
+          setTeamRecharge(userData.level_one_recharge_number)
+          setReferralCount(userData.level_one_referral_count)
+
+          //level two
+          setleveltwoTeamRecharge(userData.level_two_recharge_number)
+          setleveltwoReferralCount(userData.level_two_referral_count)
+
+           //level two
+           setlevelthreeTeamRecharge(userData.level_three_recharge_number)
+           setlevelthreeReferralCount(userData.level_three_referral_count)
+ 
+
+
+
+        } catch (error) {
+          console.error('Error fetching user data:', error);
+        }
+      };
+  
+      checkAccessToken();
+      fetchUserData()
+    }, []); 
+    
+  
     return (
         <div className="bg-[#f6f8f9] w-full h-full">
             <div className="">
@@ -31,7 +95,7 @@ const Team = () => {
                                             Number Of Invites
                                         </div>
                                         <div className="mt-3 text-center text-[#1895b0] font-[400] leading-3 ">
-                                            0
+                                        {numberofInvites}
                                         </div>
 
                                     </div>
@@ -83,14 +147,14 @@ const Team = () => {
                                 <div className="m-[0,16px] pt-6 overflow-hidden bg-white">
                                     <div className="flex relative box-border w-full p-[20px,16px] text-[#323232] text-[14px] leading-[24px]">
                                         <div className="flex-1 "> <span>Number Of Invites</span></div>
-                                        <div className="relative text-right text-[#969799] overflow-hidden "> <span>0</span></div>
+                                        <div className="relative text-right text-[#969799] overflow-hidden "> <span>{referralCount}</span></div>
                                     </div>
 
                                 </div>
                                 <div className="m-[0,16px] pt-6 overflow-hidden bg-white">
                                     <div className="flex relative box-border w-full p-[20px,16px] text-[#323232] text-[14px] leading-[24px]">
                                         <div className="flex-1 "> <span>Recharge Number</span></div>
-                                        <div className="relative text-right text-[#969799] overflow-hidden "> <span>0</span></div>
+                                        <div className="relative text-right text-[#969799] overflow-hidden "> <span>{teamRecharge}</span></div>
                                     </div>
 
                                 </div>
@@ -110,14 +174,14 @@ const Team = () => {
                                 <div className="m-[0,16px] pt-6 overflow-hidden bg-white">
                                     <div className="flex relative box-border w-full p-[20px,16px] text-[#323232] text-[14px] leading-[24px]">
                                         <div className="flex-1 "> <span>Number Of Invites</span></div>
-                                        <div className="relative text-right text-[#969799] overflow-hidden "> <span>0</span></div>
+                                        <div className="relative text-right text-[#969799] overflow-hidden "> <span>{leveltworeferralCount}</span></div>
                                     </div>
 
                                 </div>
                                 <div className="m-[0,16px] pt-6 overflow-hidden bg-white">
                                     <div className="flex relative box-border w-full p-[20px,16px] text-[#323232] text-[14px] leading-[24px]">
                                         <div className="flex-1 "> <span>Recharge Number</span></div>
-                                        <div className="relative text-right text-[#969799] overflow-hidden "> <span>0</span></div>
+                                        <div className="relative text-right text-[#969799] overflow-hidden "> <span>{levetwoteamRecharge}</span></div>
                                     </div>
 
                                 </div>
@@ -137,14 +201,14 @@ const Team = () => {
                                 <div className="m-[0,16px] pt-6 overflow-hidden bg-white">
                                     <div className="flex relative box-border w-full p-[20px,16px] text-[#323232] text-[14px] leading-[24px]">
                                         <div className="flex-1 "> <span>Number Of Invites</span></div>
-                                        <div className="relative text-right text-[#969799] overflow-hidden "> <span>0</span></div>
+                                        <div className="relative text-right text-[#969799] overflow-hidden "> <span>{levelthreereferralCount}</span></div>
                                     </div>
 
                                 </div>
                                 <div className="m-[0,16px] pt-6 overflow-hidden bg-white">
                                     <div className="flex relative box-border w-full p-[20px,16px] text-[#323232] text-[14px] leading-[24px]">
                                         <div className="flex-1 "> <span>Recharge Number</span></div>
-                                        <div className="relative text-right text-[#969799] overflow-hidden "> <span>0</span></div>
+                                        <div className="relative text-right text-[#969799] overflow-hidden "> <span>{levethreeteamRecharge}</span></div>
                                     </div>
 
                                 </div>

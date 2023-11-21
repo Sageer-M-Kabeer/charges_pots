@@ -14,27 +14,32 @@ import axios from 'axios';
 
 const Mine = () => {
 
+   const accessToken =  localStorage.getItem('token')
+console.log(accessToken)
 
     const [phoneNumber, setPhoneNumber] = useState('');
   const [accountBalance, setAccountBalance] = useState('');
   const [inviteCode, setInviteCode] = useState('');
+  const [totalIncome, setTotalIncome] = useState("");
+  const [totalIncomeToday, setTotalIncomeToday] = useState("");
 
   useEffect(() => {
     const fetchUserData = async () => {
         try {
-          const response = await axios.get('http://localhost:8000/user/', {
+          const response = await axios.get('http://3.91.225.206/api/profile/', {
             headers: {
               'Content-Type': 'application/json',
-              'X-CSRFToken': getCookie('csrftoken'),
-              'Authorization': `Token ${getAuthTokenFromSession()}`,
+              'Authorization': `Bearer ${accessToken}`,
             },
             withCredentials: true, // Send cookies with the request
           });
       
           const userData = response.data;
           setPhoneNumber(userData.phone_number);
-          setAccountBalance(userData.account_balance);
-          setInviteCode(userData.invite_code);
+          setAccountBalance(userData.main_balance);
+          setInviteCode(userData.code);
+          setTotalIncome(userData.total_income);
+          setTotalIncomeToday(userData.total_income_today)
         } catch (error) {
           console.error('Error fetching user data:', error);
         }
@@ -46,7 +51,7 @@ const Mine = () => {
 
   const getAuthTokenFromSession = () => {
     // Retrieve the authentication token from the Django session
-    const authToken = sessionStorage.getItem('authToken');
+    const authToken = sessionStorage.getItem('token');
     return authToken;
   };
 
@@ -55,31 +60,17 @@ const Mine = () => {
     };
 
     const handleLogout = async () => {
-        try {
-          const response = await axios.post('http://localhost:8000/logout/', null, {
-            headers: {
-              'Content-Type': 'application/json',
-              'X-CSRFToken': getCookie('csrftoken'),
-            },
-            withCredentials: true, // Send cookies with the request
-          });
-      
-          console.log(response);
-          if (response.status === 200) {
-            // Perform any additional actions after successful logout
-            window.location.href = "/login"; // Redirect the user to the login page
-          } else {
-            throw new Error('Logout failed!');
-          }
-        } catch (error) {
-          // Handle the error
-          console.error(error);
-        }
-      };
-      const getCookie = (name) => {
-        const cookieValue = document.cookie.match('(^|;)\\s*' + name + '\\s*=\\s*([^;]+)');
-        return cookieValue ? cookieValue.pop() : '';
-      };
+        // Clear the token from localStorage
+        localStorage.removeItem('token');
+        // Clear the token cookie (if set)
+        // Cookies.remove('token');
+        // Clear the Authorization header in axios
+        delete axios.defaults.headers.common['Authorization'];
+        // Add any additional logout logic you may need
+        // Redirect or perform any other actions after logout
+        // For example, redirecting to the login page
+        window.location.href = '/login';
+       };
 
     return (
         <div className="bg-[#f6f8f9] w-full h-full">
@@ -127,11 +118,11 @@ const Mine = () => {
                                     </div>
                                     <div className="flex relative box-border w-full p-[10px,16px] font-[500]  text-[#323232]  mb-2 text-[18px] leading-[24px]">
                                         <div className="flex-1 "> <span>Total income</span></div>
-                                        <div className="relative text-right text-[#969799] mb-2 overflow-hidden "> <span>0</span></div>
+                                        <div className="relative text-right text-[#969799] mb-2 overflow-hidden "> <span>{totalIncome}</span></div>
                                     </div>
                                     <div className="flex relative box-border w-full p-[10px,16px] font-[500]  text-[#323232] mb-2 text-[18px] leading-[24px]">
                                         <div className="flex-1 "> <span>Today income</span></div>
-                                        <div className="relative text-right text-[#969799] overflow-hidden "> <span>0</span></div>
+                                        <div className="relative text-right text-[#969799] overflow-hidden "> <span>{totalIncomeToday}</span></div>
                                     </div>
 
 

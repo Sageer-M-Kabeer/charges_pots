@@ -1,10 +1,27 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { FaAngleLeft } from 'react-icons/fa'
 import { TbCurrencyNaira } from 'react-icons/tb'
 import { Link } from "react-router-dom";
 
 const BindCardPage = () => {
 
+    const [isLoggedin, setLoggin] = useState(false);
+
+  useEffect(() => {
+    const checkAccessToken = async () => {
+      const accessToken = localStorage.getItem('token');
+      console.log(accessToken);
+      if (accessToken) {
+        setLoggin(prevState => !prevState);
+      } else {
+        setLoggin(false);
+        window.location.href = '/login';
+      }
+    };
+
+    checkAccessToken();
+  }, []); 
+  
     const [rechargeAmount, setRechargeAmount] = useState('');
 
     const handleButtonClick = (amount) => {

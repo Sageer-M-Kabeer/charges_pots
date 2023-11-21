@@ -13,7 +13,7 @@ const SuccessAlert = (props) => {
 
   return (
     showAlert && (
-      <div className="bg-green-100 border-l-[5px] border-green-500 text-green-700 p-4 relative" role="alert">
+      <div className="bg-red-100 border-l-[5px] border-red-500 text-red-700 p-4 relative" role="alert">
         <p className="font-bold">{props.title}</p>
         <p>{props.text}</p>
         <span className="cursor-pointer absolute my-auto top-2 right-2" onClick={() => setShowAlert(false)}>

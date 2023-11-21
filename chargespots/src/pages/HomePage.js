@@ -1,4 +1,4 @@
-import React, { Component, useState } from 'react'
+import React, {useState,useEffect  } from 'react'
 import BottomBar from '../components/BottomBar'
 import Popup from '../components/PopUp'
 import te from '../assets/te.png'
@@ -38,9 +38,26 @@ SwiperCore.use([Autoplay, Pagination]);
 
 export default function HomePage() {
 
+  const [isLoggedin, setLoggin] = useState(false);
+
+  useEffect(() => {
+    const checkAccessToken = async () => {
+      const accessToken = localStorage.getItem('token');
+      console.log(accessToken);
+      if (accessToken) {
+        setLoggin(prevState => !prevState);
+      } else {
+        setLoggin(false);
+        window.location.href = '/login';
+      }
+    };
+
+    checkAccessToken();
+  }, []); 
+
   return (
     <div className="bg-[#f6f8f9] w-full h-full">
-      <SuccessAlert />
+      {isLoggedin ? <SuccessAlert title="Welcome" text="This shit works" />: null}
       <div className="py-8 px-4 min-h-full">
         <Swiper
           className="swiper h-[200px] md:h-[480px] rounded-[20px] overflow-hidden translate-z-0 cursor-grab"
