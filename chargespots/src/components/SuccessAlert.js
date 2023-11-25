@@ -6,14 +6,14 @@ const SuccessAlert = (props) => {
   useEffect(() => {
     const timeoutId = setTimeout(() => {
       setShowAlert(false);
-    }, 8000); // Close the alert after 5 seconds
+    }, 10000); // Close the alert after 5 seconds
 
     return () => clearTimeout(timeoutId); // Clear the timeout on component unmount
   }, []);
 
   return (
     showAlert && (
-      <div className="bg-green-100 border-l-[5px] border-green-500 text-green-700 p-4 relative" role="alert">
+      <div className="bg-green-100 border-l-[5px] border-green-500 text-green-700 p-4 relative z-[999]" role="alert">
         <p className="font-bold">{props.title}</p>
         <p>{props.text}</p>
         <span className="cursor-pointer absolute my-auto top-2 right-2" onClick={() => setShowAlert(false)}>

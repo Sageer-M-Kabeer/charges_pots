@@ -33,7 +33,7 @@ const Team = () => {
       };
       const fetchUserData = async () => {
         try {
-          const response = await axios.get('http://3.91.225.206/api/teams/', {
+          const response = await axios.get('https://queentest.com.ng/api/teams/', {
             headers: {
               'Content-Type': 'application/json',
               'Authorization': `Bearer ${accessToken}`,

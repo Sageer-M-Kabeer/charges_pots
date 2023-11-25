@@ -26,7 +26,7 @@ console.log(accessToken)
   useEffect(() => {
     const fetchUserData = async () => {
         try {
-          const response = await axios.get('http://3.91.225.206/api/profile/', {
+          const response = await axios.get('https://queentest.com.ng/api/profile/', {
             headers: {
               'Content-Type': 'application/json',
               'Authorization': `Bearer ${accessToken}`,

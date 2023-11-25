@@ -2,32 +2,59 @@ import React, { useState, useEffect } from 'react';
 import { FaAngleLeft } from 'react-icons/fa'
 import { TbCurrencyNaira } from 'react-icons/tb'
 import { Link } from "react-router-dom";
+import axios from 'axios';
+
 
 const BindCardPage = () => {
 
     const [isLoggedin, setLoggin] = useState(false);
+    const accessToken = localStorage.getItem('token');
 
-  useEffect(() => {
-    const checkAccessToken = async () => {
-      const accessToken = localStorage.getItem('token');
-      console.log(accessToken);
-      if (accessToken) {
-        setLoggin(prevState => !prevState);
-      } else {
-        setLoggin(false);
-        window.location.href = '/login';
-      }
-    };
+    
+    const onSubmit = async (data,e) => {
+        // e.preventDefault();
 
-    checkAccessToken();
-  }, []); 
+        try {
+          // Fetch user data using the access token
+          const response = await axios.post('https://queentest.com.ng/account/bank-account/', {
+              account_name: data.accname,
+              account_number:data.accnum,
+              bank_name : data.bankname,
+            }, {
+              headers: {
+                'Content-Type': 'application/json',
+              },
+            withCredentials: true,
+          });
   
-    const [rechargeAmount, setRechargeAmount] = useState('');
-
-    const handleButtonClick = (amount) => {
-        setRechargeAmount(amount.toString());
-    };
-
+          const details = response.data;
+          if(response.status === 201){
+              console.log(details)
+          }
+          else{
+              console.log(details)
+          }
+        } catch (error) {
+          console.error('Error fetching user data:', error);
+          console.log(data)
+        }
+      };
+  
+    useEffect(() => {
+        const checkAccessToken = async () => {
+          // Check the access token
+          if (accessToken) {
+            setLoggin(true);
+          } else {
+            setLoggin(false);
+            // Redirect to login if not logged in
+            window.location.href = '/login';
+          }
+        };
+        checkAccessToken();
+      }, [accessToken]);
+  
+ 
     return (
         <div className="bg-[#f6f8f9] w-full h-screen">
             <div className="px-2 min-h-full">
@@ -55,7 +82,7 @@ const BindCardPage = () => {
                                     <div className='mt-2 outline-none bg-slate-300 h-[40px] flex items-center py-2 px-4 rounded-md'>
                                         <div className=''>
                                             {/* <font>NAra</font> */}
-                                            <input type='text' className='outline-none text-[#323232] bg-slate-300 px-2 rounded-md h-full w-full'></input>
+                                            <input type='text' name ="accname" className='outline-none text-[#323232] bg-slate-300 px-2 rounded-md h-full w-full'></input>
                                         </div>
                                     </div>
                                 </div>
@@ -68,7 +95,7 @@ const BindCardPage = () => {
                                     <div className='mt-2 outline-none bg-slate-300 h-[40px] flex items-center py-2 px-4 rounded-md'>
                                         <div className=''>
                                             {/* <font>NAra</font> */}
-                                            <input type='text' className='outline-none text-[#323232] bg-slate-300 px-2 rounded-md h-full w-full'></input>
+                                            <input type='text' name='accnum' className='outline-none text-[#323232] bg-slate-300 px-2 rounded-md h-full w-full'></input>
                                         </div>
                                     </div>
                                 </div>
@@ -79,17 +106,19 @@ const BindCardPage = () => {
                                 </div>
                                 <div>
                                     <div className='mt-2 outline-none bg-slate-300 h-[40px] flex items-center py-2 px-4 rounded-md'>
-                                        <div className=''>
+                                        <select className=''>
                                             {/* <font>NAra</font> */}
-                                            <input type='text' className='outline-none text-[#323232] bg-slate-300 px-2 rounded-md h-full w-full'></input>
-                                        </div>
+                                            <option value="Bank1" className='outline-none text-[#323232] bg-slate-300 px-2 rounded-md h-full w-full'>
+                                                fcmb
+                                            </option>
+                                        </select>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div className='flex justify-center items-center'>
-                        <button className='py-2 px-4 bg-[#1894b0]  text-white rounded-lg font-extralight w-[80%] mx-2 '>Confirm</button>
+                        <button onClick={onSubmit} className='py-2 px-4 bg-[#1894b0]  text-white rounded-lg font-extralight w-[80%] mx-2 '>Confirm</button>
                     </div>
 
 

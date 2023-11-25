@@ -5,46 +5,77 @@ import shield from '../assets/shield.png'
 import {useForm} from "react-hook-form";
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-// import Login from './Login';
 import axios from 'axios';
+import ErrorAlert from '../components/ErrorAlert'
+import SuccessAlert from '../components/SuccessAlert';
 
 const SignupPage = () => {
 
+
   const { register, handleSubmit, reset, watch, formState: { errors } } = useForm();
-  const [error, setError] = useState(null);
+  const [resperror,setRespError] = useState(null)
+  const [errorOccured, setErrorOccured] = useState(false)
+  const [formSubmited, setFormSubmitted] = useState(false)
 
-  const onSubmit = (data) => {
+
+  const onSubmit = async (data, e) => {
     const formattedPhoneNum = "+234" + data.phonenum;
+    e.preventDefault();    
 
-    axios
-      .post('http://localhost:8000/signup/', {
+    try {
+      const response = await axios.post('https://queentest.com.ng/register/', {
+        
         phone_number: formattedPhoneNum,
         password: data.password,
         confirm_password: data.confirmPassword,
-        invite_code: data.invite,
+        referral_code: data.invite,
+
       }, {
         headers: {
           'Content-Type': 'application/json',
-          'X-CSRFToken': getCookie('csrftoken'), // Include the CSRF token from Django
-          'Authorization': `Token ${getSessionAuthToken()}`, // Include the session authentication token
+          'X-CSRFToken': getCookie('token'),
         },
-      })
-      .then((response) => {
-        if (response.ok) {
-          alert('Account created successfully!');
-        } else {
-          throw new Error('Sign in failed!');
-        }
-      })
-      .catch((error) => {
-        setError('Invalid password or phone number');
-        alert('Account creation error');
-        console.log(error);
+        // withCredentials: true, // Send cookies with the request
       });
+      if(response.status===201){
+        setErrorOccured(false)
+        // const timeoutId = setTimeout(() => {
+        // }, 500); 
+        window.location.href = "/login"
+      }
+      console.log(response)
+  
+    } catch (error) {
+      console.log(error.response.request.response.toString())
+      console.log(error)
+      if (
+        error.response &&
+        error.response.data &&
+        error.response.data.non_field_errors &&
+        error.response.data.non_field_errors.includes(
+          "{'phone number', 'This number is registered for another user'}"
+        )
+      ) {
+        setErrorOccured(true)
+        setRespError('This phone number is already registered for another user.');
+        setFormSubmitted(false)
+      }
+      else if (
+        error.response &&
+        error.response.data &&
+        error.response.data.non_field_errors &&
+        error.response.data.non_field_errors.includes("Invalid referral code.")
+      ) {
+        setErrorOccured(true)
+        alert('Invalid referral code.');
+      }
 
+    }
     console.log(data);
-    
     reset();
+    setFormSubmitted(true);
+    console.log(errorOccured)
+    console.log(formSubmited)
   };
 
   const password = watch('password', '');
@@ -54,15 +85,11 @@ const SignupPage = () => {
     const cookieValue = document.cookie.match('(^|;)\\s*' + name + '\\s*=\\s*([^;]+)');
     return cookieValue ? cookieValue.pop() : '';
   };
-
-  const getSessionAuthToken = () => {
-    // Retrieve the session authentication token from wherever it's stored (e.g., local storage)
-    return localStorage.getItem('sessionAuthToken');
-  };
-
     return (
       <div className=" md:h-screen sm:h-full  w-screen bg-[#f6f8f9] p-0 m-0 border-box outline-none font-[48px]">
 
+        {formSubmited  && errorOccured ? <ErrorAlert title="Error Occured!" text={resperror}/> : " "}
+        {formSubmited &&  errorOccured === false ? <SuccessAlert title="Success!" text='account created successfully'/> : " "}
         {/* start of logo */}
         <div className="flex-box justify-center">
             <div className="bg-[#1895B0] rounded-2xl m-[15px] md:m-[30px]">
@@ -127,14 +154,14 @@ const SignupPage = () => {
                                   h-[45px] leading-[40px] py-0 px-[10px] rounded-[10px]">
                                       <img src={lock} alt='$' className="mr-[5px] text-[#fff] w-[20px] h-[20px] mt-[12px]"/>
                                     
-                                      <input {...register("comfirm-password",{
+                                      <input {...register("confirmPassword",{
                                         required:true,
                                         validate: {
                                           checkLength:(value) => value.length >= 5,
-                                          checkMatch:(value) => value === password || 'passwords do not match'
+                                          // checkMatch:() => (confirmPassword !== password)
                                           }
                                          })}
-                                       name="comfirmPassword" type='password' placeholder='enter password again' autoComplete="off"
+                                       name="confirmPassword" type='password' placeholder='enter password again' autoComplete="off"
                                         className=" pl-[10px] w-[100%] h-[45px] text-white bg-[#1895B0] border-none rounded-[10px] focus:outline-none" input/>
                   </div>
                   <div className="text-left mb-4 text-sm p-2 text-[#ee0a24]">
@@ -153,14 +180,15 @@ const SignupPage = () => {
                                       <input {...register("invite",
                                       {required:true,
                                       validate:{
-                                        checkLength:(value) => !(value.length < 5),
-                                        // matchPattern:(value) => /[0-9]/
+                                        checkLength:(value) => !(value.length < 6),
+                                        // matchPattern:(value) => !(/[0-9]/)
                                       }})} name="invite" type='tel' placeholder='Please enter invite code' autoComplete="off"
                                         className=" pl-[10px] w-[100%] h-[45px] text-white bg-[#1895B0] border-none rounded-[10px] focus:outline-none" input/>
                   </div>
                   <div className="text-left mb-3 text-sm p-2 text-[#ee0a24]">
-                    {errors.invite?.type === "required" && (<div className="errormsg">Invite is required</div>)}
-                    {/* {errors.invite?.type === "checkLength" && (<div className="errormsg">inite code must be 4 digits</div>)} */}
+                    {/* {errors.invite?.type === "required" && (<div className="errormsg">Invite code is required</div>)}
+                    {errors.invite?.type === "checkLength" && (<div className="errormsg">inite code must be 6 digits</div>)} */}
+                    {/* {errors.invite?.type === "matchPattern" && (<div className="errormsg">inite code must be digits only</div>)} */}
                   </div>
                   
               </div>
@@ -169,7 +197,7 @@ const SignupPage = () => {
               {/* button start  */}
               <div className="w-full mt-[15px] mx-auto mb-20 flex flex-col justify-center items-center">
                   <div className="w-[60%] h-[45px] group inline-flex justify-center bg-gradient-to-r from-[#1895B0] to-[#0f758b] rounded-[25px]">
-                    <button type="submit" className="w-full text-center font-bold text-white text-[16px]">
+                    <button type="submit"  className="w-full text-center font-bold text-white text-[16px]">
                       Sign up now
                     </button>
                   </div>

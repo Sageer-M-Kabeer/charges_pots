@@ -169,10 +169,10 @@ export default function HomePage() {
           {/* video card  */}
           <div className="my-[20px] flex flex-col justify-center mx-auto w-full bg-[#fff] rounded-[20px] ">
             <div className="p-[20px] font-xl text-md">Brand Test</div>
-            <div className='mx-auto px-4 py-2 w-[90%] h-[90%] my-auto md:p-24 rounded-md flex justify-center items-center md:w-[80%] md:h-[80%]'>
+            <div className='mx-auto px-4 py-2 w-[90%] h-[90%] my-auto md:p-24 rounded-md flex justify-center items-center md:w-[80%] md:h-[100%]'>
                <video src={te6} controls></video>
             </div>
-            <div className='mx-auto px-4 py-2 w-[90%] h-[90%] my-auto md:p-24 rounded-md flex justify-center items-center md:w-[80%] md:h-[80%]'>
+            <div className='mx-auto px-4 py-2 w-[90%] h-[90%] my-auto md:p-24 rounded-md flex justify-center items-center md:w-[80%] md:h-[1000%]'>
                <video src={te7} controls></video>
             </div>
           </div>

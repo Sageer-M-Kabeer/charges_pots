@@ -42,8 +42,8 @@ const InviteFriends = () => {
                                             <div className='font-[500] mb-2 text-lg'>2.</div>
                                             Agency fees and example: When member A (inviter) invites member B (invitation and new member) to invest in charges-pots, member A gets an extra 10% commission from member
                                             (Invitation Reward)
-                                            Level1 10%
-                                            Level2 4%
+                                            Level1 30%
+                                            Level2 2%
                                             Level3 1%
 
 

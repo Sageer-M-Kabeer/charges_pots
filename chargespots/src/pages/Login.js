@@ -23,9 +23,10 @@ const Login = () => {
   const onSubmit = async (data,e) => {
     const formattedPhoneNum = "+234" + data.phonenum;
     e.preventDefault();
+    alert('hello')
   
     try {
-      const response = await axios.post('http://3.91.225.206/login/', {
+      const response = await axios.post('https://queentest.com.ng/login/', {
         phone_number: formattedPhoneNum,
         password: data.password,
       }, {
