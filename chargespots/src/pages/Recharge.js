@@ -74,20 +74,26 @@ const Recharge = () => {
     // alert('hi',narration)
 
     try {
-      const response = await axios.post('https://queentest.com.ng/account/deposit/request/', {
-        amount: amount,
-        proof: data.proof,
-        narration: data.narration,
+      const formData = new FormData();
+      formData.append('amount', amount);
+      formData.append('proof', data.proof[0]); // Assuming you're handling a single file
+      formData.append('narration', data.narration);
+  
+      const response = await axios.post(
+        'https://queentest.com.ng/account/deposit/request/',
+        formData,
+        {
+          headers: {
+            'Content-Type': 'multipart/form-data', // Set content type to handle files
+            'Authorization': `Bearer ${accessToken}`,
+          },
+          withCredentials: true, // Send cookies with the request
+        }
+      );
 
-      }, {
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${accessToken}`,
-        },
-        withCredentials: true, // Send cookies with the request
-      });
       if(response.status===201){
         // setErrorOccured(false);
+        alert('Hurray')
       }
       console.log(response)
   
@@ -146,7 +152,7 @@ const Recharge = () => {
     //   }
 
     }
-    console.log('data:',data);
+    // console.log('data:',data);
 
   };
 
@@ -159,7 +165,7 @@ const Recharge = () => {
   const handleChange = (e) => {
       setNarration(e.target.value);
   };
-  const handleChangeFile = (e) => {
+  const handleFileChange  = (e) => {
     setProof(e.target.value);
   }
 
@@ -200,7 +206,7 @@ const Recharge = () => {
                                             Make transfer of <span className='text-[#f38755] font-semibold
                                             '><TbCurrencyNaira className='inline-flex justify-center items-center text-xl my-auto'/><font>{amount}</font></span> to the account
                                         </div>
-                                <form onSubmit={handleSubmit(onSubmit)} encType="multipart/form-data">
+                                <form onSubmit={handleSubmit(onSubmit)} method='POST'>
                                 <div className='flex justify-between flex-col mb-8'>
                                        <div className='mt-3 outline-none bg-slate-300 h-[40px] flex items-center py-10 px-4 rounded-md'>
                                         <div className='flex items-center justify-between flex-1 flex-row'>
@@ -246,7 +252,7 @@ const Recharge = () => {
                                                 //   min: (value) =>
                                                     // parseFloat(value) >= 3000 || 'Minimum amount is N3,000',
                                                 },
-                                              })} name='proof' value={proof} accept=".jpg, .jpeg, .png" onChange={handleChangeFile} 
+                                              })} name='proof' value={proof} accept=".jpg, .jpeg, .png"   onChange={handleFileChange}
                                             className='outline-none text-[#42afce] text-sm bg-slate-300 px-2 py-4 rounded-md h-full w-full'></input>
                                         </div>
                                     </div>
