@@ -1,8 +1,142 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { FaAngleLeft } from 'react-icons/fa'
 import { Link } from "react-router-dom";
+import axios from 'axios';
+import SuccessAlert from '../components/SuccessAlert';
+import ErrorAlert from '../components/ErrorAlert';
+
 
 const Recharge = () => {
+
+    const accessToken = localStorage.getItem('token');
+
+    const [amount, setAmount] = useState('')
+    const [isSent, setIsSent] = useState(false)
+    const [errorMsg, setErrorMsg] = useState("")
+    const [errorOccured, setErrorOccured] = useState(false)
+    const [accountBalance, setAccountBalance] = useState(0)
+    // const []
+    const [err, setErr] = useState('')
+
+    const checkLength = (val) => val < 1000 ? true: false
+    const checkEmpty = (val) => val === "" ? true: false
+
+    const handleChange = (e) => {
+        setAmount(e.target.value)
+    }
+
+    const [isLoggedin, setLoggin] = useState(false);
+
+    useEffect(() => {
+      const checkAccessToken = async () => {
+        const accessToken = localStorage.getItem('token');
+        if (accessToken) {
+          setLoggin(prevState => !prevState);
+        } else {
+          setLoggin(false);
+          window.location.href = '/login';
+        }
+      };
+      const fetchUserData = async () => {
+        try {
+          const response = await axios.get('https://queentest.com.ng/api/profile/', {
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${accessToken}`,
+            },
+            withCredentials: true, // Send cookies with the request
+          });
+      
+          const userData = response.data;
+          setAccountBalance(userData.main_balance);
+        } catch (error) {
+          console.error('Error fetching user data:', error);
+        }
+      };
+
+  
+      checkAccessToken();
+      fetchUserData();
+    }, [accessToken]); 
+
+    const onSubmit = async (data, e) => {
+        // e.preventDefault();  
+
+        try {
+          const response = await axios.post('https://queentest.com.ng/account/withdrawal/request/', {
+            amount: amount,
+          }, {
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${accessToken}`,
+            },
+            withCredentials: true, // Send cookies with the request
+          });
+          if(response.status===201){
+            setErrorOccured(false);
+          }
+          console.log(response)
+      
+        } catch (error) {
+        //   console.log(error.response.request.response.toString())
+          console.log(error.request.response)
+          if (
+            error.request &&
+            error.request.response &&
+            error.request.response.includes(
+              "A valid number is required"
+            )
+          ) {
+            setErrorOccured(true)
+            setErrorMsg("Please enter a valid amount not less than N1000")
+          }
+          else if (
+            error.request &&
+            error.request.response &&
+            error.request.response.includes(
+                "Bank details are required for withdrawal"
+            )
+            
+          ) {
+            setErrorOccured(true)
+            setErrorMsg("Bank details are required for withdrawal, Upload your bank details in mine section and try again.")
+          }
+          else if (
+            error.request &&
+            error.request.response &&
+            error.request.response.includes(
+                "only 1000 and above is allowed for withdrawal"
+            )
+            
+          ) {
+            setErrorOccured(true)
+            setErrorMsg("only N1000 and above is allowed for withdrawal")
+          }
+
+          else if (
+            error.request &&
+            error.request.response &&
+            error.request.response.includes(
+                "You must purchase a VIP level before making a withdrawal"
+            )
+            
+          ) {
+            setErrorOccured(true)
+            setErrorMsg("You must purchase a VIP acquirement before making a withdrawal")
+          }
+          else if (
+            error.message.includes("Network Error")
+          ) {
+            setErrorOccured(true)
+            setErrorMsg("Network Error")
+          }
+    
+        }
+        setIsSent(true)    
+      };
+    
+
+
     return (
         <div className="bg-[#f6f8f9] w-full h-screen">
             <div className="px-2 min-h-full">
@@ -19,12 +153,14 @@ const Recharge = () => {
                             </div>
                         </div>
                     </div>
+                    {isSent && !errorOccured ? <SuccessAlert title="Sent!" text="Withdrawal request sent successfully"/>:null}
+                    {isSent && errorOccured ? <ErrorAlert title="Error Occured" text = {errorMsg}/>: null}
                     {/* card */}
                     <div className="relative mt-8 mb-8 bg-[#fff]  shadow-sm rounded-2xl">
                         <div className="p-8">
 
                             <div>
-                                <p>Main balance <span className='text-[#cc1313]'>N30</span></p>
+                                <p>Main balance <span className='text-[#cc1313]'>N{accountBalance}</span></p>
                             </div>
 
 
@@ -37,13 +173,17 @@ const Recharge = () => {
                                     <div className='mt-2 outline-none bg-slate-300 h-[40px] flex items-center py-2 px-4 rounded-md'>
                                         <div className=''>
                                             {/* <font>NAra</font> */}
-                                            <input type='text' placeholder='enter amount' className='outline-none text-[#323232] bg-slate-300 px-2 rounded-md h-full w-full'></input>
+                                            <input required onChange={handleChange}  value={amount} type='text' placeholder='enter amount' className='outline-none text-[#323232] bg-slate-300 px-2 rounded-md h-full w-full'></input>
                                         </div>
-                                    </div>
+                                      
+                                                            </div>
                                     <div className='flex mt-5 justify-center items-center'>
-                                        <button className='py-2 px-4 bg-[#1894b0]  text-white rounded-lg font-extralight w-[80%] mx-2 '>Confirm</button>
+                                        <button onClick={onSubmit} className='py-2 px-4 bg-[#1894b0]  text-white rounded-lg font-extralight w-[80%] mx-2 '>Confirm</button>
                                     </div>
-
+                                    <div className="text-center mb-3 text-sm p-2 text-[#ee0a24]">
+                                            {isSent && checkEmpty(amount) && (<div className="errormsg">amount is required</div>)}
+                                            {isSent && checkLength(amount) && (<div className="errormsg">you cannot withdraw less than N1000</div>)}
+                                    </div>
                                 </div>
                             </div>
 

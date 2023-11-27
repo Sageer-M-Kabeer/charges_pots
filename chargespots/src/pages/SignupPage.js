@@ -39,9 +39,9 @@ const SignupPage = () => {
       });
       if(response.status===201){
         setErrorOccured(false)
-        // const timeoutId = setTimeout(() => {
-        // }, 500); 
-        window.location.href = "/login"
+        // setTimeout(() => {
+        // window.location.href = "/login"
+        // }, 3000); 
       }
       console.log(response)
   
@@ -59,15 +59,16 @@ const SignupPage = () => {
         setErrorOccured(true)
         setRespError('This phone number is already registered for another user.');
         setFormSubmitted(false)
+        
       }
       else if (
-        error.response &&
-        error.response.data &&
-        error.response.data.non_field_errors &&
-        error.response.data.non_field_errors.includes("Invalid referral code.")
+        error.request &&
+        error.request.response &&
+        error.request.response.includes("Invalid referral code.")
       ) {
         setErrorOccured(true)
-        alert('Invalid referral code.');
+        setRespError('Invalid Referral Code')
+        // alert('Invalid referral code.');
       }
 
     }
@@ -76,6 +77,10 @@ const SignupPage = () => {
     setFormSubmitted(true);
     console.log(errorOccured)
     console.log(formSubmited)
+    setTimeout(() => {
+      window.location.reload();
+    }, 5000);
+
   };
 
   const password = watch('password', '');
@@ -86,10 +91,10 @@ const SignupPage = () => {
     return cookieValue ? cookieValue.pop() : '';
   };
     return (
-      <div className=" md:h-screen sm:h-full  w-screen bg-[#f6f8f9] p-0 m-0 border-box outline-none font-[48px]">
+      <div className=" md:h-full sm:h-full  w-screen bg-[#f6f8f9] p-0 m-0 border-box outline-none font-[48px]">
 
         {formSubmited  && errorOccured ? <ErrorAlert title="Error Occured!" text={resperror}/> : " "}
-        {formSubmited &&  errorOccured === false ? <SuccessAlert title="Success!" text='account created successfully'/> : " "}
+        {errorOccured === false || formSubmited ? <SuccessAlert title="Success!" text='account created successfully'/> : " "}
         {/* start of logo */}
         <div className="flex-box justify-center">
             <div className="bg-[#1895B0] rounded-2xl m-[15px] md:m-[30px]">

@@ -64,9 +64,9 @@ const RechargeRecordPage = () => {
             <div key={index} className='flex flex-1 mt-4'>
               <li className='flex items-center justify-center flex-1 gap-2 md:gap-3'><span>{record.transaction_type}</span><span>N{record.amount}</span> <span> {record.timestamp}:</span>
                 <span className={`ml-2 rounded-md py-1 px-2 font-semibold ${
-                  record.status === 'approved' ? 'bg-[rgba(37,176,24,0.1)]' :
-                  record.status === 'failed' ? 'bg-[rgba(176,24,24,0.1)]' :
-                  record.status === 'pending' ? 'bg-[rgba(252,255,82,0.95)]' : ''
+                  record.status === 'approved' ? 'bg-green-200' :
+                  record.status === 'rejected' ? 'bg-red-200' :
+                  record.status === 'pending' ? 'bg-yellow-200' : ''
                 }`}>{record.status}</span>
               </li>
             </div>

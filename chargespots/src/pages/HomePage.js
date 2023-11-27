@@ -57,7 +57,7 @@ export default function HomePage() {
 
   return (
     <div className="bg-[#f6f8f9] w-full h-full">
-      {isLoggedin ? <SuccessAlert title="Welcome" text="This shit works" />: null}
+      {/* {isLoggedin ? <SuccessAlert title="Welcome" text="This shit works" />: null} */}
       <div className="py-8 px-4 min-h-full">
         <Swiper
           className="swiper h-[200px] md:h-[480px] rounded-[20px] overflow-hidden translate-z-0 cursor-grab"

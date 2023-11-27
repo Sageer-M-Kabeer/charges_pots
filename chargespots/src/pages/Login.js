@@ -16,6 +16,7 @@ const Login = () => {
     reset,
     formState : { errors }
   }= useForm();
+  
   const [error,setError] = useState(null)
   const [isLoggedin,setLoggin] = useState(false);
   const [formsuccess, setformsuccess] = useState(null)
@@ -66,6 +67,10 @@ const Login = () => {
     // setformsuccess(null)
     // setLoggin(null)
     reset();
+
+  setTimeout(() => {
+      window.location.reload();
+    }, 4000);
   };
   
   // Helper function to retrieve the CSRF token from cookies

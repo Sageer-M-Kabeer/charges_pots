@@ -15,7 +15,7 @@ import axios from 'axios';
 const Mine = () => {
 
    const accessToken =  localStorage.getItem('token')
-console.log(accessToken)
+   console.log(accessToken)
 
     const [phoneNumber, setPhoneNumber] = useState('');
   const [accountBalance, setAccountBalance] = useState('');
@@ -47,13 +47,6 @@ console.log(accessToken)
 
     fetchUserData();
   }, []);
-
-
-  const getAuthTokenFromSession = () => {
-    // Retrieve the authentication token from the Django session
-    const authToken = sessionStorage.getItem('token');
-    return authToken;
-  };
 
     const handleReload = () => {
         window.location.reload();

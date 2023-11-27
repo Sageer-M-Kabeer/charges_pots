@@ -88,7 +88,7 @@ const router = createBrowserRouter([
     element: <WithdrawalProofUpload />,
   },
   {
-    path: "recharge",
+    path: "recharge/:amount",
     element: <Recharge />,
   },
   {

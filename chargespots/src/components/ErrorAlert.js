@@ -6,8 +6,8 @@ const SuccessAlert = (props) => {
   useEffect(() => {
     const timeoutId = setTimeout(() => {
       setShowAlert(false);
-    }, 10000); // Close the alert after 5 seconds
-
+      window.location.reload();
+    }, 8000); // Close the alert after 5 seconds
     return () => clearTimeout(timeoutId); // Clear the timeout on component unmount
   }, []);
 

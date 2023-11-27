@@ -1,15 +1,165 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { FaAngleLeft } from 'react-icons/fa'
-import { Link } from "react-router-dom";
-// import CountdownTimer from '../components/CountdownTimer';
+import {useForm} from "react-hook-form";
+import { Link,useParams  } from "react-router-dom";
 import { IoIosCopy } from 'react-icons/io';
 import { FaLock } from 'react-icons/fa'
 import box from '../assets/box.png'
 import sh from '../assets/sh.png'
 import { TbCurrencyNaira } from 'react-icons/tb'
+import axios from 'axios';
+
 
 
 const Recharge = () => {
+
+    const copyToClipBoard = (e) => {
+    navigator.clipboard.writeText(e).then(() => {
+    }).catch(err => {
+    //   console.error('Unable to copy text to clipboard', err);
+    });
+}
+
+    const {amount} = useParams();
+    // console.log(amount)
+
+    
+    const {
+        register,
+        handleSubmit,
+        reset,
+        formState : { errors }
+      }= useForm();
+
+  const accessToken = localStorage.getItem('token');
+
+  const [err, setErr] = useState('');
+  const [accountBalance, setAccountBalance] = useState(0);
+  const [narration, setNarration] = useState("");
+  const [proof, setProof] = useState('')
+  const [value, setValue] = useState('')
+
+
+  const checkLength = (val) => val < 1000 ? true: false
+  const checkEmpty = (val) => val === "" ? true: false
+
+  // const handleChange = (e) => {
+  //     setAmount(e.target.value)
+  // }
+
+  const [isLoggedin, setLoggin] = useState(false);
+
+  useEffect(() => {
+    const checkAccessToken = async () => {
+      const accessToken = localStorage.getItem('token');
+      if (accessToken) {
+        setLoggin(prevState => !prevState);
+      } else {
+        setLoggin(false);
+        window.location.href = '/login';
+      }
+    };
+      
+
+  //   eraseAmount()
+    checkAccessToken();
+  }, [accessToken]); 
+
+  const onSubmit = async (data) => {
+    // e.preventDefault();  
+    alert('hi',narration)
+
+    try {
+      const response = await axios.post('https://queentest.com.ng/account/deposit/request/', {
+        amount: amount,
+        proof: data.proof,
+        narration: data.narration,
+
+      }, {
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${accessToken}`,
+        },
+        withCredentials: true, // Send cookies with the request
+      });
+      if(response.status===201){
+        // setErrorOccured(false);
+      }
+      console.log(response)
+  
+    } catch (error) {
+      console.log(error.response.request.response.toString())
+    //   console.log(error.request.response)
+    //   if (
+    //     error.request &&
+    //     error.request.response &&
+    //     error.request.response.includes(
+    //       "A valid number is required"
+    //     )
+    //   ) {
+    //     // setErrorOccured(true)
+    //     // setErrorMsg("Please enter a valid amount not less than N1000")
+    //   }
+    //   else if (
+    //     error.request &&
+    //     error.request.response &&
+    //     error.request.response.includes(
+    //         "Bank details are required for withdrawal"
+    //     )
+        
+    //   ) {
+    //     // setErrorOccured(true)
+    //     // setErrorMsg("Bank details are required for withdrawal, Upload your bank details in mine section and try again.")
+    //   }
+    //   else if (
+    //     error.request &&
+    //     error.request.response &&
+    //     error.request.response.includes(
+    //         "only 1000 and above is allowed for withdrawal"
+    //     )
+        
+    //   ) {
+    //     // setErrorOccured(true)
+    //     // setErrorMsg("only N1000 and above is allowed for withdrawal")
+    //   }
+
+    //   else if (
+    //     error.request &&
+    //     error.request.response &&
+    //     error.request.response.includes(
+    //         "You must purchase a VIP level before making a withdrawal"
+    //     )
+        
+    //   ) {
+    //     // setErrorOccured(true)
+    //     // setErrorMsg("You must purchase a VIP acquirement before making a withdrawal")
+    //   }
+    //   else if (
+    //     error.message.includes("Network Error")
+    //   ) {
+    //     // setErrorOccured(true)
+    //     // setErrorMsg("Network Error")
+    //   }
+
+    }
+    console.log('data:',data);
+
+  };
+
+  const [rechargeAmount, setRechargeAmount] = useState('');
+
+  const handleButtonClick = (amount) => {
+      setRechargeAmount(amount.toString());
+    };
+
+  const handleChange = (e) => {
+      setNarration(e.target.value);
+  };
+  const handleChangeFile = (e) => {
+    setProof(e.target.value);
+  }
+
+
     return (
         <div className="bg-[#f6f8f9] w-full h-screen">
             <div className="px-2 min-h-full">
@@ -31,7 +181,7 @@ const Recharge = () => {
                           
                             <div className='flex justify-between flex-col '>
                                         <div className="text-xl text-[#f38755] font-bold flex flex-row justify-center">
-                                            N<font>150000</font>
+                                            <TbCurrencyNaira className='flex justify-center items-center text-3xl '/><font>{amount}</font>
                                         </div>
                                         <div className='flex mt-4 justify-center items-center'>
                                              <button disabled className='py-2 px-4 bg-[#42afce] 
@@ -44,9 +194,9 @@ const Recharge = () => {
                                         </div>
                                         <div className='mt-4'>
                                             Make transfer of <span className='text-[#f38755] font-semibold
-                                            '>N<font>150000</font></span> to the account
+                                            '><TbCurrencyNaira className='inline-flex justify-center items-center text-xl my-auto'/><font>{amount}</font></span> to the account
                                         </div>
-                                      
+                                <form onSubmit={handleSubmit(onSubmit)}>
                                 <div className='flex justify-between flex-col mb-8'>
                                        <div className='mt-3 outline-none bg-slate-300 h-[40px] flex items-center py-10 px-4 rounded-md'>
                                         <div className='flex items-center justify-between flex-1 flex-row'>
@@ -66,7 +216,7 @@ const Recharge = () => {
                                             <label className='text-[#323232] text-md w-full'>Bank Name</label>
                                             <font className="text-[#42afce] font-bold text-md w-full">yty suui s yus i</font>
                                             <div className="text-[#e6a9b0] text-lg">
-                                                <button><IoIosCopy className=""/></button>
+                                                <button onClick={copyToClipBoard('eyyuus')}><IoIosCopy className=""/></button>
                                                 </div>
                                         </div>
                                     </div>
@@ -84,6 +234,15 @@ const Recharge = () => {
                                         <div className='flex flex-row flex-1 items-center justify-between'>
                                             <label className='text-[#323232] text-md w-full'>Payment Proof</label>
                                             <input type='file'
+                                             {...register('proof', {
+                                                required: 'proof is required',
+                                                validate: {
+                                                //   positive: (value) =>
+                                                    // parseFloat(value) > 0 || 'Amount must be positive',
+                                                //   min: (value) =>
+                                                    // parseFloat(value) >= 3000 || 'Minimum amount is N3,000',
+                                                },
+                                              })} name='proof' value={proof} accept="image/png, image/jpeg" onChange={handleChangeFile}
                                             className='outline-none text-[#42afce] text-sm bg-slate-300 px-2 py-4 rounded-md h-full w-full'></input>
                                         </div>
                                     </div>
@@ -92,16 +251,28 @@ const Recharge = () => {
                                             {/* <font>NAra</font> */}
                                             <label className='text-[#323232] text-md w-full'>Sender Name</label>
                                             <input type='text' placeholder='Enter Full Name'
+                                             {...register('narration', {
+                                                required: 'Name is required',
+                                                validate: {
+                                                //   positive: (value) =>
+                                                    // parseFloat(value) > 0 || 'Amount must be positive',
+                                                //   min: (value) =>
+                                                    // parseFloat(value) >= 3000 || 'Minimum amount is N3,000',
+                                                },
+                                              })} name='narration' value={narration} onChange={handleChange}
                                             className='outline-none text-[#42afce] placeholder:text-[#b0b0b0] 
                                             bg-slate-300 px-2 py-4 rounded-md h-full w-full'></input>
                                         </div>
                                     </div>
                                     <div className='mt-2'>
                                     <div className='flex mt-2 justify-center items-center'>
-                                             <button className='py-3 px-4 bg-[#42afce] 
+                                             <button type='submit' className='py-3 px-4 bg-[#42afce] 
                                              text-white rounded-full font-extralight w-[98%] mx-2 '>
                                                 I have made the payment >> </button>
                                         </div>
+
+                                    
+
                                         <div className='px-auto text-[#cc1313] w-[98%] py-2 text-center'>
                                             Please confirm your transaction immediately after you have sent it to avoid failure
                                         </div>
@@ -131,6 +302,7 @@ const Recharge = () => {
                                         </div>
                                     </div>
                                 </div>
+                                </form>
                             </div>
                         </div>
                     </div>

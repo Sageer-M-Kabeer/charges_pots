@@ -1,9 +1,47 @@
-import React from 'react'
+import { useState,useEffect } from 'react'
 import ivip from '../assets/1st.jpg'
 import ButtomBar from '../components/BottomBar'
 import { Link } from 'react-router-dom'
+import axios from 'axios';
+
 
 const InviteFriends = () => {
+
+    const accessToken = localStorage.getItem('token');
+    const [inviteCode, setInviteCode] = useState('')
+
+
+    useEffect(() => {
+        const checkAccessToken = async () => {
+          // Check the access token
+          if (accessToken) {
+          } else {
+            // Redirect to login if not logged in
+            window.location.href = '/login';
+          }
+        };
+    
+        const fetchUserData = async () => {
+          try {
+            // Fetch user data using the access token
+            const response = await axios.get('https://queentest.com.ng/api/profile/', {
+              headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${accessToken}`,
+              },
+              withCredentials: true,
+            });
+    
+            const userData = response.data;
+            setInviteCode(userData.code)
+          } catch (error) {
+            console.error('Error fetching user data:', error);
+          }
+        };
+    
+        checkAccessToken();
+        fetchUserData();
+      }, []);
     return (
         <div className="bg-[#f6f8f9] w-full h-full">
             <div className="">
@@ -22,11 +60,10 @@ const InviteFriends = () => {
                     <div>
                         <div className='mx-auto my-8 max-w-[100%] flex-col  flex justify-center items-center'>
                             <div className='flex justify-between gap-2 items-center'>
-                                <span>My invitation code</span> <span className='bg-[#1895b0] px-1 py-1 text-sm rounded-md text-white'>755462</span>
+                                <span>My invitation code</span> <span className='bg-[#1895b0] px-1 py-1 text-sm rounded-md text-white'>{inviteCode}</span>
                             </div>
                             <div className='bg-[#1895b0] w-full max-w-full flex justify-center items-center px-5  text-center  py-1 rounded-md mt-4 text-white sm:px-auto sm:w-full sm:text-sm '>
-                                https://www.chargespots.com/#/reg?inviteCode=755462
-                            </div>
+                                 https://www.chargespots.com.ng/{inviteCode}                            </div>
                         </div>
                         {/* card */}
                         <div className="relative text-[#323232] mt-8 mb-8 bg-[#fff]  shadow-sm rounded-2xl">
