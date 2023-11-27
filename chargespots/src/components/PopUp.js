@@ -1,28 +1,34 @@
-import PropTypes from 'prop-types';
-import React, { Component, useEffect, useState } from 'react'
+import React, { useState, useEffect } from 'react';
 
-const Popup = (props) => {
-    const [isOpen, setIsOpen] = useState(props.trigger);
+const PopUp = (props) => {
+  const [showAlert, setShowAlert] = useState(true);
 
-    useEffect(() => {
-        setIsOpen(props.trigger);
-    }, [props.trigger]);
+//   useEffect(() => {
+//     const timeoutId = setTimeout(() => {
+//       setShowAlert(false);
+//     }, 10000); // Close the alert after 5 seconds
 
-    const handleClose = () => {
-        setIsOpen(false);
-    };
+//     return () => clearTimeout(timeoutId); // Clear the timeout on component unmount
+//   }, []);
 
-    return isOpen ? (
-        <div className='w-[90%] h-[90%] m-auto rounded-xl left-0 right-0 top-[50%] max-w-[100vh]'>
-            <div>{props.children}</div>
-            <button onClick={handleClose}>Close</button>
-        </div>
-    ) : null;
+  return (
+    showAlert && (
+      <div className="flex flex-col flex-1 items-center rounded-xl bg-[#d5d5d5] p-4 m-4 h-[100%] w-80 z-50" role="alert">
+        <p className="font-bold text-center text-xl">Welcome To Chargespots</p>
+        <p className='text-center text-md'>loerm ijjsuduhhsdy yguihoids sduhisyygiuhasurui srhioiusos gyoieospguiggagg yagugadhiufuiiuadv
+        loerm ijjsuduhhsdy yguihoids sduhisyygiuhasurui srhioiusos gyoieospguiggagg yagugadhiufuiiuadv
+        loerm ijjsuduhhsdy yguihoids sduhisyygiuhasurui srhioiusos gyoieospguiggagg yagugadhiufuiiuadv
+        loerm ijjsuduhhsdy yguihoids sduhisyygiuhasurui srhioiusos gyoieospguiggagg yagugadhiufuiiuadv
+        loerm ijjsuduhhsdy yguihoids sduhisyygiuhasurui srhioiusos gyoieospguiggagg yagugadhiufuiiuadv
+        loerm ijjsuduhhsdy yguihoids sduhisyygiuhasurui srhioiusos gyoieospguiggagg yagugadhiufuiiuadv
+        loerm ijjsuduhhsdy yguihoids sduhisyygiuhasurui srhioiusos gyoieospguiggagg yagugadhiufuiiuadv
+        loerm ijjsuduhhsdy yguihoids sduhisyygiuhasurui srhioiusos gyoieospguiggagg yagugadhiufuiiuadv
+        loerm ijjsuduhhsdy yguihoids sduhisyygiuhasurui srhioiusos gyoieospguiggagg yagugadhiufuiiuadv</p>
+        < button className="cursor-pointer rounded-md buttom-0 left-0  mx-auto items-center bg-[#efefef] px-4 py-2" onClick={() => setShowAlert(false)}>Close</button>
+      </div>
+    )
+  );
 };
 
-Popup.propTypes = {
-    trigger: PropTypes.bool.isRequired,
-    children: PropTypes.node.isRequired,
-};
-
-export default Popup;
+export default PopUp;
+    ;

@@ -57,6 +57,10 @@ export default function HomePage() {
 
   return (
     <div className="bg-[#f6f8f9] w-full h-full">
+      <div className='flex justify-center items-center scroll-m-3 overflow-hidden'>
+         {/* <Popup/> */}
+      </div>
+           
       {/* {isLoggedin ? <SuccessAlert title="Welcome" text="This shit works" />: null} */}
       <div className="py-8 px-4 min-h-full">
         <Swiper
@@ -246,14 +250,9 @@ export default function HomePage() {
                 Ghana
               </div>
             </div>
-
           </div>
-
         </div>
-
       </div>
-
-
 
       <BottomBar />
     </div>

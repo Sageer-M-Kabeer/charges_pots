@@ -73,7 +73,10 @@ const Recharge = () => {
             withCredentials: true, // Send cookies with the request
           });
           if(response.status===201){
-            setErrorOccured(false);
+            setTimeout(() => {
+              setErrorOccured(false);
+            window.location.reload();
+          }, 8000);
           }
           console.log(response)
       
@@ -117,6 +120,17 @@ const Recharge = () => {
             error.request &&
             error.request.response &&
             error.request.response.includes(
+                "Insufficient account balance for withdrawal"
+            )
+            
+          ) {
+            setErrorOccured(true)
+            setErrorMsg("Insufficient account balance for withdrawal")
+          }
+          else if (
+            error.request &&
+            error.request.response &&
+            error.request.response.includes(
                 "You must purchase a VIP level before making a withdrawal"
             )
             
@@ -153,7 +167,7 @@ const Recharge = () => {
                             </div>
                         </div>
                     </div>
-                    {isSent && !errorOccured ? <SuccessAlert title="Sent!" text="Withdrawal request sent successfully"/>:null}
+                    {isSent && !errorOccured ? <SuccessAlert title="Sent!" text="Withdrawal request sent successfully, The page will reload"/>:null}
                     {isSent && errorOccured ? <ErrorAlert title="Error Occured" text = {errorMsg}/>: null}
                     {/* card */}
                     <div className="relative mt-8 mb-8 bg-[#fff]  shadow-sm rounded-2xl">

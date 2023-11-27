@@ -24,7 +24,7 @@ const Login = () => {
   const onSubmit = async (data,e) => {
     const formattedPhoneNum = "+234" + data.phonenum;
     e.preventDefault();
-    alert('hello')
+    // alert('hello')
   
     try {
       const response = await axios.post('https://queentest.com.ng/login/', {

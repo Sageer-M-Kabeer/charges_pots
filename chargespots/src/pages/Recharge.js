@@ -13,6 +13,7 @@ import axios from 'axios';
 
 const Recharge = () => {
 
+  
     const copyToClipBoard = (e) => {
     navigator.clipboard.writeText(e).then(() => {
     }).catch(err => {
@@ -65,9 +66,12 @@ const Recharge = () => {
     checkAccessToken();
   }, [accessToken]); 
 
+//   const FormData = FormData();
+//   FormData.append("amount", amount)
+  
   const onSubmit = async (data) => {
     // e.preventDefault();  
-    alert('hi',narration)
+    // alert('hi',narration)
 
     try {
       const response = await axios.post('https://queentest.com.ng/account/deposit/request/', {
@@ -196,7 +200,7 @@ const Recharge = () => {
                                             Make transfer of <span className='text-[#f38755] font-semibold
                                             '><TbCurrencyNaira className='inline-flex justify-center items-center text-xl my-auto'/><font>{amount}</font></span> to the account
                                         </div>
-                                <form onSubmit={handleSubmit(onSubmit)}>
+                                <form onSubmit={handleSubmit(onSubmit)} encType="multipart/form-data">
                                 <div className='flex justify-between flex-col mb-8'>
                                        <div className='mt-3 outline-none bg-slate-300 h-[40px] flex items-center py-10 px-4 rounded-md'>
                                         <div className='flex items-center justify-between flex-1 flex-row'>
@@ -242,7 +246,7 @@ const Recharge = () => {
                                                 //   min: (value) =>
                                                     // parseFloat(value) >= 3000 || 'Minimum amount is N3,000',
                                                 },
-                                              })} name='proof' value={proof} accept="image/png, image/jpeg" onChange={handleChangeFile}
+                                              })} name='proof' value={proof} accept=".jpg, .jpeg, .png" onChange={handleChangeFile} 
                                             className='outline-none text-[#42afce] text-sm bg-slate-300 px-2 py-4 rounded-md h-full w-full'></input>
                                         </div>
                                     </div>
