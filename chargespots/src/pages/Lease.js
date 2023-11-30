@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import ivip from '../assets/1st.jpg';
 import ButtomBar from '../components/BottomBar';
 
 const Lease = () => {
@@ -66,7 +65,7 @@ const Lease = () => {
                 <div className="py-0 px-4">
                   <div className="flex justify-around p-2 ">
                     <div className="border-solid leading-3 pt-3 w-full flex justify-between">
-                      <div className="text-[#1895b0]">Price: <span className='font-bold'>N{subscription.vip_price}</span></div>
+                      <div className="text-[#1895b0]">Price: <span className='font-bold'>{subscription.vip_price}</span></div>
                     </div>
                   </div>
                   {/* Other content */}
@@ -79,13 +78,13 @@ const Lease = () => {
                         </div>
                     </div>
                     </div>
-                    {/* <div className="flex justify-between">
+                    <div className="flex justify-between">
 
 
                     <div className="flex mx-auto text-left justify-center p-3 rounded-md border-solid border-[#f1edfe] border-2">
                                     <div className="">
-                                        <div className="text-lg text-[#333] font-semibold">Daily Return</div>
-                                        <div className="text-md text-[#333] font-semibold">N500</div>
+                                        <div className="text-lg text-[#333] font-semibold">Circle Day</div>
+                                        <div className="text-md text-[#333] font-semibold">{subscription.current_circle_day}</div>
                                     </div>                       
                                     </div>
                                     <div className="flex mx-auto text-left justify-center p-3 rounded-md border-solid border-[#f1edfe] border-2">
@@ -95,7 +94,7 @@ const Lease = () => {
                                     </div>                       
                                     </div>
 
-                    </div>  */}
+                    </div>  
                 </div>
               </div>
             </div>
