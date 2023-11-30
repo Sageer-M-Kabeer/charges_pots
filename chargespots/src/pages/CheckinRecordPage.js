@@ -54,7 +54,7 @@ const CheckinRecordPage = () => {
                         </Link>
                     </div>
                     <div className='max-w-[80%] my-0 mx-auto flex-1 text-center text-[#323232] font-[600] text-[16px]'>
-                        Recharge Records
+                        Checkin Records
                     </div>
                 </div>
             </div>

@@ -8,12 +8,17 @@ import box from '../assets/box.png'
 import sh from '../assets/sh.png'
 import { TbCurrencyNaira } from 'react-icons/tb'
 import axios from 'axios';
+import SuccessAlert from '../components/SuccessAlert';
+import ErrorAlert from '../components/ErrorAlert';
 
 
 
 const Recharge = () => {
 
-  
+    const [errorMsg, setErrorMsg] = useState();
+
+
+    
     const copyToClipBoard = (e) => {
     navigator.clipboard.writeText(e).then(() => {
     }).catch(err => {

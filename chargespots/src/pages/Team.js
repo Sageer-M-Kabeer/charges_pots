@@ -9,17 +9,25 @@ const Team = () => {
 
     const accessToken = localStorage.getItem('token');
     const [numberofInvites, setNumberOfInvites] = useState('');
+    const [totalTeamRecharge, setTotalTeamRecharge] = useState('');
+    const [inviteReward, setInviteReward] = useState('');
+    const [totalCommissions, setTotalCommissions] = useState('');
     //level one
     const [teamRecharge, setTeamRecharge] = useState('')
     const [referralCount, setReferralCount] = useState('')
+    const [levelOneCommissons, setLevelOneCommissions] = useState('');
 
     //level two
     const [levetwoteamRecharge, setleveltwoTeamRecharge] = useState('')
     const [leveltworeferralCount, setleveltwoReferralCount] = useState('')
+    const [levelTwoCommissons, setLevelTwoCommissions] = useState('');
+
  
     //level two
     const [levethreeteamRecharge, setlevelthreeTeamRecharge] = useState('')
     const [levelthreereferralCount, setlevelthreeReferralCount] = useState('')
+    const [levelThreeCommissons, setLevelThreeCommissions] = useState('');
+
 
     useEffect(() => {
       const checkAccessToken = async () => {
@@ -43,17 +51,23 @@ const Team = () => {
       
           const userData = response.data;
           setNumberOfInvites(userData.nnumber_of_invites)
+          setTotalTeamRecharge(userData.total_team_recharge_amount)
+          setInviteReward(userData.invitation_reward)
+          setTotalCommissions(userData.commissions)
           //level one
           setTeamRecharge(userData.level_one_recharge_number)
           setReferralCount(userData.level_one_referral_count)
+          setLevelOneCommissions(userData.level_one_total_commission)
 
           //level two
           setleveltwoTeamRecharge(userData.level_two_recharge_number)
           setleveltwoReferralCount(userData.level_two_referral_count)
+          setLevelTwoCommissions(userData.level_two_total_commission)
 
            //level two
            setlevelthreeTeamRecharge(userData.level_three_recharge_number)
            setlevelthreeReferralCount(userData.level_three_referral_count)
+           setLevelThreeCommissions(userData.level_three_total_commission)
  
 
 
@@ -104,7 +118,7 @@ const Team = () => {
                                             Invitation Reward
                                         </div>
                                         <div className="mt-3 text-[#1895b0] text-center font-[400] leading-3 ">
-                                            0
+                                            N{inviteReward}
                                         </div>
 
                                     </div>
@@ -121,7 +135,7 @@ const Team = () => {
                                             Team  Recharge
                                         </div>
                                         <div className="mt-3 text-center text-[#1895b0] font-[400] leading-3 ">
-                                            N0
+                                            N{totalTeamRecharge}
                                         </div>
 
                                     </div>
@@ -130,7 +144,7 @@ const Team = () => {
                                             Commissions
                                         </div>
                                         <div className="mt-3 text-[#1895b0] text-center font-[400] leading-3 ">
-                                            N0
+                                            N{totalCommissions}
                                         </div>
 
                                     </div>
@@ -161,7 +175,7 @@ const Team = () => {
                                 <div className="m-[0,16px] pt-6 overflow-hidden bg-white">
                                     <div className="flex relative box-border w-full p-[20px,16px] text-[#323232] text-[14px] leading-[24px]">
                                         <div className="flex-1 "> <span>Comissions</span></div>
-                                        <div className="relative text-right text-[#969799] overflow-hidden "> <span>N0</span></div>
+                                        <div className="relative text-right text-[#969799] overflow-hidden "> <span>N{levelOneCommissons}</span></div>
                                     </div>
                                 </div>
 
@@ -188,7 +202,7 @@ const Team = () => {
                                 <div className="m-[0,16px] pt-6 overflow-hidden bg-white">
                                     <div className="flex relative box-border w-full p-[20px,16px] text-[#323232] text-[14px] leading-[24px]">
                                         <div className="flex-1 "> <span>Comissions</span></div>
-                                        <div className="relative text-right text-[#969799] overflow-hidden "> <span>N0</span></div>
+                                        <div className="relative text-right text-[#969799] overflow-hidden "> <span>N{levelTwoCommissons}</span></div>
                                     </div>
                                 </div>
 
@@ -215,7 +229,7 @@ const Team = () => {
                                 <div className="m-[0,16px] pt-6 overflow-hidden bg-white">
                                     <div className="flex relative box-border w-full p-[20px,16px] text-[#323232] text-[14px] leading-[24px]">
                                         <div className="flex-1 "> <span>Comissions</span></div>
-                                        <div className="relative text-right text-[#969799] overflow-hidden "> <span>N0</span></div>
+                                        <div className="relative text-right text-[#969799] overflow-hidden "> <span>N{levelThreeCommissons}</span></div>
                                     </div>
                                 </div>
 
