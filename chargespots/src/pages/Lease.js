@@ -49,12 +49,12 @@ const Lease = () => {
             <div key={index} className="relative mb-8 bg-[#fff] shadow-sm rounded-2xl">
               <div className="p-8">
                 <div className="flex mb-8">
-                  <div className="w-24 h-20 mr-2">
-                    <img src={ivip} alt="" />
+                  <div className="w-24 h-20 mr-2 ">
+                    <img className="rounded-md" src={subscription.vip_image} alt="vip_image" />
                   </div>
                   <div className="flex-1 relative mb-3">
                     <div className="text-lg font-bold text-[#333] leading-relaxed overflow-hidden break-words ">
-                      {subscription.vip_name}
+                      VIP LEVEL: {subscription.level}
                       <div className="flex mb-2 text-sm">
                         <div className="bg-[rgba(24,149,176,0.1)] mt-8 mr-2 px-2 py-1 rounded-xl text-sm font-bold text-[#1895b0] leading-loose">
                           {subscription.vip_name}
@@ -66,22 +66,20 @@ const Lease = () => {
                 <div className="py-0 px-4">
                   <div className="flex justify-around p-2 ">
                     <div className="border-solid leading-3 pt-3 w-full flex justify-between">
-                      <div>Production progress</div>
-                      <div className="text-[#1895b0]">{subscription.vip_price}</div>
+                      <div className="text-[#1895b0]">Price: <span className='font-bold'>N{subscription.vip_price}</span></div>
                     </div>
                   </div>
                   {/* Other content */}
+                  <div>Production progress</div>
+
                   <div className="flex justify-around p-2 ">
                     <div className="border-solid leading-3 pt-3 w-full flex justify-between">
                         <div className="mb-4 relative rounded-md h-3 bg-[#ebebf0]">
-                            <div className="bg-green-500 py-2 px-4 rounded-md font-bold text-white">
-                                Done
-                            </div>
-
+                           {subscription.is_expired.toString() === "false" ? <div className="bg-green-500 py-2 px-4 rounded-md font-bold text-white">In Circle</div>:<div className="bg-red-500 py-2 px-4 rounded-md font-bold text-white">Expired</div>}
                         </div>
                     </div>
                     </div>
-                    <div className="flex justify-between">
+                    {/* <div className="flex justify-between">
 
 
                     <div className="flex mx-auto text-left justify-center p-3 rounded-md border-solid border-[#f1edfe] border-2">
@@ -97,7 +95,7 @@ const Lease = () => {
                                     </div>                       
                                     </div>
 
-                    </div> 
+                    </div>  */}
                 </div>
               </div>
             </div>
