@@ -1,8 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react'
 import { FaAngleLeft } from 'react-icons/fa'
-import { TbCurrencyNaira } from 'react-icons/tb'
+// import { TbCurrencyNaira } from 'react-icons/tb'
 import { Link } from "react-router-dom";
 import axios from 'axios';
+import {useForm} from "react-hook-form";
+
 
 
 const BindCardPage = () => {
@@ -10,19 +12,27 @@ const BindCardPage = () => {
     const [isLoggedin, setLoggin] = useState(false);
     const accessToken = localStorage.getItem('token');
 
+
+    const {
+        register,
+        handleSubmit,
+        reset,
+        formState : { errors }
+      }= useForm();
     
     const onSubmit = async (data,e) => {
         // e.preventDefault();
 
         try {
           // Fetch user data using the access token
-          const response = await axios.post('https://queentest.com.ng/account/bank-account/', {
+          const response = await axios.post('https://queentest.com.ng/account/bank-details/', {
               account_name: data.accname,
               account_number:data.accnum,
               bank_name : data.bankname,
             }, {
               headers: {
                 'Content-Type': 'application/json',
+                'Authorization': `Bearer ${accessToken}`,
               },
             withCredentials: true,
           });
@@ -30,13 +40,15 @@ const BindCardPage = () => {
           const details = response.data;
           if(response.status === 201){
               console.log(details)
+              alert("success")
           }
           else{
               console.log(details)
           }
         } catch (error) {
-          console.error('Error fetching user data:', error);
+          console.error('Error:', error.request.response.toString());
           console.log(data)
+          alert("error occured "+ error.request.response.toString())
         }
       };
   
@@ -59,6 +71,7 @@ const BindCardPage = () => {
         <div className="bg-[#f6f8f9] w-full h-screen">
             <div className="px-2 min-h-full">
                 <div className="min-h-full">
+                    <form onSubmit={handleSubmit(onSubmit)}>
                     <div className="relative z-10 leading-[22px] text-center bg-white">
                         <div className='relative flex items-center justify-between h-20 w-full'>
                             <div className='left-0 top-0 bottom-0 flex  items-center absolute p-[16px] text-[14px] cursor-pointer'>
@@ -81,8 +94,16 @@ const BindCardPage = () => {
                                 <div>
                                     <div className='mt-2 outline-none bg-slate-300 h-[40px] flex items-center py-2 px-4 rounded-md'>
                                         <div className=''>
-                                            {/* <font>NAra</font> */}
-                                            <input type='text' name ="accname" className='outline-none text-[#323232] bg-slate-300 px-2 rounded-md h-full w-full'></input>
+                                            <input  {...register('accname', {
+                                                required: 'proof is required',
+                                                validate: {
+                                                //   positive: (value) =>
+                                                    // parseFloat(value) > 0 || 'Amount must be positive',
+                                                //   min: (value) =>
+                                                    // parseFloat(value) >= 3000 || 'Minimum amount is N3,000',
+                                                },
+                                              })}
+                                            type='text' name ="accname" className='outline-none text-[#323232] bg-slate-300 px-2 rounded-md h-full w-full'></input>
                                         </div>
                                     </div>
                                 </div>
@@ -94,8 +115,16 @@ const BindCardPage = () => {
                                 <div>
                                     <div className='mt-2 outline-none bg-slate-300 h-[40px] flex items-center py-2 px-4 rounded-md'>
                                         <div className=''>
-                                            {/* <font>NAra</font> */}
-                                            <input type='text' name='accnum' className='outline-none text-[#323232] bg-slate-300 px-2 rounded-md h-full w-full'></input>
+                                            <input  {...register('accnum', {
+                                                required: 'proof is required',
+                                                validate: {
+                                                //   positive: (value) =>
+                                                    // parseFloat(value) > 0 || 'Amount must be positive',
+                                                //   min: (value) =>
+                                                    // parseFloat(value) >= 3000 || 'Minimum amount is N3,000',
+                                                },
+                                              })}
+                                             type='text' name='accnum' className='outline-none text-[#323232] bg-slate-300 px-2 rounded-md h-full w-full'></input>
                                         </div>
                                     </div>
                                 </div>
@@ -106,21 +135,29 @@ const BindCardPage = () => {
                                 </div>
                                 <div>
                                     <div className='mt-2 outline-none bg-slate-300 h-[40px] flex items-center py-2 px-4 rounded-md'>
-                                        <select className=''>
-                                            {/* <font>NAra</font> */}
-                                            <option value="Bank1" className='outline-none text-[#323232] bg-slate-300 px-2 rounded-md h-full w-full'>
-                                                fcmb
+                                    <select
+                                            {...register('bankname', {
+                                                required: 'Bank name is required',
+                                            })}
+                                            className='outline-none text-[#323232] bg-slate-300 px-2 rounded-md h-full w-full'
+                                            >
+                                            <option value="" disabled selected>
+                                                Select a bank
                                             </option>
-                                        </select>
+                                            <option value="Palmpay">Palmpay</option>
+                                            {/* <option value="fCM">FCMB</option> */}
+                                            {/* <option value="uba">UBA</option> */}
+                                            <option value="Opay">OPay</option>
+                                    </select>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div className='flex justify-center items-center'>
-                        <button onClick={onSubmit} className='py-2 px-4 bg-[#1894b0]  text-white rounded-lg font-extralight w-[80%] mx-2 '>Confirm</button>
+                        <button className='py-2 px-4 bg-[#1894b0]  text-white rounded-lg font-extralight w-[80%] mx-2 '>Confirm</button>
                     </div>
-
+                    </form>
 
                 </div>
             </div>
