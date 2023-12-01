@@ -39,9 +39,9 @@ const SignupPage = () => {
       });
       if(response.status===201){
         setErrorOccured(false)
-        // setTimeout(() => {
-        // window.location.href = "/login"
-        // }, 3000); 
+        setTimeout(() => {
+        window.location.href = "/login"
+        }, 5000); 
       }
       console.log(response)
   
@@ -94,7 +94,7 @@ const SignupPage = () => {
       <div className=" md:h-full sm:h-full  w-screen bg-[#f6f8f9] p-0 m-0 border-box outline-none font-[48px]">
 
         {formSubmited  && errorOccured ? <ErrorAlert title="Error Occured!" text={resperror}/> : " "}
-        {errorOccured === false || formSubmited ? <SuccessAlert title="Success!" text='account created successfully'/> : " "}
+        {errorOccured === false || formSubmited ? <SuccessAlert title="Success!" text='account created successfully, redirecting to login page'/> : " "}
         {/* start of logo */}
         <div className="flex-box justify-center">
             <div className="bg-[#1895B0] rounded-2xl m-[15px] md:m-[30px]">
