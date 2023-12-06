@@ -53,15 +53,8 @@ const Mine = () => {
     };
 
     const handleLogout = async () => {
-        // Clear the token from localStorage
         localStorage.removeItem('token');
-        // Clear the token cookie (if set)
-        // Cookies.remove('token');
-        // Clear the Authorization header in axios
         delete axios.defaults.headers.common['Authorization'];
-        // Add any additional logout logic you may need
-        // Redirect or perform any other actions after logout
-        // For example, redirecting to the login page
         window.location.href = '/login';
        };
 

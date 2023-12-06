@@ -39,9 +39,10 @@ const SignupPage = () => {
       });
       if(response.status===201){
         setErrorOccured(false)
-        setTimeout(() => {
+        // setTimeout(() => {
+          console.log('redirecting...');
         window.location.href = "/login"
-        }, 5000); 
+        // }, 5000); 
       }
       console.log(response)
   
@@ -77,9 +78,9 @@ const SignupPage = () => {
     setFormSubmitted(true);
     console.log(errorOccured)
     console.log(formSubmited)
-    setTimeout(() => {
-      window.location.reload();
-    }, 5000);
+    // setTimeout(() => {
+    //   window.location.reload();
+    // }, 5000);
 
   };
 

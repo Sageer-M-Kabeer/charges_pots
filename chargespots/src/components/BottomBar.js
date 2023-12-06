@@ -1,26 +1,42 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { Link, useLocation } from 'react-router-dom';
 import { BottomNavigation, BottomNavigationAction } from '@mui/material';
 import { styled } from '@mui/system';
-import { Home as HomeIcon, ShoppingBasket as ShoppingBasketIcon, Assignment as AssignmentIcon, People as PeopleIcon, AccountCircle as AccountCircleIcon } from '@mui/icons-material';
-import homepage from '../pages/HomePage'
-import buy from '../pages/Buy'
+import { Home as HomeIcon, ShoppingBasket as ShoppingBasketIcon, Assignment as AssignmentIcon,
+   People as PeopleIcon, AccountCircle as AccountCircleIcon } from '@mui/icons-material';
 
 function BottomBar() {
+  const location = useLocation();
   const [activeTab, setActiveTab] = useState(0);
 
-  const handleTabClick = (event, tab) => {
-    // Prevent the default behavior of the event
-   
-    // event.preventDefault();
-    // Update the active tab
-    setActiveTab(tab);
-
+  // Function to get the index based on the route
+  const getPageIndex = (route) => {
+    switch (route) {
+      case '/':
+        return 0;
+      case '/buy':
+        return 1;
+      case '/lease':
+        return 2;
+      case '/team':
+        return 3;
+      case '/mine':
+        return 4;
+      default:
+        return 0;
+    }
   };
-  
+
+  // Get the index based on the current route
+  useEffect(() => {
+    setActiveTab(getPageIndex(location.pathname));
+  }, [location.pathname]);
+
+  const handleTabClick = (event, tab) => {
+    setActiveTab(tab);
+  };
 
   const TabBarButton = styled(BottomNavigationAction)({
-   
     '&.MuiBottomNavigationAction-label': {
       color: 'gray',
     },
@@ -35,10 +51,9 @@ function BottomBar() {
       value={activeTab}
       onChange={(event, newValue) => handleTabClick(event, newValue)}
       showLabels
-      className="flex justify-between sm:gap-[2px] px-4 py-8 mx-auto bg-white  fixed bottom-0 w-screen h-8 md:gap-32"
+      className="flex justify-between sm:gap-[2px] px-4 py-8 mx-auto bg-white fixed bottom-0 w-screen h-8 md:gap-32"
     >
       <TabBarButton
-        className=""
         label="Home"
         icon={<HomeIcon />}
         component={Link}
@@ -54,7 +69,7 @@ function BottomBar() {
         label="Lease"
         icon={<AssignmentIcon />}
         component={Link}
-        to = "/lease"
+        to="/lease"
       />
       <TabBarButton
         label="Team"

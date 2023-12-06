@@ -28,6 +28,7 @@ import WithdrawRecordPage from './pages/WithdrawRecordPage';
 import CheckinRecordPage from './pages/CheckinRecordPage';
 import WithdrawalProofUpload from './pages/WithdrawalProofUpload';
 import Recharge from './pages/Recharge';
+import UploadCashOutProof from './pages/UploadCashOutProof'
 
 
 // 👇️ make sure to use the correct root element ID
@@ -115,6 +116,10 @@ const router = createBrowserRouter([
     path: "invite-friends",
     element:<InviteFriends/>
   },
+  {
+    path: "/upload-cashouts",
+    element: <UploadCashOutProof/>
+  }
 
 
 

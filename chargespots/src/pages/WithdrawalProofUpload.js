@@ -24,7 +24,8 @@ const WithdrawalProofUpload = () => {
                         The system will randomly draw a reward of N100-300
                     </div>
                     <div className="max-w-[80%] mx-auto fixed z-10 bottom-2 left-0 right-0">
-                        <button type='button' className="text-white block w-full h-14 bg-[rgb(24,149,176)] border-[rgb(24,149,176)] border-solid rounded-3xl text-lg py-2 px-20 ">Upload Proof</button>
+                        <Link to="/upload-cashouts"><button type='button' className="text-white block w-full h-14 bg-[rgb(24,149,176)]
+                         border-[rgb(24,149,176)] border-solid rounded-3xl text-lg py-2 px-20 ">Upload Proof</button></Link>
                     </div>
 
 
