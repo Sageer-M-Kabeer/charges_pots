@@ -23,7 +23,7 @@ const RechargeRecordPage = () => {
     const fetchUserData = async () => {
       try {
         // Fetch user data using the access token
-        const response = await axios.get('https://queentest.com.ng/account/transactions/deposits/', {
+        const response = await axios.get('http://3.91.225.206/account/transactions/deposits/', {
           headers: {
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${accessToken}`,
@@ -58,15 +58,15 @@ const RechargeRecordPage = () => {
                     </div>
                 </div>
             </div>
-      <div className='w-[98%] h-[98%] flex items-center justify-center py-2 px-6 min-h-full'>
-        <ul className='font-[100] text-sm md:text-md'>
+      <div className='w-screen flex items-center justify-center py-2 px-6 min-h-full'>
+        <ul className='font-[100] text-sm'>
           {value.map((record, index) => (
             <div key={index} className='flex flex-1 mt-4'>
               <li className='flex items-center justify-center flex-1 gap-2 md:gap-3'><span>{record.transaction_type}</span><span>N{record.amount}</span> <span> {record.timestamp}:</span>
                 <span className={`ml-2 rounded-md py-1 px-2 font-semibold ${
-                  record.status === 'approved' ? 'bg-green-200' :
-                  record.status === 'rejected' ? 'bg-red-200' :
-                  record.status === 'pending' ? 'bg-yellow-200' : ''
+                  record.status === 'approved' ? 'bg-[rgba(37,176,24,0.1)]' :
+                  record.status === 'failed' ? 'bg-[rgba(176,24,24,0.1)]' :
+                  record.status === 'pending' ? 'bg-[rgba(252,255,82,0.95)]' : ''
                 }`}>{record.status}</span>
               </li>
             </div>

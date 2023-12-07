@@ -61,7 +61,7 @@ const router = createBrowserRouter([
     element: <Mine />,
   },
   {
-    path: "signup",
+    path: "signup/:ref?",
     element: <SignupPage />,
   },
   {

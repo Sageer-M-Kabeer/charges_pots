@@ -9,6 +9,12 @@ import {useForm} from "react-hook-form";
 
 const BindCardPage = () => {
 
+    const bankNames = [
+        {value:"",name:"select bank"},
+        {value:'First Bank',name:'Firstbank Ng'},
+        {value:'First Bank',name:'Firstbank Ng'},
+        {value:'First Bank',name:'Firstbank Ng'},
+    ]
     const [isLoggedin, setLoggin] = useState(false);
     const accessToken = localStorage.getItem('token');
 
@@ -48,7 +54,7 @@ const BindCardPage = () => {
         } catch (error) {
           console.error('Error:', error.request.response.toString());
           console.log(data)
-          alert("error occured "+ error.request.response.toString())
+          alert("error occured"+ error.request.response.toString())
         }
       };
   
@@ -141,13 +147,17 @@ const BindCardPage = () => {
                                             })}
                                             className='outline-none text-[#323232] bg-slate-300 px-2 rounded-md h-full w-full'
                                             >
-                                            <option value="" disabled selected>
+                                            {bankNames.map((bank) =>(
+                                                <option key={bank.value} value={bank.value}>{bank.name}</option>
+                                            )
+                                            )}
+                                            {/* <option value="" disabled selected>
                                                 Select a bank
                                             </option>
                                             <option value="Palmpay">Palmpay</option>
-                                            {/* <option value="fCM">FCMB</option> */}
-                                            {/* <option value="uba">UBA</option> */}
-                                            <option value="Opay">OPay</option>
+                                            <option value="fCM">FCMB</option>
+                                            <option value="uba">UBA</option>
+                                            <option value="Opay">OPay</option> */}
                                     </select>
                                     </div>
                                 </div>

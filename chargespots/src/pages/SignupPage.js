@@ -4,18 +4,20 @@ import lock from '../assets/lock.png';
 import shield from '../assets/shield.png'
 import {useForm} from "react-hook-form";
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
-import axios from 'axios';
+import { Link, useParams } from 'react-router-dom';import axios from 'axios';
 import ErrorAlert from '../components/ErrorAlert'
 import SuccessAlert from '../components/SuccessAlert';
 
 const SignupPage = () => {
 
 
+  const { ref } = useParams();
+  
   const { register, handleSubmit, reset, watch, formState: { errors } } = useForm();
   const [resperror,setRespError] = useState(null)
   const [errorOccured, setErrorOccured] = useState(false)
   const [formSubmited, setFormSubmitted] = useState(false)
+  const [refCode, setRefCode] = useState('');
 
 
   const onSubmit = async (data, e) => {
@@ -28,7 +30,7 @@ const SignupPage = () => {
         phone_number: formattedPhoneNum,
         password: data.password,
         confirm_password: data.confirmPassword,
-        referral_code: data.invite,
+        referral_code: ref??data.invite,
 
       }, {
         headers: {
@@ -84,6 +86,11 @@ const SignupPage = () => {
 
   };
 
+  const handleOnInviteChange = (e) => {
+    if (ref) setRefCode(ref);
+    else setRefCode(e.target.value);
+  }
+
   const password = watch('password', '');
   const confirmPassword = watch('confirmPassword', '');
 
@@ -121,7 +128,7 @@ const SignupPage = () => {
                                       validate:{
                                         checkLength:(value) => value.length >= 10 && value.length <= 11,
                                         matchPattern:(value) => /[0-9]/
-                                      }})} name="phonenum" type='tel' placeholder='Please enter mobile number' autoComplete="off"
+                                      }})} name="phonenum" type='tel' placeholder='enter mobile number' autoComplete="off"
                                         className=" pl-[10px] w-[100%] h-[45px] text-white bg-[#1895B0] border-none rounded-[10px] focus:outline-none" input/>
                   </div>
                   <div className="text-left mb-3 text-sm p-2 text-[#ee0a24]">
@@ -187,13 +194,13 @@ const SignupPage = () => {
                                       {required:true,
                                       validate:{
                                         checkLength:(value) => !(value.length < 6),
-                                        // matchPattern:(value) => !(/[0-9]/)
-                                      }})} name="invite" type='tel' placeholder='Please enter invite code' autoComplete="off"
+                                        // matchPattern:(value) => !(value.isNan())
+                                      }})} name="invite" type='tel' placeholder='Please enter invite code' autoComplete="off" value={ref}
                                         className=" pl-[10px] w-[100%] h-[45px] text-white bg-[#1895B0] border-none rounded-[10px] focus:outline-none" input/>
                   </div>
                   <div className="text-left mb-3 text-sm p-2 text-[#ee0a24]">
-                    {/* {errors.invite?.type === "required" && (<div className="errormsg">Invite code is required</div>)}
-                    {errors.invite?.type === "checkLength" && (<div className="errormsg">inite code must be 6 digits</div>)} */}
+                    {errors.invite?.type === "required" && (<div className="errormsg">Invite code is required</div>)}
+                    {errors.invite?.type === "checkLength" && (<div className="errormsg">inite code must be 6 digits</div>)}
                     {/* {errors.invite?.type === "matchPattern" && (<div className="errormsg">inite code must be digits only</div>)} */}
                   </div>
                   
@@ -213,13 +220,9 @@ const SignupPage = () => {
               </div>
               {/* button end  */}
               </div>
-              
             </div>
-            
           </form>
-
         </div>
-
         {/* end of form */}
       </div>
     )
