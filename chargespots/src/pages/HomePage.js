@@ -23,9 +23,10 @@ import { RiLuggageDepositFill } from 'react-icons/ri'
 import { SlBulb } from 'react-icons/sl'
 import { Link } from "react-router-dom";
 import AlertDialog from '../components/Dialog'
-
 import SuccessAlert from '../components/SuccessAlert'
+import ErrorAlert from '../components/ErrorAlert'
 
+import axios from 'axios';
 import 'swiper/css';
 import 'swiper/css/pagination';
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -39,10 +40,15 @@ SwiperCore.use([Autoplay, Pagination]);
 export default function HomePage() {
 
   const [isLoggedin, setLoggin] = useState(false);
+  const [isCheckedIn, setIsCheckedIn] = useState(false);
+  const [errorOccured, setErrorOcured] = useState(false);
+  const [errorMsg, setErrorMsg] = useState('')
+
+  const accessToken = localStorage.getItem('token');
+
 
   useEffect(() => {
     const checkAccessToken = async () => {
-      const accessToken = localStorage.getItem('token');
       console.log(accessToken);
       if (accessToken) {
         setLoggin(prevState => !prevState);
@@ -55,13 +61,43 @@ export default function HomePage() {
     checkAccessToken();
   }, []); 
 
+  const CheckinUser = async (e) => {
+    e.preventDefault();
+  try {
+    // Fetch user data using the access token
+    const response = await axios.post('https://queentest.com.ng/account/checkin/', {
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${accessToken}`,
+        },
+      withCredentials: true,
+    });
+
+
+    const details = response.data;
+    if(response.status === 201){
+        console.log(details)
+        setIsCheckedIn(true);
+    }
+    else{
+        console.log(details)
+    }
+  } catch (error) {
+    console.error('Error:', error.request.response.toString());
+    setErrorOcured(true);
+    setErrorMsg(error.request.response.toString());
+    console.log(accessToken)
+  }
+};
+
   return (
     <div className="bg-[#f6f8f9] w-full h-full">
       <div className='flex justify-center items-center scroll-m-3 overflow-hidden'>
          {/* <Popup/> */}
       </div>
            
-      {/* {isLoggedin ? <SuccessAlert title="Welcome" text="This shit works" />: null} */}
+      {isCheckedIn ? <SuccessAlert title="Success!" text="User Checked in successfully. come back tomorrow" />: null}
+      {errorOccured ? <ErrorAlert title="Error Occured!" text={errorMsg}/> : null}
       <div className="py-8 px-4 min-h-full">
         <Swiper
           className="swiper h-[200px] md:h-[480px] rounded-[20px] overflow-hidden translate-z-0 cursor-grab"
@@ -94,7 +130,8 @@ export default function HomePage() {
           items-center leading-[24px] text-[16px] bg-[#fff]">
           <i className="min-w-[24px] h-[24px] w-[24px] text-[20px] relative inline-block "><img src={notice} alt="" /> </i>
           <div className="flex flex-1 relative overflow-hidden items-center h-full">
-            <marquee className="text-[#000] whitespace-nowrap transition-linear">+2348726722782  +7822827726</marquee>
+            <marquee className="text-[#000] whitespace-nowrap transition-linear">+2348726722782  +2348045634567 
+            +2347034567487 +23408132324570 +2348146745443 +2349163736737</marquee>
           </div>
         </div>
 
@@ -163,7 +200,8 @@ export default function HomePage() {
         {/* other btn */}
         <div className="mt-[30px] ">
           <div className="title text-[24px] text-[#333] font-lg">User checkin</div>
-          <button className="block w-full rounded-xl py-2 h-[50%] text-[16px] relative text-white bg-[rgb(24,149,176)]">Check in</button>
+          <button onClick={CheckinUser} className="block w-full rounded-xl py-2 h-[50%] text-[16px] 
+          relative text-white bg-[rgb(24,149,176)]">Check in</button>
         </div>
 
         {/* videos box */}

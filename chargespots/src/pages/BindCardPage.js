@@ -12,8 +12,22 @@ const BindCardPage = () => {
     const bankNames = [
         {value:"",name:"select bank"},
         {value:'First Bank',name:'Firstbank Ng'},
-        {value:'First Bank',name:'Firstbank Ng'},
-        {value:'First Bank',name:'Firstbank Ng'},
+        {value:'Opay',name:'Opay'},
+        {value:'Kuda Bank',name:'Kuda MicroFinance'},
+        {value:'MoniePoint',name:'MoniePoint'},
+        {value:'MTN MoMo',name:'MTN MobileMoney'},
+        {value:'Stanbic Bank',name:'Stanbik Bank'},
+        {value:'FCMB',name:'First City Manument Bank'},
+        {value:'KeyStone Bank',name:'KeyStone Bank'},
+        {value:'PalmPay',name:'PalmPay'},
+        {value:'ChipperCash',name:'ChipperCash'},
+        {value:'Access Bank',name:'Access Bank'},
+        {value:'Unity Bank',name:'Unity Bank'},
+        {value:'Fedility Bank',name:'Fedility Bank'},
+        {value:'UBA',name:'UBA'},
+        {value:'Zenith Bank',name:'Zenith Bank'},
+        
+
     ]
     const [isLoggedin, setLoggin] = useState(false);
     const accessToken = localStorage.getItem('token');

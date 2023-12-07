@@ -10,6 +10,9 @@ import {useForm} from "react-hook-form";
 const BindCardPage = () => {
 
     const [isLoggedin, setLoggin] = useState(false);
+    const [tid, setTid] = useState("");
+    const [feedback, setFeedback] = useState("");
+    const [proof, setProof] = useState('')  
     const accessToken = localStorage.getItem('token');
 
 
@@ -24,14 +27,16 @@ const BindCardPage = () => {
         // e.preventDefault();
 
         try {
+            const formData = new FormData();
+            formData.append('tid', data.transcID);
+            formData.append('image', data.proof[0]); // Assuming you're handling a single file
+            formData.append('feedback', data.feedback);
           // Fetch user data using the access token
-          const response = await axios.post('https://queentest.com.ng/account/bank-details/', {
-              tid: data.transcID,
-              image:data.proof,
-              feedback : data.feedback,
-            }, {
+          const response = await axios.post('https://queentest.com.ng/account/cashoutproof',
+                formData,
+             {
               headers: {
-                'Content-Type': 'application/json',
+                'Content-Type': 'multipart/form-data', // Set content type to handle files
                 'Authorization': `Bearer ${accessToken}`,
               },
             withCredentials: true,
@@ -65,13 +70,24 @@ const BindCardPage = () => {
         };
         checkAccessToken();
       }, [accessToken]);
+
+      const handleFeedbackChange = (e) => {
+        setFeedback(e.target.value);
+    };
+    const handleTidChange = (e) => {
+        setTid(e.target.value);
+    };
+    const handleFileChange  = (e) => {
+      setProof(e.target.value);
+    }
+  
   
  
     return (
         <div className="bg-[#f6f8f9] w-full h-screen">
             <div className="px-2 min-h-full">
                 <div className="min-h-full">
-                    <form onSubmit={handleSubmit(onSubmit)}>
+                    <form onSubmit={handleSubmit(onSubmit)} method='POST'>
                     <div className="relative z-10 leading-[22px] text-center bg-white">
                         <div className='relative flex items-center justify-between h-20 w-full'>
                             <div className='left-0 top-0 bottom-0 flex  items-center absolute p-[16px] text-[14px] cursor-pointer'>
@@ -103,7 +119,7 @@ const BindCardPage = () => {
                                                     // parseFloat(value) >= 3000 || 'Minimum amount is N3,000',
                                                 },
                                               })}
-                                            type='text' name ="transcID" className='outline-none text-[#323232] bg-slate-300 px-2 rounded-md h-full w-full'></input>
+                                            type='text' name ="transcID" value={tid} onChange={handleTidChange} className='outline-none text-[#323232] bg-slate-300 px-2 rounded-md h-full w-full'></input>
                                         </div>
                                     </div>
                                 </div>
@@ -124,7 +140,7 @@ const BindCardPage = () => {
                                                     // parseFloat(value) >= 3000 || 'Minimum amount is N3,000',
                                                 },
                                               })}
-                                             type='file' name='proof' className='outline-none text-[#323232] bg-slate-300 px-2 rounded-md h-full w-full'></input>
+                                             type='file' name='proof' value={proof} onChange={handleFileChange} className='outline-none text-[#323232] bg-slate-300 px-2 rounded-md h-full w-full'></input>
                                         </div>
                                     </div>
                                 </div>
@@ -145,7 +161,7 @@ const BindCardPage = () => {
                                                     // parseFloat(value) >= 3000 || 'Minimum amount is N3,000',
                                                 },
                                               })}
-                                             type='text' name='feedback' className='outline-none text-[#323232] bg-slate-300 px-2 rounded-md h-full w-full'></input>
+                                             type='text' name='feedback' value={feedback} onChange={handleFeedbackChange} className='outline-none text-[#323232] bg-slate-300 px-2 rounded-md h-full w-full'></input>
                                         </div>
                                     </div>
                                 </div>

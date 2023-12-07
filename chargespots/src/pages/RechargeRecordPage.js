@@ -23,7 +23,7 @@ const RechargeRecordPage = () => {
     const fetchUserData = async () => {
       try {
         // Fetch user data using the access token
-        const response = await axios.get('http://3.91.225.206/account/transactions/deposits/', {
+        const response = await axios.get('https://queentest.com.ng/account/transactions/deposits/', {
           headers: {
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${accessToken}`,

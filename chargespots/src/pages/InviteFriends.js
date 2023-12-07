@@ -71,7 +71,7 @@ const InviteFriends = () => {
                             </div>
                             <div onClick={copyToClipBoard} className='bg-[#1895b0] w-full  flex justify-center 
                             items-center px-12  text-center  py-3 rounded-md mt-4 text-white sm:px-auto sm:w-full sm:text-sm text-md'>
-                                 https://chargespots.com.ng/signup/{inviteCode}</div>
+                                 https://charges-pots.com.ng/signup/{inviteCode}</div>
                         </div>
                         {/* card */}
                         <div className="relative text-[#323232] mt-8 mb-8 bg-[#fff]  shadow-sm rounded-2xl">
