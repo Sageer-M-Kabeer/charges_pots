@@ -58,11 +58,11 @@ const RechargeRecordPage = () => {
                     </div>
                 </div>
             </div>
-      <div className='w-screen flex items-center justify-center py-2 px-6 min-h-full'>
+      <div className='w-full flex items-center justify-center py-2 px-6 min-h-full'>
         <ul className='font-[100] text-sm'>
           {value.map((record, index) => (
-            <div key={index} className='flex flex-1 mt-4'>
-              <li className='flex items-center justify-center flex-1 gap-2 md:gap-3'><span>{record.transaction_type}</span><span>N{record.amount}</span> <span> {record.timestamp}:</span>
+            <div key={index} className='flex mt-4'>
+              <li className='flex items-center justify-center'><span>{record.transaction_type}</span><span>N{record.amount}</span> <span> {record.timestamp}:</span>
                 <span className={`ml-2 rounded-md py-1 px-2 font-semibold ${
                   record.status === 'approved' ? 'bg-[rgba(37,176,24,0.1)]' :
                   record.status === 'failed' ? 'bg-[rgba(176,24,24,0.1)]' :
