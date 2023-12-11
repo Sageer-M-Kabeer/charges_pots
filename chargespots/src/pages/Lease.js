@@ -8,6 +8,8 @@ const Lease = () => {
   const [vipSubscriptions, setVipSubscriptions] = useState([]);
 
   useEffect(() => {
+    alert('This site is under maintainance pls come back a little while leter')
+
     const fetchData = async () => {
       try {
         const response = await axios.get(

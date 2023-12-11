@@ -6,6 +6,8 @@ import axios from 'axios';
 //"{\"detail\":\"Your token has expired,login\"}"
 
 const Team = () => {
+    alert('This site is under maintainance pls come back a little while leter')
+
     const [isLoggedin, setLoggin] = useState(false);
 
     const accessToken = localStorage.getItem('token');
