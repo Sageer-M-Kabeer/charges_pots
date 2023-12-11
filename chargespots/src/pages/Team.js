@@ -3,30 +3,31 @@ import ButtomBar from '../components/BottomBar'
 import { Link } from 'react-router-dom'
 import axios from 'axios';
 
+//"{\"detail\":\"Your token has expired,login\"}"
 
 const Team = () => {
     const [isLoggedin, setLoggin] = useState(false);
 
     const accessToken = localStorage.getItem('token');
-    const [numberofInvites, setNumberOfInvites] = useState('');
-    const [totalTeamRecharge, setTotalTeamRecharge] = useState('');
-    const [inviteReward, setInviteReward] = useState('');
-    const [totalCommissions, setTotalCommissions] = useState('');
+    const [numberofInvites, setNumberOfInvites] = useState(0);
+    const [totalTeamRecharge, setTotalTeamRecharge] = useState(0);
+    const [inviteReward, setInviteReward] = useState(0);
+    const [totalCommissions, setTotalCommissions] = useState(0);
     //level one
-    const [teamRecharge, setTeamRecharge] = useState('')
-    const [referralCount, setReferralCount] = useState('')
-    const [levelOneCommissons, setLevelOneCommissions] = useState('');
+    const [teamRecharge, setTeamRecharge] = useState(0)
+    const [referralCount, setReferralCount] = useState(0)
+    const [levelOneCommissons, setLevelOneCommissions] = useState(0);
 
     //level two
-    const [levetwoteamRecharge, setleveltwoTeamRecharge] = useState('')
-    const [leveltworeferralCount, setleveltwoReferralCount] = useState('')
-    const [levelTwoCommissons, setLevelTwoCommissions] = useState('');
+    const [levetwoteamRecharge, setleveltwoTeamRecharge] = useState(0)
+    const [leveltworeferralCount, setleveltwoReferralCount] = useState(0)
+    const [levelTwoCommissons, setLevelTwoCommissions] = useState(0);
 
  
     //level two
-    const [levethreeteamRecharge, setlevelthreeTeamRecharge] = useState('')
-    const [levelthreereferralCount, setlevelthreeReferralCount] = useState('')
-    const [levelThreeCommissons, setLevelThreeCommissions] = useState('');
+    const [levethreeteamRecharge, setlevelthreeTeamRecharge] = useState(0)
+    const [levelthreereferralCount, setlevelthreeReferralCount] = useState(0)
+    const [levelThreeCommissons, setLevelThreeCommissions] = useState(0);
 
 
     useEffect(() => {
@@ -68,9 +69,8 @@ const Team = () => {
            setlevelthreeTeamRecharge(userData.level_three_recharge_number)
            setlevelthreeReferralCount(userData.level_three_referral_count)
            setLevelThreeCommissions(userData.level_three_total_commission)
- 
 
-
+           console.log("DATA: " + userData.level_two_recharge_number) 
 
         } catch (error) {
           console.error('Error fetching user data:', error);
@@ -111,7 +111,6 @@ const Team = () => {
                                         <div className="mt-3 text-center text-[#1895b0] font-[400] leading-3 ">
                                         {numberofInvites}
                                         </div>
-
                                     </div>
                                     <div className="border-solid border-2 mx-2 border-[#f1edfe] rounded-md flex w-32 flex-col justify-between mt-3 py-3 px-2">
                                         <div className="flex-1 text-center text-md font-[400]leading-3 text-[#333]">
@@ -139,7 +138,7 @@ const Team = () => {
                                         </div>
 
                                     </div>
-                                    <div className=" mx-2 border-[#f1edfe] rounded-md flex w-32 flex-col justify-between mt-3 py-3 px-2">
+                                    <div className=" mx-2 border-[#f1edfe] border-solid border-2 rounded-md flex w-32 flex-col justify-between mt-3 py-3 px-2">
                                         <div className="flex-1 text-center text-md font-[400] leading-3 text-[#333]">
                                             Commissions
                                         </div>
@@ -232,8 +231,6 @@ const Team = () => {
                                         <div className="relative text-right text-[#969799] overflow-hidden "> <span>N{levelThreeCommissons}</span></div>
                                     </div>
                                 </div>
-
-
                             </div>
                         </div>
                     </div>

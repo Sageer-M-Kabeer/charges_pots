@@ -8,7 +8,7 @@ import axios from 'axios';
 const InviteFriends = () => {
 
     const accessToken = localStorage.getItem('token');
-    const [inviteCode, setInviteCode] = useState('')
+    const [inviteCode, setInviteCode] = useState('XXXXXX')
 
     const copyToClipBoard = (e) => {
         navigator.clipboard.writeText(e).then(() => {

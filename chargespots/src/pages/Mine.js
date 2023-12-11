@@ -17,11 +17,11 @@ const Mine = () => {
    const accessToken =  localStorage.getItem('token')
    console.log(accessToken)
 
-    const [phoneNumber, setPhoneNumber] = useState('');
-  const [accountBalance, setAccountBalance] = useState('');
-  const [inviteCode, setInviteCode] = useState('');
-  const [totalIncome, setTotalIncome] = useState("");
-  const [totalIncomeToday, setTotalIncomeToday] = useState("");
+    const [phoneNumber, setPhoneNumber] = useState('XXXXXXXXXXX');
+  const [accountBalance, setAccountBalance] = useState(0);
+  const [inviteCode, setInviteCode] = useState('XXXXXX');
+  const [totalIncome, setTotalIncome] = useState(0);
+  const [totalIncomeToday, setTotalIncomeToday] = useState(0);
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -104,11 +104,11 @@ const Mine = () => {
                                     </div>
                                     <div className="flex relative box-border w-full p-[10px,16px] font-[500]  text-[#323232]  mb-2 text-[18px] leading-[24px]">
                                         <div className="flex-1 "> <span>Total income</span></div>
-                                        <div className="relative text-right text-[#969799] mb-2 overflow-hidden "> <span>{totalIncome}</span></div>
+                                        <div className="relative text-right text-[#969799] mb-2 overflow-hidden "> <span>N{totalIncome}</span></div>
                                     </div>
                                     <div className="flex relative box-border w-full p-[10px,16px] font-[500]  text-[#323232] mb-2 text-[18px] leading-[24px]">
                                         <div className="flex-1 "> <span>Today income</span></div>
-                                        <div className="relative text-right text-[#969799] overflow-hidden "> <span>{totalIncomeToday}</span></div>
+                                        <div className="relative text-right text-[#969799] overflow-hidden "> <span>N{totalIncomeToday}</span></div>
                                     </div>
 
 

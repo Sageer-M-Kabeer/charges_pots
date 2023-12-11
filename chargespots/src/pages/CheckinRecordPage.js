@@ -23,7 +23,7 @@ const CheckinRecordPage = () => {
     const fetchUserData = async () => {
       try {
         // Fetch user data using the access token
-        const response = await axios.get('http://3.91.225.206/account/transactions/checkin/', {
+        const response = await axios.get('https://queentest.com.ng/account/transactions/checkin/', {
           headers: {
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${accessToken}`,

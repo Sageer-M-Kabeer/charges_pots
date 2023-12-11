@@ -83,17 +83,16 @@ const Lease = () => {
 
                     <div className="flex mx-auto text-left justify-center p-3 rounded-md border-solid border-[#f1edfe] border-2">
                                     <div className="">
-                                        <div className="text-lg text-[#333] font-semibold">Circle Day</div>
+                                        <div className="text-lg text-[#333] font-semibold">Circle Days</div>
                                         <div className="text-md text-[#333] font-semibold">{subscription.current_circle_day}</div>
                                     </div>                       
                                     </div>
                                     <div className="flex mx-auto text-left justify-center p-3 rounded-md border-solid border-[#f1edfe] border-2">
                                     <div className="">
                                     <div className="text-lg text-[#333] font-semibold">Total Revenue</div>
-                                        <div className="text-md text-[rgb(24,142,176)] font-semibold">N500</div>
+                                        <div className="text-md text-[rgb(24,142,176)] font-semibold">{subscription.vip.total_revenue}</div>
                                     </div>                       
                                     </div>
-
                     </div>  
                 </div>
               </div>

@@ -20,11 +20,21 @@ const Recharge = () => {
 
     
     const copyToClipBoard = (e) => {
-    navigator.clipboard.writeText(e).then(() => {
-    }).catch(err => {
-    //   console.error('Unable to copy text to clipboard', err);
-    });
-}
+      // Check if e is a string
+      if (typeof e !== 'string') {
+        console.error('Invalid input. Expected a string.');
+        return;
+      }
+    
+      navigator.clipboard.writeText(e)
+        .then(() => {
+          console.log('Text copied to clipboard successfully:', e);
+        })
+        .catch(err => {
+          console.error('Unable to copy text to clipboard', err);
+        });
+    }
+    
 
     const {amount} = useParams();
     // console.log(amount)
@@ -44,6 +54,11 @@ const Recharge = () => {
   const [narration, setNarration] = useState("");
   const [proof, setProof] = useState('')
   const [value, setValue] = useState('')
+  const [admminAccountNum, setAdminAccountNumber] = useState('XXXXXXXXXX');
+  const [adminAccountName, setAdminAccountName] = useState('XXXXXXXXXX');
+  const [adminBankName, setAdminBankName] = useState('XXXXXXXXXX');
+  const [accountdata, setData] = useState([]);
+
 
 
   const checkLength = (val) => val < 1000 ? true: false
@@ -65,9 +80,29 @@ const Recharge = () => {
         window.location.href = '/login';
       }
     };
+
+    const fetchAccountDetails = async () => {
+      try {
+        const response = await axios.get('https://queentest.com.ng/account/our_bank_details/', {
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${accessToken}`,
+          },
+          withCredentials: true, // Send cookies with the request
+        });
+        const details = response.data
+        setData(response.data);
+        
+        setAdminAccountNumber(details.account_number);
+        setAdminAccountName(details.account_name)
+        setAdminBankName(details.bank_name)
+      } catch (error) {
+        console.error('Error fetching user data:', error);
+      }
+    };
       
 
-  //   eraseAmount()
+    fetchAccountDetails()
     checkAccessToken();
   }, [accessToken]); 
 
@@ -212,26 +247,28 @@ const Recharge = () => {
                                             '><TbCurrencyNaira className='inline-flex justify-center items-center text-xl my-auto'/><font>{amount}</font></span> to the account
                                         </div>
                                 <form onSubmit={handleSubmit(onSubmit)} method='POST'>
+                                {accountdata.map((x, index) => (
                                 <div className='flex justify-between flex-col mb-8'>
                                        <div className='mt-3 outline-none bg-slate-300 h-[40px] flex items-center py-10 px-4 rounded-md'>
                                         <div className='flex items-center justify-between flex-1 flex-row'>
                                             {/* <font>NAra</font> */}
                                             <label className='text-[#323232] text-md w-full'>Account Number</label>
-                                            <font className="text-[#42afce] font-bold text-md w-full">45676456434
+                                            <font className="text-[#42afce] font-bold text-md w-full">{x.account_number ?? 'XXXXXXXXXX'}
                                              </font>
                                              <div className="text-[#e6a9b0] text-lg">
-                                                <button><IoIosCopy className=""/></button>
+                                                <button onClick={(e) => copyToClipBoard(x.account_number)}><IoIosCopy className=""/></button>
                                                 </div>
                                              
                                         </div>
                                     </div>
+
                                     <div className='mt-3 outline-none bg-slate-300 h-[40px] flex items-center py-10 px-4 rounded-md'>
                                         <div className='flex items-center justify-between flex-1 flex-row'>
                                             {/* <font>NAra</font> */}
                                             <label className='text-[#323232] text-md w-full'>Bank Name</label>
-                                            <font className="text-[#42afce] font-bold text-md w-full">yty suui s yus i</font>
+                                            <font className="text-[#42afce] font-bold text-md w-full">{x.bank_name ?? 'XXXXXXXXXX'}</font>
                                             <div className="text-[#e6a9b0] text-lg">
-                                                <button onClick={copyToClipBoard('eyyuus')}><IoIosCopy className=""/></button>
+                                                <button onClick={(e) => copyToClipBoard(x.bank_name)}><IoIosCopy className=""/></button>
                                                 </div>
                                         </div>
                                     </div>
@@ -239,9 +276,9 @@ const Recharge = () => {
                                         <div className='flex items-center justify-between flex-1 flex-row'>
                                             {/* <font>NAra</font> */}
                                             <label className='text-[#323232] text-md w-full'>Account Name</label>
-                                            <font className="text-[#42afce] font-bold text-md w-full">yty suui s yus i</font>
+                                            <font className="text-[#42afce] font-bold text-md w-full">{x.account_name ?? 'XXXXXXXXXX'}</font>
                                             <div className="text-[#e6a9b0] text-lg">
-                                                <button><IoIosCopy className=""/></button>
+                                                <button onClick={(e) => copyToClipBoard(x.account_name)}><IoIosCopy className=""/></button>
                                                 </div>
                                         </div>
                                     </div>
@@ -317,7 +354,8 @@ const Recharge = () => {
                                         </div>
                                     </div>
                                 </div>
-                                </form>
+                              ))}
+                              </form>
                             </div>
                         </div>
                     </div>

@@ -60,19 +60,21 @@ export default function HomePage() {
 
     checkAccessToken();
   }, []); 
-
+  
   const CheckinUser = async (e) => {
     e.preventDefault();
-  try {
-    // Fetch user data using the access token
-    const response = await axios.post('https://queentest.com.ng/account/checkin/', {
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${accessToken}`,
-        },
-      withCredentials: true,
-    });
-
+    try {
+      const response = await axios.post(
+        'https://queentest.com.ng/account/checkin/',
+        {},  // Empty data object if you don't need to send any data
+        {
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${localStorage.getItem('token')}`,
+          },
+          withCredentials: true,
+        }
+      );
 
     const details = response.data;
     if(response.status === 201){
