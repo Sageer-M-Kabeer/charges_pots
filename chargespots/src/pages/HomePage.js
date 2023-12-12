@@ -48,7 +48,6 @@ export default function HomePage() {
 
 
   useEffect(() => {
-    alert('This site is under maintainance pls come back a little while leter')
     const checkAccessToken = async () => {
       console.log(accessToken);
       if (accessToken) {
