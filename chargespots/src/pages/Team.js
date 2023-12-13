@@ -2,6 +2,7 @@ import React, {useState,useEffect  } from 'react'
 import ButtomBar from '../components/BottomBar'
 import { Link } from 'react-router-dom'
 import axios from 'axios';
+import { TbCurrencyNaira } from 'react-icons/tb'
 
 //"{\"detail\":\"Your token has expired,login\"}"
 
@@ -116,8 +117,8 @@ const Team = () => {
                                         <div className="flex-1 text-center text-md font-[400]leading-3 text-[#333]">
                                             Invitation Reward
                                         </div>
-                                        <div className="mt-3 text-[#1895b0] text-center font-[400] leading-3 ">
-                                            N{inviteReward}
+                                        <div className="mt-3 text-[#1895b0] text-center font-[400] leading-3 flex justify-center items-center">
+                                            <TbCurrencyNaira size={20}/>{inviteReward}
                                         </div>
 
                                     </div>
@@ -129,16 +130,16 @@ const Team = () => {
                         <div className="relative  mb-8 bg-[#fff]  shadow-sm rounded-2xl">
                             <div className="p-8">
                                 <div className="flex justify-around">
-                                    <div className=" border-solid border-2 mx-2 border-[#f1edfe] rounded-md flex w-32 flex-col justify-between mt-3 py-3 px-2">
+                                    <div className=" border-solid border-2 mx-2 border-[#f1edfe] rounded-md flex w-32 flex-col w-full justify-between mt-3 py-3 px-2">
                                         <div className="flex-1 text-center text-md font-[400] leading-3 text-[#333]">
                                             Team  Recharge
                                         </div>
-                                        <div className="mt-3 text-center text-[#1895b0] font-[400] leading-3 ">
-                                            N{totalTeamRecharge}
+                                        <div className="mt-3 text-center text-[#1895b0] flex justify-center items-center font-[400] leading-3 ">
+                                        <TbCurrencyNaira size={20}/>{totalTeamRecharge}
                                         </div>
 
                                     </div>
-                                    <div className=" mx-2 border-[#f1edfe] border-solid border-2 rounded-md flex w-32 flex-col justify-between mt-3 py-3 px-2">
+                                    {/* <div className=" mx-2 border-[#f1edfe] border-solid border-2 rounded-md flex w-32 flex-col justify-between mt-3 py-3 px-2">
                                         <div className="flex-1 text-center text-md font-[400] leading-3 text-[#333]">
                                             Commissions
                                         </div>
@@ -146,7 +147,7 @@ const Team = () => {
                                             N{totalCommissions}
                                         </div>
 
-                                    </div>
+                                    </div> */}
                                 </div>
 
                             </div>
@@ -165,18 +166,18 @@ const Team = () => {
 
                                 </div>
                                 <div className="m-[0,16px] pt-6 overflow-hidden bg-white">
-                                    <div className="flex relative box-border w-full p-[20px,16px] text-[#323232] text-[14px] leading-[24px]">
+                                    <div className="flex relative box-border w-full h-full p-[20px,16px] text-[#323232] text-[14px] leading-[24px]">
                                         <div className="flex-1 "> <span>Recharge Number</span></div>
                                         <div className="relative text-right text-[#969799] overflow-hidden "> <span>{teamRecharge}</span></div>
                                     </div>
 
                                 </div>
-                                <div className="m-[0,16px] pt-6 overflow-hidden bg-white">
+                                {/* <div className="m-[0,16px] pt-6 overflow-hidden bg-white">
                                     <div className="flex relative box-border w-full p-[20px,16px] text-[#323232] text-[14px] leading-[24px]">
                                         <div className="flex-1 "> <span>Comissions</span></div>
                                         <div className="relative text-right text-[#969799] overflow-hidden "> <span>N{levelOneCommissons}</span></div>
                                     </div>
-                                </div>
+                                </div> */}
 
 
                             </div>
@@ -198,12 +199,12 @@ const Team = () => {
                                     </div>
 
                                 </div>
-                                <div className="m-[0,16px] pt-6 overflow-hidden bg-white">
+                                {/* <div className="m-[0,16px] pt-6 overflow-hidden bg-white">
                                     <div className="flex relative box-border w-full p-[20px,16px] text-[#323232] text-[14px] leading-[24px]">
                                         <div className="flex-1 "> <span>Comissions</span></div>
                                         <div className="relative text-right text-[#969799] overflow-hidden "> <span>N{levelTwoCommissons}</span></div>
                                     </div>
-                                </div>
+                                </div> */}
 
 
                             </div>
@@ -225,12 +226,12 @@ const Team = () => {
                                     </div>
 
                                 </div>
-                                <div className="m-[0,16px] pt-6 overflow-hidden bg-white">
+                                {/* <div className="m-[0,16px] pt-6 overflow-hidden bg-white">
                                     <div className="flex relative box-border w-full p-[20px,16px] text-[#323232] text-[14px] leading-[24px]">
                                         <div className="flex-1 "> <span>Comissions</span></div>
                                         <div className="relative text-right text-[#969799] overflow-hidden "> <span>N{levelThreeCommissons}</span></div>
                                     </div>
-                                </div>
+                                </div> */}
                             </div>
                         </div>
                     </div>

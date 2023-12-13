@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import axios from 'axios';
 import SuccessAlert from '../components/SuccessAlert';
 import ErrorAlert from '../components/ErrorAlert';
+import { TbCurrencyNaira } from 'react-icons/tb'
 
 
 const Recharge = () => {
@@ -174,7 +175,11 @@ const Recharge = () => {
                         <div className="p-8">
 
                             <div>
-                                <p>Main balance <span className='text-[#cc1313]'>N{accountBalance}</span></p>
+                                <p className='flex  items-center'>
+                                  Main balance 
+                                  <span className='text-[#cc1313] flex items-center justify-center'> <TbCurrencyNaira size={20}/>
+                                    {accountBalance}
+                                  </span></p>
                             </div>
 
 

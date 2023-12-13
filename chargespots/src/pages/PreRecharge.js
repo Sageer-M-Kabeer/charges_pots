@@ -99,7 +99,9 @@ const PreRecharge = () => {
                         <div className="p-8">
 
                             <div>
-                                <p>My current available balance <span className='text-[#cc1313]'><TbCurrencyNaira className='inline text-xl'/>{accountBalance}</span></p>
+                                <p className='flex justify-center items-center'>My current available balance
+                                   <span className='text-[#cc1313] flex justify-center items-center'>
+                                  <TbCurrencyNaira size={20}/>{accountBalance}</span></p>
                             </div>
 
 
@@ -109,7 +111,8 @@ const PreRecharge = () => {
                     <div className="relative mt-8 mb-8 bg-[#fff]  shadow-sm rounded-2xl">
                         <div className="p-8">
                             <div className='text-md font-thin py-2  w-full'>
-                                <h4>Minimum deposit amount: <span className='text-[#1895b0]'>N3,000</span></h4>
+                                <h4 className='flex justify-center items-center'>Minimum deposit amount: <span className='text-[#1895b0] font-medium flex justify-center items-center'>
+                                   <TbCurrencyNaira size={20}/>3,000</span></h4>
                             </div>
                             <div>
 

@@ -10,6 +10,8 @@ import { GoSignOut } from 'react-icons/go'
 import { VscRefresh } from 'react-icons/vsc'
 import { Link } from 'react-router-dom'
 import axios from 'axios';
+import { TbCurrencyNaira } from 'react-icons/tb'
+
 
 
 const Mine = () => {
@@ -100,15 +102,18 @@ const Mine = () => {
                                 <div className="m-[0,16px] pt-3 overflow-hidden bg-white">
                                     <div className="flex relative box-border w-full p-[10px,16px] font-[500] text-[#323232] mb-2 text-[18px] leading-[24px]">
                                         <div className="flex-1 "> <span>Main Balance</span></div>
-                                        <div className="relative text-right text-[#969799] mb-2 overflow-hidden "> <span>N{accountBalance}</span></div>
+                                        <div className="relative text-right text-[#969799] mb-2 overflow-hidden ">
+                                             <span className='flex justify-center items-center'> <TbCurrencyNaira size={22}/>{accountBalance}</span></div>
                                     </div>
                                     <div className="flex relative box-border w-full p-[10px,16px] font-[500]  text-[#323232]  mb-2 text-[18px] leading-[24px]">
                                         <div className="flex-1 "> <span>Total income</span></div>
-                                        <div className="relative text-right text-[#969799] mb-2 overflow-hidden "> <span>N{totalIncome}</span></div>
+                                        <div className="relative text-right text-[#969799] mb-2 overflow-hidden ">
+                                             <span className='flex justify-center items-center'> <TbCurrencyNaira size={22}/>{totalIncome}</span></div>
                                     </div>
                                     <div className="flex relative box-border w-full p-[10px,16px] font-[500]  text-[#323232] mb-2 text-[18px] leading-[24px]">
                                         <div className="flex-1 "> <span>Today income</span></div>
-                                        <div className="relative text-right text-[#969799] overflow-hidden "> <span>N{totalIncomeToday}</span></div>
+                                        <div className="relative text-right text-[#969799] overflow-hidden ">
+                                             <span className='flex items-center justify-center'> <TbCurrencyNaira size={22}/>{totalIncomeToday}</span></div>
                                     </div>
 
 

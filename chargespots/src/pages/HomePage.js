@@ -81,8 +81,10 @@ export default function HomePage() {
         console.log(details)
         setIsCheckedIn(true);
     }
-    else{
-        console.log(details)
+    else if (response.status === 403){
+        setErrorOcured(true);
+        setErrorMsg("Your token has expired,login again");
+        window.location.href = '/login'
     }
   } catch (error) {
     console.error('Error:', error.request.response.toString());
@@ -133,7 +135,7 @@ export default function HomePage() {
           <i className="min-w-[24px] h-[24px] w-[24px] text-[20px] relative inline-block "><img src={notice} alt="" /> </i>
           <div className="flex flex-1 relative overflow-hidden items-center h-full">
             <marquee className="text-[#000] whitespace-nowrap transition-linear">+2348726722782  +2348045634567 
-            +2347034567487 +23408132324570 +2348146745443 +2349163736737</marquee>
+            +2347034567487 +23408132324570 +2348146745443 +2349163736737 +234704676774</marquee>
           </div>
         </div>
 

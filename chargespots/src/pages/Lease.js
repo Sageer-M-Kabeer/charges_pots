@@ -6,6 +6,7 @@ const Lease = () => {
   const accessToken = localStorage.getItem('token');
   const [isLoggedin, setLoggedIn] = useState(false);
   const [vipSubscriptions, setVipSubscriptions] = useState([]);
+  const [text, setText]= useState(null)
 
   useEffect(() => {
 
@@ -28,7 +29,7 @@ const Lease = () => {
           setVipSubscriptions(vipData);
         } else {
           // Handle the case where the response data is not as expected
-          console.error('Invalid response data structure');
+          setText('No Vip Found');
         }
 
         console.log(response);
@@ -47,6 +48,7 @@ const Lease = () => {
         <div className="py-8 px-4 min-h-full">
           {vipSubscriptions.map((subscription, index) => (
             <div key={index} className="relative mb-8 bg-[#fff] shadow-sm rounded-2xl">
+              {text}
               <div className="p-8">
                 <div className="flex mb-8">
                   <div className="w-24 h-20 mr-2 ">
