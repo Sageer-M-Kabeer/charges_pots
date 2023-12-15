@@ -58,8 +58,41 @@ export default function HomePage() {
       }
     };
 
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(
+          'https://queentest.com.ng/profile/leased-vips/',
+          {
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${accessToken}`,
+            },
+            withCredentials: true, /** send with cookies **/
+          }
+        );
+        console.log(response);
+      } catch (error) {
+        // console.error('Error fetching VIP data:', error);
+        if (
+          error.request &&
+          error.request.response &&
+          error.request.response.includes(
+            "Your token has expired,login"  
+          )) {
+              window.location.href = "/login";
+              setErrorOcured(true);
+              setErrorMsg('Your token has expired, login again');
+              localStorage.removeItem('token')
+          }
+        // Handle the error, e.g., redirect to login or display an error message
+      }
+    };
+
+    fetchData();
     checkAccessToken();
   }, []); 
+
+
   
   const CheckinUser = async (e) => {
     e.preventDefault();

@@ -2,11 +2,17 @@ import React, {useState,useEffect  } from 'react'
 import ivip from '../assets/1st.jpg'
 import ButtomBar from '../components/BottomBar'
 import axios from 'axios';
+import ErrorAlert from '../components/ErrorAlert';
+import SuccessAlert from '../components/SuccessAlert';
 
 const Buy = () => {
     const accessToken = localStorage.getItem('token');
   const [isLoggedin, setLoggedIn] = useState(false);
   const [vipSubscriptions, setVipSubscriptions] = useState([]);
+  const [errorMsg, setErrorMsg]=useState('')
+  const [errorOccured, setErrorOccured] = useState(false)
+  const [success, setSuccess] = useState(false);
+
 
   useEffect(() => {
     const fetchData = async () => {
@@ -34,7 +40,18 @@ const Buy = () => {
         console.log(response);
       } catch (error) {
         console.error('Error fetching VIP data:', error);
-        // Handle the error, e.g., redirect to login or display an error message
+           if (
+            error.request &&
+            error.request.response &&
+            error.request.response.includes(
+              "Your token has expired,login"  
+            )) {
+                window.location.href = "/login";
+                setErrorOccured(true);
+                setErrorMsg('Your token has expired, login again');
+                localStorage.removeItem('token')
+            }
+           
       }
     };
 
@@ -57,7 +74,7 @@ const Buy = () => {
           }
         );
         if (response.status === 201){
-            alert('Vip Purchased Successfully')
+            setSuccess(true);
         }
 
         const buy = response.data;
@@ -67,6 +84,16 @@ const Buy = () => {
         console.log(response);
       } catch (error) {
         console.error('Error buying VIP:', error);
+        if (
+          error.request &&
+          error.request.response &&
+          error.request.response.includes(
+            "Insufficient balance"  
+          )){
+            setErrorOccured(true);
+            setErrorMsg("Insufficient balance to purchase this Vip recharge and try again. the page will refresh")
+
+          }  
         // Handle the error, e.g., redirect to login or display an error message
       }
 
@@ -75,6 +102,8 @@ const Buy = () => {
   return (
 <div className="bg-[#f6f8f9] w-full h-full">
     <div className="">
+    {errorOccured ? <ErrorAlert title="Error Occured" text = {errorMsg}/>: null}
+    {success ? <SuccessAlert title="Sucess" text ="Vip Level Purchase Successful"/>: null}
         <div className="py-8 px-4 min-h-full">
             {/* card */}
             {vipSubscriptions.map((subscription, index) => (

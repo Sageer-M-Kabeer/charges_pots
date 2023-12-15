@@ -11,6 +11,7 @@ import { VscRefresh } from 'react-icons/vsc'
 import { Link } from 'react-router-dom'
 import axios from 'axios';
 import { TbCurrencyNaira } from 'react-icons/tb'
+import ErrorAlert from '../components/ErrorAlert';
 
 
 
@@ -24,6 +25,9 @@ const Mine = () => {
   const [inviteCode, setInviteCode] = useState('XXXXXX');
   const [totalIncome, setTotalIncome] = useState(0);
   const [totalIncomeToday, setTotalIncomeToday] = useState(0);
+  const [errorMsg, setErrorMsg]=useState('')
+  const [errorOccured, setErrorOccured] = useState(false)
+
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -43,7 +47,19 @@ const Mine = () => {
           setTotalIncome(userData.total_income);
           setTotalIncomeToday(userData.total_income_today)
         } catch (error) {
-          console.error('Error fetching user data:', error);
+        //   console.error('Error fetching user data:', error);
+          if (
+            error.request &&
+            error.request.response &&
+            error.request.response.includes(
+              "Your token has expired,login"  
+            )) {
+                window.location.href = "/login";
+                setErrorOccured(true);
+                setErrorMsg('Your token has expired, login again');
+                localStorage.removeItem('token')
+            }
+                //
         }
       };
 
@@ -64,6 +80,7 @@ const Mine = () => {
         <div className="bg-[#f6f8f9] w-full h-full">
             <div className="">
                 <div className="py-8 px-4 min-h-full">
+                {errorOccured ? <ErrorAlert title="Error Occured" text = {errorMsg}/>: null}
 
                     <div>
                         {/* card */}
