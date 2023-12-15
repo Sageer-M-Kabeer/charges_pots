@@ -4,6 +4,8 @@ import { FaAngleLeft } from 'react-icons/fa'
 import { Link } from "react-router-dom";
 import axios from 'axios';
 import {useForm} from "react-hook-form";
+import SuccessAlert from '../components/SuccessAlert';
+import ErrorAlert from '../components/ErrorAlert';
 
 
 
@@ -31,6 +33,9 @@ const BindCardPage = () => {
     ]
     const [isLoggedin, setLoggin] = useState(false);
     const accessToken = localStorage.getItem('token');
+    const [success, setSuccess] = useState(false)
+    const [errorOccured, setErrorOccured] = useState(false)
+    const [errorMsg, setErrorMsg] = useState('')
 
 
     const {
@@ -60,7 +65,11 @@ const BindCardPage = () => {
           const details = response.data;
           if(response.status === 201){
               console.log(details)
-              alert("success")
+              setSuccess(true);
+              setTimeout(() => {
+                setErrorOccured(false);
+              window.location.href = '/'
+            }, 5000);
           }
           else{
               console.log(details)
@@ -68,7 +77,8 @@ const BindCardPage = () => {
         } catch (error) {
           console.error('Error:', error.request.response.toString());
           console.log(data)
-          alert("error occured"+ error.request.response.toString())
+          setErrorOccured(true);
+          setErrorMsg(error.request.response.toString())
         }
       };
   
@@ -91,6 +101,9 @@ const BindCardPage = () => {
         <div className="bg-[#f6f8f9] w-full h-screen">
             <div className="px-2 min-h-full">
                 <div className="min-h-full">
+                {success ? <SuccessAlert title="Sent!" text="Bank details have been uploaded successfully. Redirecting to homepage"/>:null}
+                    {errorOccured ? <ErrorAlert title="Error Occured" text = {errorMsg}/>: null}
+
                     <form onSubmit={handleSubmit(onSubmit)}>
                     <div className="relative z-10 leading-[22px] text-center bg-white">
                         <div className='relative flex items-center justify-between h-20 w-full'>
@@ -120,12 +133,17 @@ const BindCardPage = () => {
                                                 //   positive: (value) =>
                                                     // parseFloat(value) > 0 || 'Amount must be positive',
                                                 //   min: (value) =>
-                                                    // parseFloat(value) >= 3000 || 'Minimum amount is N3,000',
+                                                //     value >= 0  && value <= 10,
                                                 },
                                               })}
                                             type='text' name ="accname" className='outline-none text-[#323232] bg-slate-300 px-2 rounded-md h-full w-full'></input>
                                         </div>
                                     </div>
+                                    <div className="text-center text-sm p-2 text-[#ee0a24]">
+                                          {errors.accname?.type === "required" && (<div className="errormsg">Account name is required </div>)}
+                                          {errors.accname?.type === "min" && (<div className="errormsg">A valid withdrawal transaction ID must be 8 characters</div>)}
+
+                                      </div>
                                 </div>
                             </div>
                             <div className="flex justify-between flex-col mt-4">
@@ -140,13 +158,22 @@ const BindCardPage = () => {
                                                 validate: {
                                                 //   positive: (value) =>
                                                     // parseFloat(value) > 0 || 'Amount must be positive',
-                                                //   min: (value) =>
-                                                    // parseFloat(value) >= 3000 || 'Minimum amount is N3,000',
+                                                  min: (value) =>
+                                                    value > 10,
                                                 },
+                                                max: (value) =>
+                                                    value > 10,
                                               })}
                                              type='text' name='accnum' className='outline-none text-[#323232] bg-slate-300 px-2 rounded-md h-full w-full'></input>
                                         </div>
                                     </div>
+                                    <div className="text-center text-sm p-2 text-[#ee0a24]">
+                                          {errors.accnum?.type === "required" && (<div className="errormsg">Account number is required </div>)}
+                                          {errors.accnum?.type === "min" && (<div className="errormsg">A valid account number must be 10 digits long</div>)}
+                                          {/* {errors.accnum?.type === "max" && (<div className="errormsg">A valid account number must be no longer than 10 digits</div>)} */}
+
+
+                                      </div>
                                 </div>
                             </div>
                             <div className="flex justify-between flex-col mt-4">
@@ -174,6 +201,13 @@ const BindCardPage = () => {
                                             <option value="Opay">OPay</option> */}
                                     </select>
                                     </div>
+                                    <div className="text-center text-sm p-2 text-[#ee0a24]">
+                                          {errors.bankname?.type === "required" && (<div className="errormsg">Bank name is required </div>)}
+                                          {errors.accnum?.type === "min" && (<div className="errormsg">A valid account number must be 10 digits long</div>)}
+                                          {/* {errors.accnum?.type === "max" && (<div className="errormsg">A valid account number must be no longer than 10 digits</div>)} */}
+
+
+                                      </div>
                                 </div>
                             </div>
                         </div>

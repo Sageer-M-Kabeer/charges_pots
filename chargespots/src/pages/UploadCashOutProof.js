@@ -4,6 +4,9 @@ import { FaAngleLeft } from 'react-icons/fa'
 import { Link } from "react-router-dom";
 import axios from 'axios';
 import {useForm} from "react-hook-form";
+import SuccessAlert from '../components/SuccessAlert';
+import ErrorAlert from '../components/ErrorAlert';
+
 
 
 
@@ -14,6 +17,9 @@ const BindCardPage = () => {
     const [feedback, setFeedback] = useState("");
     const [proof, setProof] = useState('')  
     const accessToken = localStorage.getItem('token');
+    const [success, setSuccsess] = useState(false);
+    const [errorOccured, setErrorOccured] = useState(false)
+    const [errorMsg, setErrorMsg] = useState('')
 
 
     const {
@@ -45,7 +51,11 @@ const BindCardPage = () => {
           const details = response.data;
           if(response.status === 201){
               console.log(details)
-              alert("success")
+              setSuccsess(true)
+              setTimeout(() => {
+                setErrorOccured(false);
+              window.location.href = '/'
+            }, 5000);
           }
           else{
               console.log(details)
@@ -53,7 +63,8 @@ const BindCardPage = () => {
         } catch (error) {
           console.error('Error:', error.request.response.toString());
           console.log(data)
-          alert("error occured "+ error.request.response.toString())
+          setErrorMsg(error.request.response.toString())
+          setErrorOccured(true)
         }
       };
   
@@ -87,6 +98,8 @@ const BindCardPage = () => {
         <div className="bg-[#f6f8f9] w-full h-screen">
             <div className="px-2 min-h-full">
                 <div className="min-h-full">
+                {success ? <SuccessAlert title="Sent!" text="Withdrawal proof sent successfully. Redirecting to homepage"/>:null}
+                    {errorOccured ? <ErrorAlert title="Error Occured" text = {errorMsg}/>: null}
                     <form onSubmit={handleSubmit(onSubmit)} method='POST'>
                     <div className="relative z-10 leading-[22px] text-center bg-white">
                         <div className='relative flex items-center justify-between h-20 w-full'>
