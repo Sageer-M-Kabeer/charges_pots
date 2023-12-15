@@ -116,12 +116,17 @@ const BindCardPage = () => {
                                                 //   positive: (value) =>
                                                     // parseFloat(value) > 0 || 'Amount must be positive',
                                                 //   min: (value) =>
-                                                    // parseFloat(value) >= 3000 || 'Minimum amount is N3,000',
+                                                //     value < 8,
                                                 },
                                               })}
                                             type='text' name ="transcID" value={tid} onChange={handleTidChange} className='outline-none text-[#323232] bg-slate-300 px-2 rounded-md h-full w-full'></input>
                                         </div>
                                     </div>
+                                    <div className="text-center text-sm p-2 text-[#ee0a24]">
+                                          {errors.transcID?.type === "required" && (<div className="errormsg">A valid withdrawal transaction ID is required </div>)}
+                                          {errors.transcID?.type === "min" && (<div className="errormsg">A valid withdrawal transaction ID must be 8 characters</div>)}
+
+                                      </div>
                                 </div>
                             </div>
                             <div className="flex justify-between flex-col mt-4">
@@ -143,6 +148,9 @@ const BindCardPage = () => {
                                              type='file' name='proof' value={proof} onChange={handleFileChange} className='outline-none text-[#323232] bg-slate-300 px-2 rounded-md h-full w-full'></input>
                                         </div>
                                     </div>
+                                    <div className="text-center text-sm p-2 text-[#ee0a24]">
+                                          {errors.proof?.type === "required" && (<div className="errormsg">an image proof is required for this request</div>)}
+                                      </div>
                                 </div>
                             </div>
                             <div className="flex justify-between flex-col mt-4">
@@ -164,6 +172,9 @@ const BindCardPage = () => {
                                              type='text' name='feedback' value={feedback} onChange={handleFeedbackChange} className='outline-none text-[#323232] bg-slate-300 px-2 rounded-md h-full w-full'></input>
                                         </div>
                                     </div>
+                                    <div className="text-center text-sm p-2 text-[#ee0a24]">
+                                          {errors.feedback?.type === "required" && (<div className="errormsg">an honest feedback is required for this request</div>)}
+                                      </div>
                                 </div>
                             </div>
                          

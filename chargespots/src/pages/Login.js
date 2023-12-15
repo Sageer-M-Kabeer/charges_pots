@@ -83,7 +83,7 @@ const Login = () => {
     return (
       <div className=" h-full md:h-screen w-screen bg-[#f6f8f9] p-0 m-0 border-box outline-none font-[48px]">
         { isLoggedin && formsuccess ? <SuccessAlert title="Login Success" text="Redirecting to homepage"/> : ""}
-        {formsuccess === false ? <ErrorAlert title="Login Failed!" text="invalid credentials"/> : null}
+        {!formsuccess ? <ErrorAlert title="Login Failed!" text="invalid credentials"/> : null}
 
 
         {/* start of logo */}

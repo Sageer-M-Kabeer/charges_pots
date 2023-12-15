@@ -58,6 +58,7 @@ const Recharge = () => {
   const [adminAccountName, setAdminAccountName] = useState('XXXXXXXXXX');
   const [adminBankName, setAdminBankName] = useState('XXXXXXXXXX');
   const [accountdata, setData] = useState([]);
+  const [success, setSuccess] = useState(false);
 
 
 
@@ -132,8 +133,10 @@ const Recharge = () => {
       );
 
       if(response.status===201){
-        // setErrorOccured(false);
-        alert('Hurray')
+        setSuccess(true)
+        setTimeout(() => {
+          window.location.href = '/'
+        }, 5000);
       }
       console.log(response)
   
@@ -214,6 +217,8 @@ const Recharge = () => {
         <div className="bg-[#f6f8f9] w-full h-screen">
             <div className="px-2 min-h-full">
                 <div className="min-h-full">
+                {success ? <SuccessAlert title="Success" text="Request has been sent successfully. Redirecting to homepage"/> : ""}
+
                     <div className="relative z-10 leading-[22px] text-center bg-white">
                         <div className='relative flex items-center justify-between h-20 w-full'>
                             <div className='left-0 top-0 bottom-0 flex  items-center absolute p-[16px] text-[14px] cursor-pointer'>
@@ -298,6 +303,9 @@ const Recharge = () => {
                                             className='outline-none text-[#42afce] text-sm bg-slate-300 px-2 py-4 rounded-md h-full w-full'></input>
                                         </div>
                                     </div>
+                                    <div className="text-center text-sm p-2 text-[#ee0a24]">
+                                          {errors.proof?.type === "required" && (<div className="errormsg">an image proof is required for this request</div>)}
+                                      </div>
                                     <div className='mt-3 outline-none bg-slate-300 h-[40px] flex items-center py-10 px-4 rounded-md'>
                                         <div className='flex flex-row flex-1 items-center justify-between'>
                                             {/* <font>NAra</font> */}
@@ -316,6 +324,9 @@ const Recharge = () => {
                                             bg-slate-300 px-2 py-4 rounded-md h-full w-full'></input>
                                         </div>
                                     </div>
+                                    <div className="text-center text-sm p-2 text-[#ee0a24]">
+                                          {errors.narration?.type === "required" && (<div className="errormsg">sender's full name or relevant text is required</div>)}
+                                      </div>
                                     <div className='mt-2'>
                                     <div className='flex mt-2 justify-center items-center'>
                                              <button type='submit' className='py-3 px-4 bg-[#42afce] 

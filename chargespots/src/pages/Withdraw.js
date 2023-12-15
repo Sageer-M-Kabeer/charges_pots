@@ -76,8 +76,8 @@ const Recharge = () => {
           if(response.status===201){
             setTimeout(() => {
               setErrorOccured(false);
-            window.location.reload();
-          }, 8000);
+            window.location.href = '/'
+          }, 5000);
           }
           console.log(response)
       
@@ -168,7 +168,7 @@ const Recharge = () => {
                             </div>
                         </div>
                     </div>
-                    {isSent && !errorOccured ? <SuccessAlert title="Sent!" text="Withdrawal request sent successfully, The page will reload"/>:null}
+                    {isSent && !errorOccured ? <SuccessAlert title="Sent!" text="Withdrawal request sent successfully. Redirecting to homepage"/>:null}
                     {isSent && errorOccured ? <ErrorAlert title="Error Occured" text = {errorMsg}/>: null}
                     {/* card */}
                     <div className="relative mt-8 mb-8 bg-[#fff]  shadow-sm rounded-2xl">

@@ -169,8 +169,16 @@ const PreRecharge = () => {
                         })} name='amount' value={rechargeAmount} onChange={handleChange}
                         className='w-full py-2 pl-4  text-[#1895b0] outline-none'
                       />
+                        
                     </div>
+                    <div className="text-center mb-1 text-sm p-2 text-[#ee0a24]">
+                           {errors.amount?.type === "required" && (<div className="errormsg">amount is required</div>)}
+                           {errors.amount?.type === "positive" && (<div className="errormsg">Must not be negative</div>)}                          
+                           {errors.amount?.type === "min" && (<div className="errormsg">Minimum amount required is N3000</div>)}
+                           {/* {errors.amount?.type === "positive" && (<div className="errormsg">Must not be negative</div>)} */}
+                      </div>
                     <div className='flex justify-center items-center'>
+                 
                       {/* Use a regular button for form submission */}
                       <button
                         type="submit"
