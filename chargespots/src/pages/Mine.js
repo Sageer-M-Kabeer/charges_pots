@@ -12,6 +12,7 @@ import { Link } from 'react-router-dom'
 import axios from 'axios';
 import { TbCurrencyNaira } from 'react-icons/tb'
 import ErrorAlert from '../components/ErrorAlert';
+import PopOver from '../components/PopOver'
 
 
 
@@ -27,6 +28,7 @@ const Mine = () => {
   const [totalIncomeToday, setTotalIncomeToday] = useState(0);
   const [errorMsg, setErrorMsg]=useState('')
   const [errorOccured, setErrorOccured] = useState(false)
+  const [showModal,setShowModal] = useState(false)
 
 
   useEffect(() => {
@@ -180,14 +182,15 @@ const Mine = () => {
                                 </Link>
                                 <hr className="w- text-gray-100 h-1 mt-1" />
 
-                                <Link className="m-[0,16px] pt-1 overflow-hidden bg-white">
+                                <div  className="m-[0,16px] pt-1 overflow-hidden bg-white" onClick={() => setShowModal(!showModal)}>
+                                {showModal ? <PopOver color="blue" /> : null}
                                     <div className="flex relative box-border w-full p-[10px,16px] text-[#323232] text-[14px] leading-[24px]">
                                         <div className='text-lg items-center mr-2'> <RiCustomerService2Line /> </div>
                                         <div className="flex-1 "> <span className="text-sm">Customer Service</span></div>
                                         <div className="relative text-right text-[#969799] overflow-hidden "> <span className="text-sm"><AiOutlineRight /></span></div>
                                     </div>
 
-                                </Link>
+                                </div>
                                 <hr className="w- text-gray-100 h-1 mt-1" />
 
                                 <Link className="m-[0,16px] pt-2 overflow-hidden bg-white">

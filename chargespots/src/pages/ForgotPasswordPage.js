@@ -9,7 +9,7 @@ export class ForgotPasswordPage extends Component {
       
               {/* button start  */}
               <div className="w-full mt-[15px] mx-auto mb-20 flex flex-col justify-center items-center">
-                  <a href="t.me/Chargerspots" target="_blank" className="w-[60%] h-[45px] group inline-flex justify-center bg-gradient-to-r from-[#1895B0] to-[#0f758b] rounded-[25px]">
+                  <a href={"https://t.me/Chargerspots"} rel='noreferrer' target="_blank" className="w-[60%] h-[45px] group inline-flex justify-center bg-gradient-to-r from-[#1895B0] to-[#0f758b] rounded-[25px]">
                     <button type="button" className="w-full text-center font-bold text-white text-[16px]">
                       Contact us
                     </button>
