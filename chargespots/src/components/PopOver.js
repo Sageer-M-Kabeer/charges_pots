@@ -31,7 +31,7 @@ export default function Modal() {
                 <div className='sticky'>
                 <div className="flex gap-4 items-center justify-center flex-col-reverse flex-1 p-6 border-t border-solid border-blueGray-200 rounded-b">
                 <button
-                    className="bg-[#1895b0]  text-white active:bg-emerald-600 font-bold uppercase text-sm px-6 py-3 rounded-md shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                    className="bg-[#b01818]  text-white active:bg-emerald-600 font-bold uppercase text-sm px-6 py-3 rounded-md shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                     type="button"
                     onClick={() => setShowModal(false)}
                   >
@@ -40,11 +40,12 @@ export default function Modal() {
 
                   <a href={'https://t.me/Chargerspots'} rel = "noreferrer" target='_blank'>
                   <button
-                    className="bg-[#1895b0] flex justify-center items-center h-40 w-40 text-white active:bg-emerald-600 font-bold uppercase text-sm px-6 py-3 rounded-md shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                    className="bg-[#1895b0] flex justify-center items-center gap-2 flex-col h-40 w-40 text-white active:bg-emerald-600 font-bold uppercase text-sm px-6 py-3 rounded-md shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                     type="button"
                     onClick={() => setShowModal(false)}
                   >
                     <RiTelegramFill size={120}/>
+                    <p>Contact Costomer Service</p>
                   </button>
                   </a>
                 </div>
