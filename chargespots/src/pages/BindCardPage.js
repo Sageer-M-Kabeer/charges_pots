@@ -197,7 +197,7 @@ const BindCardPage = () => {
                                             </option>
                                             <option value="Palmpay">Palmpay</option>
                                             <option value="fCM">FCMB</option>
-                                            <option value="uba">UBA</option>
+                                            <optio n value="uba">UBA</option>
                                             <option value="Opay">OPay</option> */}
                                     </select>
                                     </div>

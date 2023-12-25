@@ -22,15 +22,17 @@ import { TbCurrencyNaira } from 'react-icons/tb'
 import { RiLuggageDepositFill } from 'react-icons/ri'
 import { SlBulb } from 'react-icons/sl'
 import { Link } from "react-router-dom";
-import AlertDialog from '../components/Dialog'
+import PopUp from '../components/PopUp'
 import SuccessAlert from '../components/SuccessAlert'
 import ErrorAlert from '../components/ErrorAlert'
+import PopoverRender from '../components/PopOver'
 
 import axios from 'axios';
 import 'swiper/css';
 import 'swiper/css/pagination';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import SwiperCore, { Autoplay, Pagination } from 'swiper';
+import { Popover } from '@mui/material'
 
 SwiperCore.use([Autoplay, Pagination]);
 
@@ -130,7 +132,8 @@ export default function HomePage() {
   return (
     <div className="bg-[#f6f8f9] w-full h-full">
       <div className='flex justify-center items-center scroll-m-3 overflow-hidden'>
-         {/* <Popup/> */}
+         <Popup/>
+         {/* <Popover/> */}
       </div>
            
       {isCheckedIn ? <SuccessAlert title="Success!" text="User Checked in successfully. come back tomorrow" />: null}
