@@ -56,7 +56,7 @@ export default function HomePage() {
         setLoggin(prevState => !prevState);
       } else {
         setLoggin(false);
-        window.location.href = '/login';
+        //window.location.href = '/login';
       }
     };
 
@@ -91,7 +91,7 @@ export default function HomePage() {
     };
 
     fetchData();
-    checkAccessToken();
+    //checkAccessToken();
   }, []); 
 
 
