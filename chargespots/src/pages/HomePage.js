@@ -41,7 +41,7 @@ SwiperCore.use([Autoplay, Pagination]);
 
 export default function HomePage() {
 
-  const [isLoggedin, setLoggin] = useState(false);
+  const [isLoggedin, setLoggin] = useState(true);
   const [isCheckedIn, setIsCheckedIn] = useState(false);
   const [errorOccured, setErrorOcured] = useState(false);
   const [errorMsg, setErrorMsg] = useState('')
